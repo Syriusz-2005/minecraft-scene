@@ -1,10 +1,12 @@
 import Scene from "./lib/Scene.js"
-import Speaker from "./lib/Speaker.js";
-import DisplaySentence from "./lib/actions/DisplaySentece.js";
+import Speaker from "./lib/utils/Speaker.js";
+import DisplaySentence from "./lib/actions/DisplaySentence.js";
 import FreezePlayer from "./lib/actions/FreezePlayer.js";
 import RunCommand from "./lib/actions/RunCommand.js";
 import UnfreezePlayer from "./lib/actions/UnfreezePlayer.js";
 import Wait from "./lib/actions/Wait.js";
+import TransformGroup from "./lib/utils/TransformGroup.js";
+import DisplayText from "./lib/actions/DisplayText.js";
 
 
 export {}
@@ -32,3 +34,28 @@ testScene.actionTree
   
 
 testScene.compile();
+
+
+const dialogScene = new Scene({
+  PATH,
+  NAMESPACED_PATH,
+  sceneName: 'dialog',
+  sceneIndex: 100,
+});
+
+const group = new TransformGroup('w.dialog.test');
+
+dialogScene.actionTree
+  .then(new DisplayText([1, -30, -3], olaf, '[{"text": "Just a test message"}]', group))
+  .then(new Wait(1))
+  .then(new DisplayText([1, -30, -3], olaf, '[{"text": "Hey, buddy!"}]', group))
+  .then(new Wait(1))
+  .then(new DisplayText([1, -30, -3], olaf, '[{"text": "Whats up?"}]', group))
+  .then(new Wait(1))
+  .then(new DisplayText([1, -30, -3], olaf, '[{"text": "Aren\'t those subtitles cool?"}]', group))
+  .then(new Wait(1))
+  .then(new RunCommand(`
+    kill @e[tag=${group.groupTag}]
+  `))
+
+dialogScene.compile();
