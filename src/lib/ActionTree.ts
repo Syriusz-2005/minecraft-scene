@@ -13,6 +13,10 @@ export type Action = {
 
 export default class ActionTree implements Action {
   private elements: Action[] = [];
+
+  public static appendAction( config: ActionConfig, content: string) {
+    config.scene.appendToFile(`${config.functionIndex}.mcfunction`, content);
+  }
    
   constructor(
     private scene: Scene,
