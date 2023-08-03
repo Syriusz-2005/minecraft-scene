@@ -1,4 +1,4 @@
-import { Action, ActionConfig } from "../ActionTree.js";
+import ActionTree, { Action, ActionConfig } from "../ActionTree.js";
 
 export default class Wait implements Action {
   constructor(
@@ -11,15 +11,22 @@ export default class Wait implements Action {
     let index = config.functionIndex;
 
 
-    await scene.appendToFile(`${index}.mcfunction`, `
-      function ${scene.getFunctionReference(`${++index}-wait`)}
+    const functionName = scene.getFunctionName(config.branchIndex, ++index, 'wait');
+    const waitFunctionReference = scene.getFunctionReference(config.branchIndex, index, 'wait');
+
+    await ActionTree.appendAction(config, `
+      function ${waitFunctionReference}
     `);
 
-    await scene.mkFile(`${index}-wait.mcfunction`, `
-      schedule function ${scene.getFunctionReference(`${++index}`)} ${this.timeSeconds}s
+    const endFunctionReference = scene.getFunctionReference(config.branchIndex, ++index);
+    const endFunctionName = scene.getFunctionName(config.branchIndex, index);
+
+    await scene.mkFile(functionName, `
+      schedule function ${endFunctionReference} ${this.timeSeconds}s
     `);
 
-    await scene.mkFile(`${index}.mcfunction`, `
+
+    await scene.mkFile(endFunctionName, `
       # Run by Wait action
     `)
 

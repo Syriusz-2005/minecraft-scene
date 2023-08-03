@@ -23,8 +23,12 @@ export default class Scene {
     return `${this.config.PATH}/${this.config.sceneName}`;
   }
   
-  public getFunctionReference(functionName: string) {
-    return `${this.config.NAMESPACED_PATH}/${this.config.sceneName}/${functionName}`;
+  public getFunctionReference(branch: number | undefined, index: number, extra?: string) {
+    return `${this.config.NAMESPACED_PATH}/${this.config.sceneName}/${branch ?? 0}-${index}${extra ? `-${extra}` : ''}`;
+  }
+
+  public getFunctionName(branch: number | undefined, index: number, extra?: string) {
+    return `${branch ?? 0}-${index}${extra ? `-${extra}` : ''}.mcfunction`;
   }
 
   private async mkdir() {
@@ -56,10 +60,10 @@ export default class Scene {
     `);
 
     await this.mkFile('tick.mcfunction', `
-      execute if score #w.gameState w.scenes matches ${this.config.sceneIndex} run function ${this.getFunctionReference('0')}
+      execute if score #w.gameState w.scenes matches ${this.config.sceneIndex} run function ${this.getFunctionReference(0, 0)}
     `);
 
-    await this.mkFile(`0.mcfunction`, `
+    await this.mkFile(`0-0.mcfunction`, `
       # Run by scene manager
       scoreboard players add #w.gameState w.scenes 1
     `);

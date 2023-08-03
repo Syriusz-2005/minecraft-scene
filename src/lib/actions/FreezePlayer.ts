@@ -1,4 +1,4 @@
-import { Action, ActionConfig, CompileResult } from "../ActionTree";
+import ActionTree, { Action, ActionConfig, CompileResult } from "../ActionTree.js";
 
 
 
@@ -11,7 +11,7 @@ export default class FreezePlayer implements Action {
     const {scene} = config;
     let index = config.functionIndex;
 
-    await scene.appendToFile(`${index}.mcfunction`, `
+    await ActionTree.appendAction(config, `
 
       execute at @a[tag=w.player,tag=!w.freeze] run summon marker ${this.position?.[0] ?? '~'} ${this.position?.[1] ?? '~'} ${this.position?.[2] ?? '~'} {Tags: ["w.freezer"]}
 

@@ -1,7 +1,9 @@
 import Scene, { SceneConfig } from "./Scene.js";
+import Concurrently from "./actions/Concurrently.js";
 
 export type ActionConfig = {
   functionIndex: number;
+  branchIndex?: number;
   scene: Scene;
 } & SceneConfig;
 
@@ -11,11 +13,16 @@ export type Action = {
   compile: (config: ActionConfig) => CompileResult;
 }
 
+export type ConcurrencyOptions = {
+  awaitingMethod: 'instant-skip' | 'any-finished' | 'all-finished';
+}
+
 export default class ActionTree implements Action {
   private elements: Action[] = [];
 
   public static async appendAction( config: ActionConfig, content: string) {
-    await config.scene.appendToFile(`${config.functionIndex}.mcfunction`, content);
+    const branch = config.branchIndex ?? 0;
+    await config.scene.appendToFile(`${branch}-${config.functionIndex}.mcfunction`, content);
   }
    
   constructor(
@@ -24,6 +31,13 @@ export default class ActionTree implements Action {
 
   public then(action: Action) {
     this.elements.push(action);
+    return this;
+  }
+
+  public concurrently(config: ConcurrencyOptions, actions: Action[]) {
+
+    this.elements.push(new Concurrently(config, actions));
+
     return this;
   }
 
