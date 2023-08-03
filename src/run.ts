@@ -1,4 +1,5 @@
 import Scene from "./lib/Scene.js"
+import RunCommand from "./lib/actions/RunCommand.js";
 import Wait from "./lib/actions/Wait.js";
 
 
@@ -16,5 +17,8 @@ const testScene = new Scene({
 
 testScene.actionTree
   .then(new Wait(5))
+  .then(new RunCommand(`
+    say 5 seconds later...
+  `))
 
 testScene.compile();

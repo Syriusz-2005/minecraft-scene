@@ -7,6 +7,9 @@ export type SceneConfig = {
   sceneIndex: number;
 } & Env;
 
+/**
+ * Scene has internal sceneIndex that may be used to determine the game state. Each scene must also reserve a `sceneIndex + 1` state as It corresponds to the scene in progress
+ */
 export default class Scene {
 
   public readonly actionTree = new ActionTree(this);
@@ -45,8 +48,13 @@ export default class Scene {
       scoreboard players set #SCENE_${this.config.sceneName} w.scenes ${this.config.sceneIndex}
     `);
 
+    await this.mkFile('tick.mcfunction', `
+      execute if score #w.gameState w.scenes matches ${this.config.sceneIndex} run function ${this.getFunctionReference('0')}
+    `)
+
     await this.mkFile(`0.mcfunction`, `
       # Run by scene manager
+      scoreboard players add #w.gameState w.scenes 1
     `)
 
     this.actionTree.compile({
