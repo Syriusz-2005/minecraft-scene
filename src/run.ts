@@ -15,6 +15,7 @@ export {}
 
 const PATH = '../data/w/functions/generated';
 const NAMESPACED_PATH = 'w:generated'
+console.time('Compiled in');
 
 const testScene = new Scene({
   PATH,
@@ -35,7 +36,7 @@ testScene.actionTree
   .then(new RunCommand(`say the player is unfreezed!`))
   
 
-testScene.compile();
+  await testScene.compile();
 
 
 const dialogScene = new Scene({
@@ -64,7 +65,7 @@ dialogScene.actionTree
     kill @e[tag=${group.groupTag}]
   `))
 
-dialogScene.compile();
+  await dialogScene.compile();
 
 
 const concurrentScene = new Scene({
@@ -85,4 +86,6 @@ concurrentScene.actionTree
   ])
   .then(new RunCommand('say 2'))
 
-concurrentScene.compile();
+await concurrentScene.compile();
+
+console.timeEnd('Compiled in');

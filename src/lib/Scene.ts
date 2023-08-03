@@ -44,7 +44,6 @@ export default class Scene {
   }
 
   public async compile() {
-    console.time('Compiled in');
     await fs.rm(this.getPath(), {recursive: true}).catch(err => {});
     await this.mkdir();
 
@@ -74,6 +73,5 @@ export default class Scene {
       scene: this,
     })
 
-    console.timeEnd('Compiled in');
   }
 }
