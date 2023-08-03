@@ -45,7 +45,7 @@ export default class Scene {
 
   public async compile() {
     console.time('Compiled in');
-    await fs.rm(this.getPath(), {recursive: true})
+    await fs.rm(this.getPath(), {recursive: true}).catch(err => {});
     await this.mkdir();
 
     await this.mkFile('../tick.mcfunction', `

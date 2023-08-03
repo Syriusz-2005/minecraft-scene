@@ -8,6 +8,7 @@ import Wait from "./lib/actions/Wait.js";
 import TransformGroup from "./lib/utils/TransformGroup.js";
 import DisplayText from "./lib/actions/DisplayText.js";
 import Repeat from "./lib/actions/Repeat.js";
+import ActionTree from "./lib/ActionTree.js";
 
 
 export {}
@@ -64,3 +65,24 @@ dialogScene.actionTree
   `))
 
 dialogScene.compile();
+
+
+const concurrentScene = new Scene({
+  NAMESPACED_PATH,
+  PATH,
+  sceneIndex: 200,
+  sceneName: 'concurrent-flows',
+});
+
+concurrentScene.actionTree
+  .concurrently({
+    awaitingMethod: 'instant-skip',
+    }, [
+    new ActionTree(concurrentScene)
+      .then(new Wait(2))
+      .then(new RunCommand('say 3')),
+    new RunCommand('say 1')
+  ])
+  .then(new RunCommand('say 2'))
+
+concurrentScene.compile();
