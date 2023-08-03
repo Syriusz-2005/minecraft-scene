@@ -1,0 +1,16 @@
+{
+  "include": ["src"],
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["ES2020"],
+    "skipLibCheck": true,
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+
+    "isolatedModules": true,
+    "strict": true,
+    "outDir": "out"
+  }
+}
