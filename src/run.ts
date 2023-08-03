@@ -48,19 +48,19 @@ const group = new TransformGroup('w.dialog.test');
 const pos = [1, -30, -3] as const;
 
 dialogScene.actionTree
+  .then(new DisplayText(pos, olaf, '[{"text": "Just a test message"}]', group))
+  .then(new Wait(1))
+  .then(new DisplayText(pos, olaf, '[{"text": "Hey, buddy!"}]', group))
+  .then(new Wait(1))
+  .then(new DisplayText(pos, olaf, '[{"text": "Whats up?"}]', group))
+  .then(new Wait(1))
+  .then(new DisplayText(pos, olaf, '[{"text": "Aren\'t those subtitles cool?"}]', group))
+  .then(new Wait(1))
   .then(new Repeat(`
-    say hello
-  `, 1))
-  // .then(new DisplayText(pos, olaf, '[{"text": "Just a test message"}]', group))
-  // .then(new Wait(1))
-  // .then(new DisplayText(pos, olaf, '[{"text": "Hey, buddy!"}]', group))
-  // .then(new Wait(1))
-  // .then(new DisplayText(pos, olaf, '[{"text": "Whats up?"}]', group))
-  // .then(new Wait(1))
-  // .then(new DisplayText(pos, olaf, '[{"text": "Aren\'t those subtitles cool?"}]', group))
-  // .then(new Wait(1))
-  // .then(new RunCommand(`
-  //   kill @e[tag=${group.groupTag}]
-  // `))
+    execute as @e[tag=${group.groupTag}] at @s run tp @s ~ ~.03 ~
+  `, 7))
+  .then(new RunCommand(`
+    kill @e[tag=${group.groupTag}]
+  `))
 
 dialogScene.compile();
