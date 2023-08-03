@@ -77,7 +77,7 @@ const concurrentScene = new Scene({
 
 concurrentScene.actionTree
   .concurrently({
-    awaitingMethod: 'instant-skip',
+      awaitingMethod: 'instant-skip',
     }, [
     new ActionTree(concurrentScene)
       .then(new Wait(2))
