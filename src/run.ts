@@ -7,6 +7,7 @@ import UnfreezePlayer from "./lib/actions/UnfreezePlayer.js";
 import Wait from "./lib/actions/Wait.js";
 import TransformGroup from "./lib/utils/TransformGroup.js";
 import DisplayText from "./lib/actions/DisplayText.js";
+import Repeat from "./lib/actions/Repeat.js";
 
 
 export {}
@@ -44,18 +45,22 @@ const dialogScene = new Scene({
 });
 
 const group = new TransformGroup('w.dialog.test');
+const pos = [1, -30, -3] as const;
 
 dialogScene.actionTree
-  .then(new DisplayText([1, -30, -3], olaf, '[{"text": "Just a test message"}]', group))
-  .then(new Wait(1))
-  .then(new DisplayText([1, -30, -3], olaf, '[{"text": "Hey, buddy!"}]', group))
-  .then(new Wait(1))
-  .then(new DisplayText([1, -30, -3], olaf, '[{"text": "Whats up?"}]', group))
-  .then(new Wait(1))
-  .then(new DisplayText([1, -30, -3], olaf, '[{"text": "Aren\'t those subtitles cool?"}]', group))
-  .then(new Wait(1))
-  .then(new RunCommand(`
-    kill @e[tag=${group.groupTag}]
-  `))
+  .then(new Repeat(`
+    say hello
+  `, 1))
+  // .then(new DisplayText(pos, olaf, '[{"text": "Just a test message"}]', group))
+  // .then(new Wait(1))
+  // .then(new DisplayText(pos, olaf, '[{"text": "Hey, buddy!"}]', group))
+  // .then(new Wait(1))
+  // .then(new DisplayText(pos, olaf, '[{"text": "Whats up?"}]', group))
+  // .then(new Wait(1))
+  // .then(new DisplayText(pos, olaf, '[{"text": "Aren\'t those subtitles cool?"}]', group))
+  // .then(new Wait(1))
+  // .then(new RunCommand(`
+  //   kill @e[tag=${group.groupTag}]
+  // `))
 
 dialogScene.compile();

@@ -40,8 +40,9 @@ export default class Scene {
   }
 
   public async compile() {
+    console.time('Compiled in');
+    await fs.rm(this.getPath(), {recursive: true})
     await this.mkdir();
-    console.log('Compiled!');
 
     await this.mkFile('../tick.mcfunction', `
       execute as @a[tag=w.freeze] at @s at @e[tag=w.freezer,sort=nearest,limit=1] run tp @s ~ ~ ~
@@ -50,6 +51,8 @@ export default class Scene {
     await this.mkFile('load.mcfunction', `
       #declare score_holder #SCENE_${this.config.sceneName}
       scoreboard players set #SCENE_${this.config.sceneName} w.scenes ${this.config.sceneIndex}
+
+      scoreboard objectives add w.internal dummy
     `);
 
     await this.mkFile('tick.mcfunction', `
@@ -61,10 +64,12 @@ export default class Scene {
       scoreboard players add #w.gameState w.scenes 1
     `);
 
-    this.actionTree.compile({
+    await this.actionTree.compile({
       ...this.config,
       functionIndex: 0,
       scene: this,
     })
+
+    console.timeEnd('Compiled in');
   }
 }
