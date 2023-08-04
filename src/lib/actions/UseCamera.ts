@@ -77,7 +77,6 @@ export default class UseCamera implements Action {
 
       console.log(rotation[0] - prevAnchor.rotation[0], 'Normal delta');
       console.log(rotationxCounterDelta, 'Counter delta');
-      console.log()
 
 
       const rotationDelta = [
@@ -85,11 +84,16 @@ export default class UseCamera implements Action {
         rotation[1] - prevAnchor.rotation[1],
       ] as const;
 
+      const rotationDeltaPerTick = [
+        rotationDelta[0] / durationInTicks,
+        rotationDelta[1] / durationInTicks,
+      ]
+
       await scene.mkFile(name, `
         execute if score ${scoreHolderName} w.internal matches ..${durationInTicks - 1} run schedule function ${reference} 1t
         execute if score ${scoreHolderName} w.internal matches ${durationInTicks}.. run function ${anchorEndReference}
 
-        execute as @e[tag=w.camera-marker] at @s run tp @s ~${posDeltaPerTick[0]} ~${posDeltaPerTick[1]} ~${posDeltaPerTick[2]}
+        execute as @e[tag=w.camera-marker] at @s run tp @s ~${posDeltaPerTick[0]} ~${posDeltaPerTick[1]} ~${posDeltaPerTick[2]} ~${rotationDeltaPerTick[0]} ~${rotationDeltaPerTick[1]}
 
         scoreboard players add ${scoreHolderName} w.internal 1
       `);
