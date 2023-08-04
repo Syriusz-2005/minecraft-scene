@@ -50,6 +50,18 @@ export default class UseCamera implements Action {
 
 
 
+    {
+      const {name, reference} = scene.getFunction(config.branchIndex, index, 'test-mode-loop');
+      await scene.appendToFile('tick.mcfunction', `
+        execute if data storage w:config testMode run function ${reference}
+      `);
+      await scene.mkFile(name, `
+        execute unless score #timer.60t w.internal matches 1 run return 1
+
+
+      `);
+    }
+
 
     let isFirst = true;
     let i = 0;

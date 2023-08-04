@@ -56,6 +56,10 @@ export default class Scene {
 
     await this.mkFile('../tick.mcfunction', `
       execute as @a[tag=w.freeze] at @s at @e[tag=w.freezer,sort=nearest,limit=1] run tp @s ~ ~ ~
+
+      #declare score_holder #timer.60t
+      scoreboard players add #timer.60t w.internal 1
+      execute if score #timer.60t w.internal matches 60.. run scoreboard players reset #timer.60t w.internal
     `)
 
     await this.mkFile('load.mcfunction', `
