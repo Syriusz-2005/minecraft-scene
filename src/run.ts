@@ -103,14 +103,19 @@ cameraScene.actionTree
   .then(new UseCamera({
     anchorPoints: [
       {
-        position: [-0.5, -30, -3.5],
-        rotation: [-44.9, 17.8],
+        position: [70, -24, 40],
+        rotation: [122, 45],
         durationTo: 1,
       },
       {
-        position: [3.5, -30, .5],
-        rotation: [135, 18.8],
-        durationTo: 3,
+        position: [16, -28, 7],
+        rotation: [122, 15.7],
+        durationTo: 4,
+      },
+      {
+        position: [10.8, -28, -13.5],
+        rotation: [49.3, 15.7],
+        durationTo: 2,
       }
     ],
   }))
