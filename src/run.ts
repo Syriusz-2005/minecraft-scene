@@ -10,6 +10,7 @@ import DisplayText from "./lib/actions/DisplayText.js";
 import Repeat from "./lib/actions/Repeat.js";
 import ActionTree from "./lib/ActionTree.js";
 import UseCamera from "./lib/actions/UseCamera.js";
+import ContinueWhen from "./lib/actions/ContinueWhen.js";
 
 
 export {}
@@ -129,5 +130,22 @@ cameraScene.actionTree
   `))
 
 await cameraScene.compile();
+
+
+
+const conditions = new Scene({
+  NAMESPACED_PATH,
+  PATH,
+  sceneIndex: 400,
+  sceneName: 'conditions',
+})
+
+conditions.actionTree
+  .then(new ContinueWhen(`execute if entity @e[type=villager]`, `
+    say no villager
+  `))
+  .then(new RunCommand('say Villager spawned, we can continue!'))
+
+await conditions.compile();
 
 console.timeEnd('Compiled in');
