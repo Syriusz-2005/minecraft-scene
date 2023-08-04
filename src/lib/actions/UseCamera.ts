@@ -71,6 +71,20 @@ export default class UseCamera implements Action {
       const posDelta = VMath.delta(prevAnchor.position, position);
       const posDeltaPerTick = VMath.scalarDivide(posDelta, durationInTicks);
 
+      const rotationxDelta = rotation[0] - prevAnchor.rotation[0];
+      const rotationxCounterDelta = (rotationxDelta > 0 ? -1 : 1)*(Math.abs((rotation[0] > 0 ? 180 : -180) - rotation[0]) 
+        + Math.abs((prevAnchor.rotation[0] > 0 ? 180 : -180) - prevAnchor.rotation[0]));
+
+      console.log(rotation[0] - prevAnchor.rotation[0], 'Normal delta');
+      console.log(rotationxCounterDelta, 'Counter delta');
+      console.log()
+
+
+      const rotationDelta = [
+        Math.abs(rotationxDelta) < Math.abs(rotationxCounterDelta) ? rotationxDelta : rotationxCounterDelta,
+        rotation[1] - prevAnchor.rotation[1],
+      ] as const;
+
       await scene.mkFile(name, `
         execute if score ${scoreHolderName} w.internal matches ..${durationInTicks - 1} run schedule function ${reference} 1t
         execute if score ${scoreHolderName} w.internal matches ${durationInTicks}.. run function ${anchorEndReference}
