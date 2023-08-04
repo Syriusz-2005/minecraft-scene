@@ -116,6 +116,11 @@ cameraScene.actionTree
         position: [10.8, -28, -13.5],
         rotation: [49.3, 15.7],
         durationTo: 2,
+      },
+      {
+        position: [-11.3, -28, -14.5],
+        rotation: [-48.3, 12],
+        durationTo: 2.2,
       }
     ],
   }))

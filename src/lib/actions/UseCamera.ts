@@ -78,7 +78,7 @@ export default class UseCamera implements Action {
 
       const {durationTo, position, rotation} = anchor;
       const prevAnchor = this.anchors[i - 1];
-      const durationInTicks = durationTo * 20;
+      const durationInTicks = Math.round(durationTo * 20);
 
       const posDelta = VMath.delta(prevAnchor.position, position);
       const posDeltaPerTick = VMath.scalarDivide(posDelta, durationInTicks);
