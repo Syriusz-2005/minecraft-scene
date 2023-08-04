@@ -75,12 +75,12 @@ export default class UseCamera implements Action {
         execute if score ${scoreHolderName} w.internal matches ..${durationInTicks - 1} run schedule function ${reference} 1t
         execute if score ${scoreHolderName} w.internal matches ${durationInTicks}.. run function ${anchorEndReference}
 
-        tp @e[tag=w.camera-marker] ~${posDeltaPerTick[0]} ~${posDeltaPerTick[1]} ~${posDeltaPerTick[2]}
+        execute as @e[tag=w.camera-marker] at @s run tp @s ~${posDeltaPerTick[0]} ~${posDeltaPerTick[1]} ~${posDeltaPerTick[2]}
 
         scoreboard players add ${scoreHolderName} w.internal 1
       `);
 
-      
+
       await scene.mkFile(anchorEndName, `
         scoreboard players set ${scoreHolderName} w.internal 0
 
