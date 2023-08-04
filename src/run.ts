@@ -9,6 +9,7 @@ import TransformGroup from "./lib/utils/TransformGroup.js";
 import DisplayText from "./lib/actions/DisplayText.js";
 import Repeat from "./lib/actions/Repeat.js";
 import ActionTree from "./lib/ActionTree.js";
+import UseCamera from "./lib/actions/UseCamera.js";
 
 
 export {}
@@ -77,7 +78,7 @@ const concurrentScene = new Scene({
 
 concurrentScene.actionTree
   .concurrently({
-      awaitingMethod: 'instant-skip',
+      awaitingMethod: 'all-finished',
     }, [
     new ActionTree(concurrentScene)
       .then(new Wait(2))
@@ -87,5 +88,36 @@ concurrentScene.actionTree
   .then(new RunCommand('say 2'))
 
 await concurrentScene.compile();
+
+
+
+const cameraScene = new Scene({
+  NAMESPACED_PATH,
+  PATH,
+  sceneIndex: 300,
+  sceneName: 'camera-move',
+});
+
+
+cameraScene.actionTree
+  .then(new UseCamera({
+    anchorPoints: [
+      {
+        position: [-0.5, -30, -3.5],
+        rotation: [-44.9, 17.8],
+        durationTo: 1,
+      },
+      {
+        position: [3.5, -30, .5],
+        rotation: [135, 18.8],
+        durationTo: 3,
+      }
+    ],
+  }))
+  .then(new RunCommand(`
+    say the end of the camera
+  `))
+
+await cameraScene.compile();
 
 console.timeEnd('Compiled in');

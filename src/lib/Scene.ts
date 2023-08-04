@@ -31,6 +31,13 @@ export default class Scene {
     return `${branch ?? 0}-${index}${extra ? `-${extra}` : ''}.mcfunction`;
   }
 
+  public getFunction(branch: number | undefined, index: number, extra?: string) {
+    return {
+      name: this.getFunctionName(branch, index, extra),
+      reference: this.getFunctionReference(branch, index, extra),
+    }
+  }
+
   private async mkdir() {
     await fs.mkdir(this.getPath(), {recursive: true});
   }
