@@ -166,7 +166,7 @@ const guardian = new EntityModel('guardian_poc', {});
 
 model.actionTree
   .then(new SummonModel(guardian, new Position([3, -31, 8], [0, 0])))
-  .then(new MoveModel(guardian, [3, -31, 15], 4))
+  .then(new MoveModel(guardian, [6.4, -31, 15], 4))
   .then(new RunCommand('say the model stopped moving'))
 
 

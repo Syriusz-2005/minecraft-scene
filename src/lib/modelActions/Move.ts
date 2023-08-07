@@ -23,7 +23,7 @@ export default class MoveModel implements Action {
     const {pos, time, model} = this;
     
     const ticks = Math.round(time * 20);
-    const SCALE = 10000;
+    const SCALE = 10_000;
 
     const storage = `w:model/${config.branchIndex ?? 0}-${config.functionIndex}-${config.sceneIndex}`;
 
@@ -54,31 +54,35 @@ export default class MoveModel implements Action {
       data modify storage ${storage} zDeltaPerTick set string storage ${storage} zDeltaPerTick 0 -1
 
       function ${reference} with storage ${storage}
+
+      execute as @e[tag=${model.id}] run function animated_java:guardian_poc/animations/move/play
     `);
 
     
-    const {name: name1, reference: reference1} = scene.getFunction(config.branchIndex, index, 'as-model');
+    const {name: name1, reference: reference1} = scene.getFunction(config.branchIndex, index, 'repeat');
     const {name: name2, reference: reference2} = scene.getFunction(config.branchIndex, ++index);
+
+    await scene.mkFile(name1, `
+
+      function ${reference} with storage ${storage}
+    `);
 
     await scene.mkFile(name, `
     
       execute if score ${scoreHolderName} w.internal matches ${ticks}.. run function ${reference2}
       execute if score ${scoreHolderName} w.internal matches ${ticks}.. run return 1
 
-      $execute as @e[tag=${model.id}] at @s facing ${pos[0]} ${pos[1]} ${pos[2]} run tp @s ~$(xDeltaPerTick) ~ ~$(zDeltaPerTick)
+      $execute as @e[tag=${model.id}] at @s facing ${pos[0]} ${pos[1]} ${pos[2]} run tp @s ~$(xDeltaPerTick) ~ ~$(zDeltaPerTick) ~ ~
     
+
       scoreboard players add ${scoreHolderName} w.internal 1
-      schedule function ${reference} 1t
+      schedule function ${reference1} 1t
     `);
-
-
-    await scene.mkFile(name1, `
-      
-    `);
-
 
     await scene.mkFile(name2, `
       #run by move model action
+
+      execute as @e[tag=${model.id}] run function animated_java:guardian_poc/animations/move/pause
     `);
 
     return {
