@@ -11,6 +11,9 @@ import Repeat from "./lib/actions/Repeat.js";
 import ActionTree from "./lib/ActionTree.js";
 import UseCamera from "./lib/actions/UseCamera.js";
 import ContinueWhen from "./lib/actions/ContinueWhen.js";
+import EntityModel from "./lib/utils/EntityModel.js";
+import SummonModel from "./lib/modelActions/Summon.js";
+import Position from "./lib/utils/Position.js";
 
 
 export {}
@@ -149,3 +152,19 @@ conditions.actionTree
 await conditions.compile();
 
 console.timeEnd('Compiled in');
+
+
+const model = new Scene({
+  NAMESPACED_PATH,
+  PATH,
+  sceneIndex: 500,
+  sceneName: 'model',
+});
+
+const guardian = new EntityModel('guardian_poc', {});
+
+model.actionTree
+  .then(new SummonModel(guardian, new Position([3, -31, 8], [0, 0])))
+
+
+await model.compile();

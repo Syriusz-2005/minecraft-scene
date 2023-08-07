@@ -15,7 +15,7 @@ export default class DisplaySentence implements Action {
     const {scene} = config;
 
 
-    ActionTree.appendAction(config, `
+    await ActionTree.appendAction(config, `
       tellraw @a ${this.source.getJson(this.message)}
     `);
 

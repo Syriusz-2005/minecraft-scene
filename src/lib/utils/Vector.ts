@@ -1,6 +1,7 @@
 
 
 export type Vector = [number, number, number];
+export type Vec2 = [number, number];
 
 export class VMath {
   public static delta(v1: Vector, v2: Vector): Vector {
