@@ -14,6 +14,7 @@ import ContinueWhen from "./lib/actions/ContinueWhen.js";
 import EntityModel from "./lib/utils/EntityModel.js";
 import SummonModel from "./lib/modelActions/Summon.js";
 import Position from "./lib/utils/Position.js";
+import MoveModel from "./lib/modelActions/Move.js";
 
 
 export {}
@@ -165,6 +166,8 @@ const guardian = new EntityModel('guardian_poc', {});
 
 model.actionTree
   .then(new SummonModel(guardian, new Position([3, -31, 8], [0, 0])))
+  .then(new MoveModel(guardian, [3, -31, 15], 4))
+  .then(new RunCommand('say the model stopped moving'))
 
 
 await model.compile();
