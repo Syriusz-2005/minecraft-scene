@@ -10,6 +10,7 @@ export type CameraConfig = {
  * @param durationTo is no-op for the first placed anchor
  */
 export type Anchor = {
+  in?: string;
   position: Vector;
   rotation: [number, number];
   durationTo: number;
@@ -39,7 +40,7 @@ export default class UseCamera implements Action {
 
     await ActionTree.appendAction(config, `
       #Camera scripts
-      summon armor_stand ${firstAnchor.position[0]} ${firstAnchor.position[1]} ${firstAnchor.position[2]} {Rotation: [${firstAnchor.rotation[0]}f, ${firstAnchor.rotation[1]}f], Tags: ["w.camera-marker"], NoGravity: true, Invulnerable: true}
+      ${firstAnchor.in ? `execute in ${firstAnchor.in} run ` : ''}summon armor_stand ${firstAnchor.position[0]} ${firstAnchor.position[1]} ${firstAnchor.position[2]} {Rotation: [${firstAnchor.rotation[0]}f, ${firstAnchor.rotation[1]}f], Tags: ["w.camera-marker"], NoGravity: true, Invulnerable: true}
 
       scoreboard players set ${scoreHolderName} w.internal 0
 
