@@ -16,11 +16,10 @@ import SummonModel from "./lib/modelActions/Summon.js";
 import Position from "./lib/utils/Position.js";
 import MoveModel from "./lib/modelActions/Move.js";
 import { KillModel } from "./lib/modelActions/Kill.js";
+import './misc.js'
+import { NAMESPACED_PATH, PATH } from "./PATH.js";
 
 export {}
-
-const PATH = '../data/w/functions/generated';
-const NAMESPACED_PATH = 'w:generated'
 
 const startCamera = new Scene({
   NAMESPACED_PATH,
@@ -84,7 +83,6 @@ camera1.actionTree
 
 await camera1.compile();
 
-throw 'ok';
 console.time('Compiled in');
 
 const testScene = new Scene({

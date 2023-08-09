@@ -5,6 +5,7 @@ import * as fs from 'fs/promises';
 export type SceneConfig = {
   sceneName: string;
   sceneIndex: number;
+  autoStart?: boolean;
 } & Env;
 
 /**
@@ -67,6 +68,8 @@ export default class Scene {
       scoreboard players set #SCENE_${this.config.sceneName} w.scenes ${this.config.sceneIndex}
 
       scoreboard objectives add w.internal dummy
+
+      ${this.config.autoStart ? `function ${this.getFunctionReference(0, 0)}` : ''}
     `);
 
     await this.mkFile('tick.mcfunction', `
