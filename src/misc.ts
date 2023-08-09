@@ -26,9 +26,11 @@ const Beggar = new Speaker('Beggar', 'green');
 
 beggarScene.actionTree
   .then(new ContinueWhen('execute if entity @a[tag=w.player,x=-302,y=64,z=-65,dz=4,dx=7]'))
+  .then(new RunCommand('execute as @a at @s run playsound minecraft:entity.villager.celebrate master @s ~ ~ ~ 1 1 1'))
   .then(new DisplayText([-295, 66, -64], Beggar, '[{"text": "A single coin for the pathetic beggar?"}]', beggarSentence))
   .then(new Wait(3))
   .then(new DisplayText([-295, 66, -64], Beggar, '[{"text": "Thank you!"}]', beggarSentence))
+  .then(new RunCommand('execute as @a at @s run playsound minecraft:entity.villager.celebrate master @s ~ ~ ~ 1 1 1'))
   .then(new ContinueWhen('execute unless entity @a[tag=w.player,x=-302,y=64,z=-65,dz=4,dx=7]'))
   .then(new Wait(5))
   .then(new RunCommand(`kill @e[tag=${beggarSentence.groupTag}]`))
