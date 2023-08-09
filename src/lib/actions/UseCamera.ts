@@ -38,9 +38,13 @@ export default class UseCamera implements Action {
 
     const scoreHolderName = `#w.camera.${config.branchIndex ?? 0}-${config.functionIndex}.tick`;
 
+    function getDimension(dimension?: string) {
+      return `${dimension ? `execute in ${dimension} run ` : ''}`
+    }
+
     await ActionTree.appendAction(config, `
       #Camera scripts
-      ${firstAnchor.in ? `execute in ${firstAnchor.in} run ` : ''}summon armor_stand ${firstAnchor.position[0]} ${firstAnchor.position[1]} ${firstAnchor.position[2]} {Rotation: [${firstAnchor.rotation[0]}f, ${firstAnchor.rotation[1]}f], Tags: ["w.camera-marker"], NoGravity: true, Invulnerable: true}
+      ${getDimension(firstAnchor.in)}summon armor_stand ${firstAnchor.position[0]} ${firstAnchor.position[1]} ${firstAnchor.position[2]} {Rotation: [${firstAnchor.rotation[0]}f, ${firstAnchor.rotation[1]}f], Tags: ["w.camera-marker"], NoGravity: true, Invulnerable: true}
 
       scoreboard players set ${scoreHolderName} w.internal 0
 
@@ -88,9 +92,6 @@ export default class UseCamera implements Action {
       const rotationxCounterDelta = (rotationxDelta > 0 ? -1 : 1)*(Math.abs((rotation[0] > 0 ? 180 : -180) - rotation[0]) 
         + Math.abs((prevAnchor.rotation[0] > 0 ? 180 : -180) - prevAnchor.rotation[0]));
 
-      console.log(rotation[0] - prevAnchor.rotation[0], 'Normal delta');
-      console.log(rotationxCounterDelta, 'Counter delta');
-
 
       const rotationDelta = [
         Math.abs(rotationxDelta) < Math.abs(rotationxCounterDelta) ? rotationxDelta : rotationxCounterDelta,
@@ -116,7 +117,7 @@ export default class UseCamera implements Action {
       await scene.mkFile(anchorEndName, `
         scoreboard players set ${scoreHolderName} w.internal 0
 
-        tp @e[tag=w.camera-marker] ${position[0]} ${position[1]} ${position[2]} ${rotation[0]} ${rotation[1]}
+        ${getDimension(firstAnchor.in)}tp @e[tag=w.camera-marker] ${position[0]} ${position[1]} ${position[2]} ${rotation[0]} ${rotation[1]}
 
         function ${
           i === this.anchors.length - 1

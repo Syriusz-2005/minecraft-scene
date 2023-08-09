@@ -45,8 +45,8 @@ startCamera.actionTree
       },
       {
         durationTo: 4,
-        position: [-187.5, 10.7, 57.6],
-        rotation: [114, 58],
+        position: [-187.6, 10.8, 57.7],
+        rotation: [114.1, 58.1],
       }
     ]
   }))
@@ -84,7 +84,7 @@ camera1.actionTree
 
 await camera1.compile();
 
-throw new Error('Early escape');
+throw 'ok';
 console.time('Compiled in');
 
 const testScene = new Scene({
