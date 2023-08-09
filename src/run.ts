@@ -22,6 +22,31 @@ export {}
 const PATH = '../data/w/functions/generated';
 const NAMESPACED_PATH = 'w:generated'
 
+const startCamera = new Scene({
+  NAMESPACED_PATH,
+  PATH,
+  sceneIndex: -600,
+  sceneName: 'start-camera',
+});
+
+startCamera.actionTree
+  .then(new UseCamera({
+    anchorPoints: [
+      {
+        durationTo: 1,
+        position: [-200, -12, 47],
+        rotation: [-164.7, 23.5],
+        in: 'w:warland',
+      },
+      {
+        durationTo: 5,
+        position: [-187.5, 10.7, 57.6],
+        rotation: [114, 58],
+      }
+    ]
+  }))
+
+await startCamera.compile();
 
 const camera1 = new Scene({
   NAMESPACED_PATH,
