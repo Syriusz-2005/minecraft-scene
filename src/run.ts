@@ -39,7 +39,12 @@ startCamera.actionTree
         in: 'w:warland',
       },
       {
-        durationTo: 5,
+        durationTo: 7,
+        position: [-187.5, 10.7, 57.6],
+        rotation: [114, 58],
+      },
+      {
+        durationTo: 4,
         position: [-187.5, 10.7, 57.6],
         rotation: [114, 58],
       }
