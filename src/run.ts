@@ -17,11 +17,44 @@ import Position from "./lib/utils/Position.js";
 import MoveModel from "./lib/modelActions/Move.js";
 import { KillModel } from "./lib/modelActions/Kill.js";
 
-
 export {}
 
 const PATH = '../data/w/functions/generated';
 const NAMESPACED_PATH = 'w:generated'
+
+
+const camera1 = new Scene({
+  NAMESPACED_PATH,
+  PATH,
+  sceneIndex: -500,
+  sceneName: 'camera1',
+});
+
+camera1.actionTree
+  .then(new UseCamera({
+    anchorPoints: [
+      {
+        position: [-519, 63, 17],
+        rotation: [-118, 5.5],
+        durationTo: 1,
+      },
+      {
+        position: [-460.5, 63, -8.6],
+        rotation: [-98.9, 0.5],
+        durationTo: 5,
+      },
+      {
+        position: [-363.5, 108, -32.188],
+        rotation: [-101.7, 10.4],
+        durationTo: 5,
+      }
+    ]
+  }))
+
+
+await camera1.compile();
+
+throw new Error('Early escape');
 console.time('Compiled in');
 
 const testScene = new Scene({
