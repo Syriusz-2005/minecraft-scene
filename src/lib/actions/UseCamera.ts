@@ -106,6 +106,7 @@ export default class UseCamera implements Action {
         execute if score ${scoreHolderName} w.internal matches ${durationInTicks}.. run function ${anchorEndReference}
 
         execute as @e[tag=w.camera-marker] at @s run tp @s ~${posDeltaPerTick[0]} ~${posDeltaPerTick[1]} ~${posDeltaPerTick[2]} ~${rotationDeltaPerTick[0]} ~${rotationDeltaPerTick[1]}
+        execute as @a[tag=w.player] at @s run tp @s ~${posDeltaPerTick[0]} ~${posDeltaPerTick[1]} ~${posDeltaPerTick[2]} ~${rotationDeltaPerTick[0]} ~${rotationDeltaPerTick[1]}
 
         scoreboard players add ${scoreHolderName} w.internal 1
       `);
