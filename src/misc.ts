@@ -1,18 +1,17 @@
 import Scene from "./lib/Scene.js";
 import ContinueWhen from "./lib/actions/ContinueWhen.js";
-import RunCommand from "./lib/actions/RunCommand.js";
 import { NAMESPACED_PATH, PATH } from "./PATH.js";
 import Speaker from "./lib/utils/Speaker.js";
 import DisplaySentence from "./lib/actions/DisplaySentence.js";
-import DisplayText from "./lib/actions/DisplayText.js";
 import TransformGroup from "./lib/utils/TransformGroup.js";
 import Wait from "./lib/actions/Wait.js";
-import Switch from "./lib/actions/Switch.js";
-import { VMath, Vector } from "./lib/utils/Vector.js";
+import { Vector } from "./lib/utils/Vector.js";
 import DisplayMenu from "./lib/actions/DisplayMenu.js";
 import Speech from "./lib/utils/Speech.js";
 import ActionTree from "./lib/ActionTree.js";
 import { ThePlayer } from "./speakers/ThePlayer.js";
+import RunCommand from "./lib/actions/RunCommand.js";
+import DisplayText from "./lib/actions/DisplayText.js";
 
 
 
@@ -66,3 +65,40 @@ beggarScene.actionTree
   .then('function w:generated/beggar-begging/0-0')
 
 await beggarScene.compile();
+
+
+// testowa scena do testów 
+
+const mammonSentence = new TransformGroup('mammon');
+
+const Mammon = new Speaker('Mammon', 'blue');
+
+const pos2137: Vector = [-293, 71, -19];
+
+const mammonSpeech = new Speech(Mammon, pos2137, mammonSentence);
+
+const testScene = new Scene({
+  NAMESPACED_PATH,
+  PATH,
+  sceneIndex: 2137,
+  sceneName: 'kaktis-first-scene',
+  autoStart: true,
+});
+
+
+testScene.actionTree
+  .then(new ContinueWhen('execute if entity @a[tag=w.player,x=-290,y=69,z=-16,dz=-6,dx=-6]'))
+
+  
+  .then(playSpeakSound)
+  .then(mammonSpeech.say({text: 'Jak on ma poczekaj...'}))
+  .then(new Wait(2))
+  
+
+  .then(new ContinueWhen('execute unless entity @a[tag=w.player,x=-290,y=69,z=-16,dz=-6,dx=-6]'))
+  .then(`kill @e[tag=${mammonSentence.groupTag}]`)
+  .then('function w:generated/kaktis-first-scene/0-0')
+
+await testScene.compile();
+
+
