@@ -41,10 +41,16 @@ export default class UsePath implements Action {
     `);
 
     await scene.mkFile(positionedFunctionName, `
-      particle minecraft:glow_squid_ink ~ ~ ~ .1 20 .1 0 10 force
+      particle minecraft:glow_squid_ink ~ ~ ~ .1 20 .1 0 13 force
+      particle minecraft:happy_villager ~ ~ ~ ${pathConfig.radius / 2} 0 ${pathConfig.radius / 2} 0 1 normal
+
+      ${pathConfig.tickSideEffect ?? ''}
     `);
 
     await scene.mkFile(endFunctionName, `
+      execute as @a at @s run playsound minecraft:entity.experience_orb.pickup master @s ~ ~ ~
+      particle minecraft:happy_villager ~ ~.3 ~ ${pathConfig.radius / 2} 0.3 ${pathConfig.radius / 2} 0 300 normal
+
       #Run after the UsePath
     `);
 
