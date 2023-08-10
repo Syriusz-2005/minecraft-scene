@@ -78,7 +78,7 @@ export default class Scene {
 
     await this.mkFile(`0-0.mcfunction`, `
       # Run by scene manager
-      scoreboard players add #w.gameState w.scenes 1
+      scoreboard players set #w.gameState w.scenes ${this.config.sceneIndex + 1}
     `);
 
     await this.actionTree.compile({

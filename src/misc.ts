@@ -17,6 +17,7 @@ import FreezePlayer from "./lib/actions/FreezePlayer.js";
 import UnfreezePlayer from "./lib/actions/UnfreezePlayer.js";
 import StateMachine from "./lib/utils/StateMachine.js";
 import Restart from "./lib/actions/Restart.js";
+import Switch from "./lib/actions/Switch.js";
 
 
 const pathScene = new Scene({
@@ -69,8 +70,20 @@ const playSpeakSound = 'execute as @a at @s run playsound minecraft:entity.villa
 const playChatNotificationSound = 'execute as @a at @s run playsound minecraft:ui.toast.in master @s ~ ~ ~ 1 1 1';
 
 beggarScene.actionTree
-  .then(new ContinueWhen(beggarState.UseTest(0)))
   .then(new ContinueWhen('execute if entity @a[tag=w.player,x=-302,y=64,z=-65,dz=4,dx=7]'))
+  .then(new Switch({
+    branches: [
+      {
+        case: beggarState.UseTest(1),
+        then: new ActionTree(beggarScene)
+          .then(beggarSpeech.say({text: 'Hello!'}))
+          .then(new ContinueWhen('execute unless entity @a[tag=w.player,x=-302,y=64,z=-65,dz=4,dx=7]'))
+          .then(new Wait(2))
+          .then(`kill @e[tag=${beggarSentence.groupTag}]`)
+          .then(new Restart())
+      },
+    ]
+  }))
   .then(playSpeakSound)
   .then(beggarSpeech.say({text: 'A single coin for the pathetic beggar?'}))
   .then(playChatNotificationSound)

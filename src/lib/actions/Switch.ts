@@ -57,6 +57,10 @@ export default class Switch implements Action {
       branchIndex++;
     }
 
+    await ActionTree.appendAction(config, `
+      function ${endFunctionReference}
+    `);
+
     await scene.mkFile(endFunctionName, `
       #run after switch action
     `);
