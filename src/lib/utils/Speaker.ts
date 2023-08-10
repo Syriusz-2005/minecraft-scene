@@ -1,5 +1,6 @@
 
 
+
 export default class Speaker {
   constructor(
     public readonly name: string,
