@@ -240,3 +240,22 @@ bardScene.actionTree
 await bardScene.compile();
 
 
+const transition = new Scene({
+  NAMESPACED_PATH,
+  PATH,
+  sceneIndex: -145,
+  sceneName: 'transition',
+});
+
+transition.actionTree
+  .then('effect give _Syriusz_ minecraft:darkness 3 1 true')
+  .then(new Wait(.7))
+  .then('effect clear _Syriusz_ minecraft:darkness')
+  .then('effect give _Syriusz_ minecraft:blindness 4 1 true')
+  .then(new Wait(2.4))
+  .then('tp _Syriusz_ kakti')
+  .then('effect give _Syriusz_ minecraft:blindness 3 1 true')
+  .then(new Wait(.6))
+  .then('effect give _Syriusz_ minecraft:darkness 3 1 true')
+
+await transition.compile();
