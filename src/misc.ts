@@ -128,6 +128,15 @@ const pos2137: Vector = [-250, 71, -39];
 
 const bardSpeech = new Speech(bard, pos2137, bardSentence);
 
+const bardState = new StateMachine({
+  PATH,
+  NAMESPACED_PATH,
+  name: 'bard-state',
+  default: 0,
+});
+
+await bardState.init();
+
 const bardScene = new Scene({
   NAMESPACED_PATH,
   PATH,
@@ -136,10 +145,27 @@ const bardScene = new Scene({
   autoStart: true,
 });
 
-const commandPart = 'execute as kakti at @s run playsound minecraft:block.note_block.banjo master @s ~ ~ ~'
+const commandPart = 'execute as @a at @s run playsound minecraft:block.note_block.banjo master @s ~ ~ ~'
+const bardZone = '@a[tag=w.player,x=-248,y=69,z=-39,dz=5,dx=-3]';
 
 bardScene.actionTree
-  .then(new ContinueWhen('execute if entity @a[tag=w.player,x=-248,y=69,z=-39,dz=5,dx=-3]'))
+  .then(new ContinueWhen(`execute if entity ${bardZone}`))
+
+  .then(new Switch({
+    branches: [
+      {
+        case: bardState.UseTest(1),
+        then: new ActionTree(beggarScene)
+          .then(playChatNotificationSound)
+          .then('tellraw @a {"text": "*The bard plays familiar song*", "color": "#D3D3D3"}')
+          .then(new ContinueWhen('execute unless entity @a[tag=w.player,x=-248,y=69,z=-39,dz=5,dx=-3]'))
+          .then(new Wait(2))
+          .then(`kill @e[tag=${bardSentence.groupTag}]`)
+          .then(new Restart())
+      },
+    ]
+  }))
+
   .then(playChatNotificationSound)
   .then('tellraw @a {"text": "*Your gaze falls on the bard who is just beginning to play*", "color": "#D3D3D3"}')
   //.then(new FreezePlayer())
@@ -149,31 +175,36 @@ bardScene.actionTree
   .then(`${commandPart} 100 1`)
   .then(`${commandPart} 100 1.2`)
 
-  .then(bardSpeech.say({text: 'The minstrel boy to the war is gone'}))
-  .then(new Wait(2))
+  .then(bardSpeech.say({text: '♪ The minstrel boy to the war is gone ♪'}))
+  .then(new Wait(4))
+  .then(`kill @e[tag=${bardSentence.groupTag}]`)
 
   .then(`${commandPart} 100 1.05`)
   .then(`${commandPart} 100 1.35`)
   .then(`${commandPart} 100 1.6`)
   
-  .then(bardSpeech.say({text: 'In the ranks of death you`ll find him'}))
-  .then(new Wait(2))
+  .then(bardSpeech.say({text: '♪ In the ranks of death you`ll find him ♪'}))
+  .then(new Wait(4))
+  .then(`kill @e[tag=${bardSentence.groupTag}]`)
 
   .then(`${commandPart} 100 .8`)
   .then(`${commandPart} 100 1`)
   .then(`${commandPart} 100 1.2`)
 
-  .then(bardSpeech.say({text: 'His father`s sword he hath girded on'}))
-  .then(new Wait(2))
+  .then(bardSpeech.say({text: '♪ His father`s sword he hath girded on ♪'}))
+  .then(new Wait(4))
+  .then(`kill @e[tag=${bardSentence.groupTag}]`)
 
   .then(`${commandPart} 100 1.05`)
   .then(`${commandPart} 100 1.35`)
   .then(`${commandPart} 100 1.6`)
 
-  .then(bardSpeech.say({text: 'And his wild harp slung behind him'}))
+  .then(bardSpeech.say({text: '♪ And his wild harp slung behind him ♪'}))
   .then(new Wait(.5))
 
   //.then(new UnfreezePlayer())
+
+
   .then(playChatNotificationSound)
   .then(new DisplayMenu({
     preText: '[{"text": "What do you want to do?"}]',
@@ -201,7 +232,7 @@ bardScene.actionTree
     ],
     skipWhen: 'execute unless entity @a[tag=w.player,x=-248,y=69,z=-39,dz=5,dx=-3]'
   }))
-
+  .then(bardState.Update(1))
   .then(new ContinueWhen('execute unless entity @a[tag=w.player,x=-248,y=69,z=-39,dz=5,dx=-3]'))
   .then(`kill @e[tag=${bardSentence.groupTag}]`)
   .then(new Restart())
