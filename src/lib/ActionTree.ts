@@ -1,5 +1,6 @@
 import Scene, { SceneConfig } from "./Scene.js";
 import Concurrently from "./actions/Concurrently.js";
+import RunCommand from "./actions/RunCommand.js";
 
 export type ActionConfig = {
   functionIndex: number;
@@ -29,8 +30,8 @@ export default class ActionTree implements Action {
     private scene: Scene,
   ) {}
 
-  public then(action: Action) {
-    this.elements.push(action);
+  public then(action: Action | string) {
+    this.elements.push(typeof action === 'string' ? new RunCommand(action) : action);
     return this;
   }
 

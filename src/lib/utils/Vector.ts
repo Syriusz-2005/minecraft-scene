@@ -19,4 +19,8 @@ export class VMath {
       v[2] / scalar,
     ]
   }
+
+  public static toString(v: Vector) {
+    return `${v[0]} ${v[1]} ${v[2]}`
+  }
 }
