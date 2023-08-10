@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import ActionTree, { Action, ActionConfig, CompileResult } from "../ActionTree.js";
 
 export type MenuOption = {
@@ -22,8 +23,13 @@ export default class DisplayMenu implements Action {
     let index = config.functionIndex;
 
     const text: any[] = [
+      {text: '\n\n\n'},
+      {text: '> ', color: 'red', bold: true},
        ...(menuConfig.preText ? JSON.parse(menuConfig.preText) : []),
+      {text: '\n\n'},
     ];
+
+    const stateStore = `#display-menu.${randomUUID()}.state w.internal`;
     
     const {name: endFunctionName, reference: endFunctionReference} = scene.getFunction(config.branchIndex, index + 1);
 
@@ -34,15 +40,18 @@ export default class DisplayMenu implements Action {
       
       await scene.mkFile(name, `
         #run by display menu action
+        execute if score ${stateStore} matches 0 run return 0
+        
+        scoreboard players set ${stateStore} 0
       `);
 
       text.push({
-        text: `[${option.content}]`,
+        text: ` [${option.content}]`,
         color: option.color ?? 'white',
         bold: true,
         clickEvent: {
           action: "run_command",
-          value: `/function ${reference}`,
+          value: `/schedule function ${reference} 1t`,
         }
       })
 
@@ -63,6 +72,8 @@ export default class DisplayMenu implements Action {
     }
     
     await ActionTree.appendAction(config, `
+      # One means that the menu is active
+      scoreboard players set ${stateStore} 1
       tellraw @a ${JSON.stringify(text)}
     `);
 
@@ -73,7 +84,7 @@ export default class DisplayMenu implements Action {
 
 
     return {
-      endFunctionIndex: index,
+      endFunctionIndex: index + 1,
     }
   }
 }
