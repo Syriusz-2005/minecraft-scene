@@ -10,7 +10,7 @@ import Wait from "./lib/actions/Wait.js";
 import Switch from "./lib/actions/Switch.js";
 import { VMath, Vector } from "./lib/utils/Vector.js";
 import DisplayMenu from "./lib/actions/DisplayMenu.js";
-import Speech from "./lib/utils/Speach.js";
+import Speech from "./lib/utils/Speech.js";
 import ActionTree from "./lib/ActionTree.js";
 import { ThePlayer } from "./speakers/ThePlayer.js";
 
