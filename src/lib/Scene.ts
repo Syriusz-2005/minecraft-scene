@@ -8,6 +8,8 @@ export type SceneConfig = {
   autoStart?: boolean;
 } & Env;
 
+let firstTime = true;
+
 /**
  * Scene has internal sceneIndex that may be used to determine the game state. Each scene must also reserve a `sceneIndex + 1` state as It corresponds to the scene in progress
  */
@@ -54,6 +56,11 @@ export default class Scene {
   public async compile() {
     await fs.rm(this.getPath(), {recursive: true}).catch(err => {});
     await this.mkdir();
+
+    if (firstTime === true) {
+      await this.mkFile('../reset-state-machines.mcfunction', '');
+      firstTime = false;
+    }
 
     await this.mkFile('../tick.mcfunction', `
       execute as @a[tag=w.freeze] at @s at @e[tag=w.freezer,sort=nearest,limit=1] run tp @s ~ ~ ~

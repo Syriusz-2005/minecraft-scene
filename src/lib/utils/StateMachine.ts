@@ -34,6 +34,7 @@ export default class StateMachine {
       scoreboard players set ${this.scoreHolder} w.internal ${this.config.default}
     `);
 
+    
     return this;
   }
 
