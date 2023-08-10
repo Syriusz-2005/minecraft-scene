@@ -37,6 +37,10 @@ export default class Switch implements Action {
         execute if score ${successStore} w.internal matches 1.. run return 1
       `);
 
+      await scene.mkFile(name, `
+        #run by switch action
+      `);
+
       const {endFunctionIndex} = await branch.then.compile({
         ...config,
         branchIndex,
