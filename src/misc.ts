@@ -16,6 +16,7 @@ import UsePath from "./lib/actions/UsePath.js";
 import FreezePlayer from "./lib/actions/FreezePlayer.js";
 import UnfreezePlayer from "./lib/actions/UnfreezePlayer.js";
 import StateMachine from "./lib/utils/StateMachine.js";
+import Restart from "./lib/actions/Restart.js";
 
 
 const pathScene = new Scene({
@@ -68,6 +69,7 @@ const playSpeakSound = 'execute as @a at @s run playsound minecraft:entity.villa
 const playChatNotificationSound = 'execute as @a at @s run playsound minecraft:ui.toast.in master @s ~ ~ ~ 1 1 1';
 
 beggarScene.actionTree
+  .then(new ContinueWhen(beggarState.UseTest(0)))
   .then(new ContinueWhen('execute if entity @a[tag=w.player,x=-302,y=64,z=-65,dz=4,dx=7]'))
   .then(playSpeakSound)
   .then(beggarSpeech.say({text: 'A single coin for the pathetic beggar?'}))
@@ -98,7 +100,7 @@ beggarScene.actionTree
   .then(new ContinueWhen('execute unless entity @a[tag=w.player,x=-302,y=64,z=-65,dz=4,dx=7]'))
   .then(new Wait(2))
   .then(`kill @e[tag=${beggarSentence.groupTag}]`)
-  .then('function w:generated/beggar-begging/0-0')
+  .then(new Restart())
 
 await beggarScene.compile();
 
@@ -189,7 +191,7 @@ bardScene.actionTree
 
   .then(new ContinueWhen('execute unless entity @a[tag=w.player,x=-248,y=69,z=-39,dz=5,dx=-3]'))
   .then(`kill @e[tag=${bardSentence.groupTag}]`)
-  .then('function w:generated/kaktis-first-scene/0-0')
+  .then(new Restart())
 
 await bardScene.compile();
 
