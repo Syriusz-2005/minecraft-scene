@@ -61,7 +61,7 @@ export default class Scene {
       #declare score_holder #timer.60t
       scoreboard players add #timer.60t w.internal 1
       execute if score #timer.60t w.internal matches 60.. run scoreboard players reset #timer.60t w.internal
-    `)
+    `);
 
     await this.mkFile('load.mcfunction', `
       #declare score_holder #SCENE_${this.config.sceneName}
