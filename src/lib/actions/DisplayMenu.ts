@@ -10,6 +10,7 @@ export type MenuOption = {
 export type MenuConfig = {
   preText?: string;
   options: MenuOption[];
+  skipWhen?: string;
 }
 
 export default class DisplayMenu implements Action {
@@ -30,9 +31,24 @@ export default class DisplayMenu implements Action {
     ];
 
     const stateStore = `#display-menu.${randomUUID()}.state w.internal`;
+    const skipStore = `#display-menu.${config.branchIndex ?? 0}-${config.functionIndex}.skip w.internal`;
     
     const {name: endFunctionName, reference: endFunctionReference} = scene.getFunction(config.branchIndex, index + 1);
 
+    const {name: tickFunctionName, reference: tickFunctionReference} = scene.getFunction(config.branchIndex, index, 'display-menu-tick');
+
+    await scene.mkFile(tickFunctionName, `
+      execute if score ${stateStore} matches 0 run return 0
+
+      execute store success score ${skipStore} run ${menuConfig.skipWhen}
+      execute if score ${skipStore} matches 1.. run tellraw @a {"text":"Skipped the dialouge...", "color": "red"}
+      execute if score ${skipStore} matches 1.. run scoreboard players set ${stateStore} 0
+      execute if score ${skipStore} matches 1.. run function ${endFunctionReference}
+      execute if score ${skipStore} matches 1.. run return 1
+
+      schedule function ${tickFunctionReference} 1t
+    `);
+    
 
     let branchIndex = (config.branchIndex ?? 0) + 1;
     for (const option of menuConfig.options) {
@@ -53,7 +69,7 @@ export default class DisplayMenu implements Action {
           action: "run_command",
           value: `/schedule function ${reference} 1t`,
         }
-      })
+      });
 
       const {endFunctionIndex} = await option.then.compile({
         ...config,
@@ -71,10 +87,16 @@ export default class DisplayMenu implements Action {
       branchIndex++;
     }
     
+    text.push({
+      text: '\n',
+    })
+
     await ActionTree.appendAction(config, `
       # One means that the menu is active
       scoreboard players set ${stateStore} 1
       tellraw @a ${JSON.stringify(text)}
+
+      ${menuConfig.skipWhen ? `function ${tickFunctionReference}` : ''}
     `);
 
     await scene.mkFile(endFunctionName, `

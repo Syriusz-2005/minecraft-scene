@@ -42,9 +42,9 @@ beggarScene.actionTree
         content: 'No',
         then: new DisplayText(pos, Beggar, '[{"text": "Take your time and come back later!"}]', beggarSentence)
       }
-    ]
+    ],
+    skipWhen: 'execute unless entity @a[tag=w.player,x=-302,y=64,z=-65,dz=4,dx=7]'
   }))
-  .then(new Wait(3))
   .then('execute as @a at @s run playsound minecraft:entity.villager.celebrate master @s ~ ~ ~ 1 1 1')
   .then(new ContinueWhen('execute unless entity @a[tag=w.player,x=-302,y=64,z=-65,dz=4,dx=7]'))
   .then(new Wait(2))
