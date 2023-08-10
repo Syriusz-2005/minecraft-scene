@@ -15,6 +15,7 @@ import DisplayText from "./lib/actions/DisplayText.js";
 import UsePath from "./lib/actions/UsePath.js";
 import FreezePlayer from "./lib/actions/FreezePlayer.js";
 import UnfreezePlayer from "./lib/actions/UnfreezePlayer.js";
+import StateMachine from "./lib/utils/StateMachine.js";
 
 
 const pathScene = new Scene({
@@ -37,6 +38,15 @@ pathScene.actionTree
 
 await pathScene.compile();
 
+
+const beggarState = new StateMachine({
+  PATH,
+  NAMESPACED_PATH,
+  name: 'beggar-state',
+  default: 0,
+});
+
+await beggarState.init();
 
 const beggarScene = new Scene({
   NAMESPACED_PATH,
@@ -68,6 +78,7 @@ beggarScene.actionTree
       {
         content: 'Yes',
         then: new ActionTree(beggarScene)
+          .then(beggarState.Update(1))
           .then(new DisplaySentence(ThePlayer, '[{"text": "Sure, here you go."}]'))
           .then(new Wait(2))
           .then(playSpeakSound)
