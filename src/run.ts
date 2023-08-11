@@ -6,6 +6,7 @@ export {}
 
 console.time('Compiled in');
 import './misc.js'
+import './scenes/emperorSpeech1.js'
 
 const startCamera = new Scene({
   NAMESPACED_PATH,
@@ -38,3 +39,4 @@ startCamera.actionTree
 
 await startCamera.compile();
 
+console.timeEnd('Compiled in');
