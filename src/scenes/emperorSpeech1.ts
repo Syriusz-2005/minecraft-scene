@@ -35,6 +35,8 @@ scene.actionTree
     summon minecraft:villager -274 69 -18.5 {NoAI:true,Rotation:[90f, -5.8f], Tags: ["w.listener"]}
     summon minecraft:villager -276 69 -8.4 {NoAI:true,Rotation:[131f, -5.8f], Tags: ["w.listener"]}
     summon minecraft:villager -277 69 -11.3 {NoAI:true,Rotation:[110f, -5.8f], Tags: ["w.listener"]}
+    execute positioned -280.8 70.5 -11.97 rotated -86 0 run function animated_java:guardian_poc/summon
+    execute positioned -281.349 70.5 -21.108 rotated -86 0 run function animated_java:guardian_poc/summon
     `)
   .then(new FreezePlayer())
   .then('effect give @a[tag=w.player] minecraft:blindness 5 1 true')
@@ -106,9 +108,13 @@ scene.actionTree
       }))
   ])
   .then(`tellraw @a "*The speech*"`)
-  .then(new Wait(5))
+  .then(new Wait(10))
   .then(`
     kill @e[tag=w.listener]
+    execute positioned -281.349 70.5 -21 as @e[type=#animated_java:root,tag=aj.guardian_poc.root,distance=..15] run function animated_java:guardian_poc/remove/this
+
+    fill -287 68 -7 -273 68 -24 air
+    clone -294 -4 -8 -308 7 -25 -287 67 -24
   `)
 //TODO: scene cleanup
 
