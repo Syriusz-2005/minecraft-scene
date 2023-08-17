@@ -3,6 +3,7 @@ import Scene from "../lib/Scene.js";
 import ContinueWhen from "../lib/actions/ContinueWhen.js";
 import DisplaySentence from "../lib/actions/DisplaySentence.js";
 import FreezePlayer from "../lib/actions/FreezePlayer.js";
+import UnfreezePlayer from "../lib/actions/UnfreezePlayer.js";
 import UsePath from "../lib/actions/UsePath.js";
 import Wait from "../lib/actions/Wait.js";
 import { fishSellerSpeech } from "../speakers/FishSeller.js";
@@ -40,7 +41,7 @@ scene.actionTree
     pos: [-214.09, 70.00, -90.18],
     radius: 2,
   }))
-  .then(new FreezePlayer())
+  .then(new FreezePlayer([-214.09, 70.00, -90.18]))
   .then(new Wait(1))
   .then(fishSellerSpeech.say({text: `Hey, where are ye going?`}))
   .then(new Wait(3))
@@ -57,5 +58,6 @@ scene.actionTree
   .then(fishSellerSpeech.say({text: `No! The war is necessary to keep us safe! Regardless, I wish you luck and glory on the battlefield.`}))
   .then(new Wait(4))
   .then(new DisplaySentence(ThePlayer, `{"text": "Thank you."}`))
+  .then(new UnfreezePlayer())
 
 await scene.compile();
