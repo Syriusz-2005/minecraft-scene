@@ -62,22 +62,23 @@ const beggarSentence = new TransformGroup('beggar');
 
 const Beggar = new Speaker('Beggar', 'green');
 
-const pos: Vector = [-295, 66, -64];
-
+const pos: Vector = [-294.3, 71.5, -57];
+  
 const beggarSpeech = new Speech(Beggar, pos, beggarSentence);
 
 const playSpeakSound = 'execute as @a at @s run playsound minecraft:entity.villager.celebrate master @s ~ ~ ~ 1 1 1';
 const playChatNotificationSound = 'execute as @a at @s run playsound minecraft:ui.toast.in master @s ~ ~ ~ 1 1 1';
+const positionSelector = '@a[tag=w.player,x=-300,y=68,z=-58,dz=3,dx=5,dy=5]';
 
 beggarScene.actionTree
-  .then(new ContinueWhen('execute if entity @a[tag=w.player,x=-302,y=64,z=-65,dz=4,dx=7]'))
+  .then(new ContinueWhen(`execute if entity ${positionSelector}`))
   .then(new Switch({
     branches: [
       {
         case: beggarState.UseTest(1),
         then: new ActionTree(beggarScene)
           .then(beggarSpeech.say({text: 'Hello!'}))
-          .then(new ContinueWhen('execute unless entity @a[tag=w.player,x=-302,y=64,z=-65,dz=4,dx=7]'))
+          .then(new ContinueWhen(`execute unless entity ${positionSelector}`))
           .then(new Wait(2))
           .then(`kill @e[tag=${beggarSentence.groupTag}]`)
           .then(new Restart())
@@ -108,9 +109,9 @@ beggarScene.actionTree
           .then(beggarSpeech.say({text: 'Come back later, please.'}))
       }
     ],
-    skipWhen: 'execute unless entity @a[tag=w.player,x=-302,y=64,z=-65,dz=4,dx=7]'
+    skipWhen: `execute unless entity ${positionSelector}`
   }))
-  .then(new ContinueWhen('execute unless entity @a[tag=w.player,x=-302,y=64,z=-65,dz=4,dx=7]'))
+  .then(new ContinueWhen(`execute unless entity ${positionSelector}`))
   .then(new Wait(2))
   .then(`kill @e[tag=${beggarSentence.groupTag}]`)
   .then(new Restart())
