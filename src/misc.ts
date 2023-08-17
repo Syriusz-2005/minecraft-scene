@@ -73,7 +73,7 @@ const positionSelector = '@a[tag=w.player,x=-300,y=68,z=-58,dz=3,dx=5,dy=5]';
 beggarScene.actionTree
   .then(new ContinueWhen(`execute if entity ${positionSelector}`))
   .then(new Switch({
-    branches: [
+    branches: [ 
       {
         case: beggarState.UseTest(1),
         then: new ActionTree(beggarScene)

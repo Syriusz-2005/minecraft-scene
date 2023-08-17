@@ -6,6 +6,7 @@ export {}
 
 console.time('Compiled in');
 import './misc.js'
+import './scenes/castle-travel.js'
 import './scenes/emperorSpeech1.js'
 
 const startCamera = new Scene({
