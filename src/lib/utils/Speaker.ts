@@ -8,11 +8,13 @@ export default class Speaker {
   ) {}
 
   public getJson(message: string): string {
+    const msg = JSON.parse(message);
+
     const json = [
       {"text": "["}, 
       {"text": this.name, "color": this.color}, 
       {"text": "]: "},
-      ...JSON.parse(message),
+      ...(msg instanceof Array ? msg : [msg]),
     ]
 
     return JSON.stringify(json).replace(/'/g, "\\'");
