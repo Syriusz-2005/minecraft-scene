@@ -260,3 +260,4 @@ transition.actionTree
   .then('effect give _Syriusz_ minecraft:darkness 3 1 true')
 
 await transition.compile();
+

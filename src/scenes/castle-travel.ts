@@ -125,6 +125,10 @@ scene.actionTree
     worldborder damage amount 0
   `)
   .then(new UnfreezePlayer())
+  .then(new ContinueWhen('execute unless entity @e[tag=w.burglar]'))
+  .then(`
+    worldborder set 999999
+  `)
 
 
 await scene.compile();
