@@ -1,4 +1,5 @@
 import { NAMESPACED_PATH, PATH } from "../PATH.js";
+import ActionTree from "../lib/ActionTree.js";
 import Scene from "../lib/Scene.js";
 import ContinueWhen from "../lib/actions/ContinueWhen.js";
 import DisplaySentence from "../lib/actions/DisplaySentence.js";
@@ -54,15 +55,30 @@ scene.actionTree
   .then(new Wait(4))
   .then(new DisplaySentence(ThePlayer, `{"text": "Yes, my father gave it along with his final notes."}`))
   .then(new Wait(4))
-  .then(fishSellerSpeech.say({text: `He died for our kingdom! It's an honor and our duty! The emperor and his army are protecting us from evil!`}))
+  .then(fishSellerSpeech.say({text: `He died for our kingdom! It's an honor and our duty!`}))
   .then(new Wait(5))
-  .then(new DisplaySentence(ThePlayer, `{"text": "I'm not sure. Look around. The war has brought us poverty and loss."}`))
+  .then(new DisplaySentence(ThePlayer, `{"text": "I'm not sure. The war has brought to us poverty and loss."}`))
   .then(new Wait(5))
-  .then(fishSellerSpeech.say({text: `No! The war is necessary to keep us safe! Regardless, I wish you luck and glory on the battlefield.`}))
+  .then(fishSellerSpeech.say({text: `It is a sacrifice for a greater goal. The Emperor says that our enemies would murder us all as their whole nation hates us.`}))
+  .then(new Wait(6))
+  .then(fishSellerSpeech.say({text: `That's why we need constant protection. From them, and from the terrorists.`}))
   .then(new Wait(5))
-  .then(new DisplaySentence(ThePlayer, `{"text": "Thank you."}`))
+  .then(fishSellerSpeech.say({text: `Long live the Emperor. Long live you!`}))
+  .then(new Wait(4))
+  .then(new DisplaySentence(ThePlayer, `{"text": "Thank you. I hope we'll see again."}`))
   .then(new UnfreezePlayer())
-  .then(new Wait(5))
-  .then(`kill @e[tag=${fishSellerSpeech.TransformGroup.groupTag}]`)
+  .concurrently({
+    awaitingMethod: 'instant-skip',
+  }, [
+    new ActionTree(scene)
+      .then(new Wait(5))
+      .then(`kill @e[tag=${fishSellerSpeech.TransformGroup.groupTag}]`)
+  ])
+  .then(new UsePath({
+    pos: [-243.69, 71.00, -29.04],
+    radius: 2,
+  }))
+
+  
 
 await scene.compile();
