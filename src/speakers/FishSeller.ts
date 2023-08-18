@@ -6,7 +6,7 @@ import { Vector } from "../lib/utils/Vector.js";
 
 export const FishSeller = new Speaker('Fish seller', 'green');
 
-const pos: Vector = [-216, 71, -95];
+const pos: Vector = [-217.4, 71, -91.3];
 
 const sellerSentence = new TransformGroup('beggar');
 

@@ -1,6 +1,7 @@
 import ActionTree, { Action, ActionConfig, CompileResult } from "../ActionTree.js";
 import Speaker from "../utils/Speaker.js";
 import TransformGroup from "../utils/TransformGroup.js";
+import { Vec2 } from "../utils/Vector.js";
 
 
 export default class DisplayText implements Action {
@@ -9,6 +10,7 @@ export default class DisplayText implements Action {
     private readonly source: Speaker,
     private readonly message: string,
     private readonly transformGroup?: TransformGroup,
+    private readonly rotation?: Vec2,
   ) {}
 
   public async compile(config: ActionConfig): CompileResult {
@@ -26,14 +28,15 @@ export default class DisplayText implements Action {
     const transformDistance = 
       length <= 30 ? .4
       : length <= 60 ? .8
-      : 1.2 
+      : length <= 80 ? 1.2
+      : 1.6
 
     await ActionTree.appendAction(config, `
       ${this.transformGroup ? `
         execute as @e[tag=${this.transformGroup.groupTag}] at @s run tp @s ~ ~${transformDistance} ~
       ` : ''}
 
-      summon text_display ${this.position[0]} ${this.position[1]} ${this.position[2]} {billboard: "vertical", text: '${text}', teleport_duration: 4, Tags: ${JSON.stringify(tags)}}
+      summon text_display ${this.position[0]} ${this.position[1]} ${this.position[2]} {billboard: ${this.rotation ? '"fixed"' : '"vertical"'}, text: '${text}', teleport_duration: 4, Tags: ${JSON.stringify(tags)} ${this.rotation ? `, Rotation: [${this.rotation[0]}f, ${this.rotation[1]}f]` : ''}}
     `);
 
     return {
