@@ -64,6 +64,7 @@ export default class Scene {
 
     await this.mkFile('../tick.mcfunction', `
       execute as @a[tag=w.freeze] at @s at @e[tag=w.freezer,sort=nearest,limit=1] run tp @s ~ ~ ~
+      execute as @a[tag=w.freeze] run effect give @s jump_boost 1 128 true 
 
       #declare score_holder #timer.60t
       scoreboard players add #timer.60t w.internal 1
