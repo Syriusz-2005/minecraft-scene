@@ -35,26 +35,26 @@ const scene = new Scene({
 
 
 scene.actionTree
-    .then(new ContinueWhen(`execute if entity ${positionSelector}`))
-    .then(new Switch({
-        branches: [ 
-          {
-            case: isPlayerRecruited.Matches(0),
-            then: new ActionTree(scene)
-              .then(mineGuardSpeech.say({text: 'Stop right there!'}))
-              .then(playSpeakSound)
-              .then(new Wait(3))
-              .then(mineGuardSpeech.say({text: 'Only soldiers and miners are allowed into this mine'}))
-              .then(playSpeakSound)
+  .then(new ContinueWhen(`execute if entity ${positionSelector}`))
+  .then(new Switch({
+      branches: [ 
+        {
+          case: isPlayerRecruited.Matches(0),
+          then: new ActionTree(scene)
+            .then(mineGuardSpeech.say({text: 'Stop right there!'}))
+            .then(playSpeakSound)
+            .then(new Wait(3))
+            .then(mineGuardSpeech.say({text: 'Only soldiers and miners are allowed into this mine'}))
+            .then(playSpeakSound)
 
-              .then(new ContinueWhen(`execute unless entity ${positionSelector}`))
-              .then(new Wait(2))
-              .then(`kill @e[tag=${mineGuardSentence.groupTag}]`)
-              .then(new Restart())
-          },
-        ]
-      }))
-      
-    .then(new Restart())
+            .then(new ContinueWhen(`execute unless entity ${positionSelector}`))
+            .then(new Wait(2))
+            .then(`kill @e[tag=${mineGuardSentence.groupTag}]`)
+            .then(new Restart())
+        },
+      ]
+    }))
+    
+  .then(new Restart())
 
 await scene.compile();
