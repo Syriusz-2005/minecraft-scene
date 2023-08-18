@@ -17,4 +17,8 @@ export default class Speech {
   public say(text: TextComponent | TextComponent[]) {
     return new DisplayText(this.pos, this.speaker, JSON.stringify(text instanceof Array ? text : [text]), this.transformGroup)
   }
+
+  public get TransformGroup() {
+    return this.transformGroup;
+  }
 }

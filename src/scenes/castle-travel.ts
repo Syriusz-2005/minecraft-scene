@@ -20,6 +20,7 @@ const scene = new Scene({
 
 scene.actionTree
   .then('execute in minecraft:overworld run tp @a[tag=w.player] -194.70 79.00 -89.30 -1902.52 21.48')
+  .then('execute positioned -190 72 -89 run kill @e[type=item_frame,limit=1,distance=..2]')
   .then(`summon item_frame -190 72 -89 {Invisible:true,Facing:1b}`)
   .then('clear @a[tag=w.player]')
   .then('gamemode adventure @a[tag=w.player]')
@@ -47,7 +48,7 @@ scene.actionTree
   .then(new Wait(3))
   .then(new DisplaySentence(ThePlayer, `{"text": "Haven't you listened to the emperor's speech yesterday? I'm 18 so I'm going to war! I'll be a recruit."}`))
   .then(new Wait(5))
-  .then(fishSellerSpeech.say({text: `Ah, the endless war... That's such good news, maybe finally your training will pay off. I've heard that you know some neat tricks with a sword. Speaking of which, is that your father's sword?`}))
+  .then(fishSellerSpeech.say({text: `Ah, the endless war... That's such good news, maybe finally your training will pay off. I've heard that you know some neat tricks with a sword. Speaking of which, is that your father's blade?`}))
   .then(new Wait(6))
   .then(new DisplaySentence(ThePlayer, `{"text": "Yes, my father gave it along with his final notes."}`))
   .then(new Wait(4))
@@ -59,5 +60,7 @@ scene.actionTree
   .then(new Wait(4))
   .then(new DisplaySentence(ThePlayer, `{"text": "Thank you."}`))
   .then(new UnfreezePlayer())
+  .then(new Wait(5))
+  .then(`kill @e[tag=${fishSellerSpeech.TransformGroup.groupTag}]`)
 
 await scene.compile();

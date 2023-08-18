@@ -21,9 +21,16 @@ export default class DisplayText implements Action {
 
     tags.push('w.text-display');
 
+    const length = text.length;
+
+    const transformDistance = 
+      length <= 30 ? .4
+      : length <= 60 ? .8
+      : 1.2 
+
     await ActionTree.appendAction(config, `
       ${this.transformGroup ? `
-        execute as @e[tag=${this.transformGroup.groupTag}] at @s run tp @s ~ ~.4 ~
+        execute as @e[tag=${this.transformGroup.groupTag}] at @s run tp @s ~ ~${transformDistance} ~
       ` : ''}
 
       summon text_display ${this.position[0]} ${this.position[1]} ${this.position[2]} {billboard: "vertical", text: '${text}', teleport_duration: 4, Tags: ${JSON.stringify(tags)}}
