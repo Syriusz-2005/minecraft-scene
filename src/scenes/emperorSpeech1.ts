@@ -23,8 +23,8 @@ const scene = new Scene({
 scene.actionTree
   .then('gamemode spectator @a[tag=w.player]')
   .then('execute in overworld run tp @a[tag=w.player] -511 64 13 -116 17.8')
-  .then('fill -287 68 -7 -273 68 -24 air')
-  .then('clone -278 -4 -8 -292 7 -25 -287 67 -24')
+  // .then('fill -287 68 -7 -273 68 -24 air')
+  // .then('clone -278 -4 -8 -292 7 -25 -287 67 -24')
   .then(`
     summon minecraft:villager ~ ~ ~ {NoAI:true,Silent: true, Tags: ["w.listener"]}
     summon minecraft:villager -275.6 69 -14.5 {NoAI:true,Rotation:[87f, -7f],Silent:true, Tags: ["w.listener"]}
@@ -113,8 +113,8 @@ scene.actionTree
     kill @e[tag=w.listener]
     execute positioned -281.349 70.5 -21 as @e[type=#animated_java:root,tag=aj.guardian_poc.root,distance=..15] run function animated_java:guardian_poc/remove/this
 
-    fill -287 68 -7 -273 68 -24 air
-    clone -294 -4 -8 -308 7 -25 -287 67 -24
+    #fill -287 68 -7 -273 68 -24 air
+    #clone -294 -4 -8 -308 7 -25 -287 67 -24
   `)
 //TODO: scene cleanup
 
