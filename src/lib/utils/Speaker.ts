@@ -17,6 +17,6 @@ export default class Speaker {
       ...(msg instanceof Array ? msg : [msg]),
     ]
 
-    return JSON.stringify(json).replace(/'/g, "\\'");
+    return JSON.stringify(json);
   }
 }
