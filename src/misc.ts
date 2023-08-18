@@ -75,7 +75,7 @@ beggarScene.actionTree
   .then(new Switch({
     branches: [ 
       {
-        case: beggarState.UseTest(1),
+        case: beggarState.Matches(1),
         then: new ActionTree(beggarScene)
           .then(beggarSpeech.say({text: 'Hello!'}))
           .then(new ContinueWhen(`execute unless entity ${positionSelector}`))
@@ -155,7 +155,7 @@ bardScene.actionTree
   .then(new Switch({
     branches: [
       {
-        case: bardState.UseTest(1),
+        case: bardState.Matches(1),
         then: new ActionTree(beggarScene)
           .then(playChatNotificationSound)
           .then('tellraw @a {"text": "*The bard plays familiar song*", "color": "#D3D3D3"}')

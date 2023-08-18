@@ -10,6 +10,8 @@ export type StateConfig = {
   default: number;
 } & Env;
 
+let firstTime = true;
+
 export default class StateMachine {
   public readonly scoreHolder: string;
 
@@ -28,12 +30,15 @@ export default class StateMachine {
   }
 
   public async init() {
+    if (firstTime === true) {
+      await fs.writeFile(this.getPath('reset-state-machines.mcfunction'), '');
+      firstTime = false;
+    }
 
     await this.appendToFile('reset-state-machines.mcfunction', `
       #file ${import.meta.url}
       scoreboard players set ${this.scoreHolder} w.internal ${this.config.default}
     `);
-
     
     return this;
   }
@@ -42,7 +47,7 @@ export default class StateMachine {
     return `scoreboard players set ${this.scoreHolder} w.internal ${value}`
   }
 
-  public UseTest(value: number | `${number}..` | `..${number}` | `${number}..${number}` ) {
+  public Matches(value: number | `${number}..` | `..${number}` | `${number}..${number}` ) {
     return `execute if score ${this.scoreHolder} w.internal matches ${value}`;
   }
 }
