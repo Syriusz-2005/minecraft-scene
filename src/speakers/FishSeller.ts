@@ -11,4 +11,4 @@ const pos: Vector = [-217.4, 71, -91.3];
 const sellerSentence = new TransformGroup('beggar');
 
 
-export const fishSellerSpeech = new Speech(FishSeller, pos, sellerSentence);
+export const fishSellerSpeech = new Speech(FishSeller, pos, sellerSentence, [-35, 0]);

@@ -24,12 +24,13 @@ export default class DisplayText implements Action {
     tags.push('w.text-display');
 
     const length = text.length;
+    const line = 65;
 
     const transformDistance = 
-      length <= 30 ? .4
-      : length <= 60 ? .8
-      : length <= 80 ? 1.2
-      : 1.6
+      length <= line ? .3
+      : length <= line * 2 ? .7
+      : length <= line * 3 ? 1.1
+      : 1.5
 
     await ActionTree.appendAction(config, `
       ${this.transformGroup ? `
