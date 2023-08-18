@@ -24,7 +24,7 @@ export default class DisplayText implements Action {
     tags.push('w.text-display');
 
     const length = text.length;
-    const line = 65;
+    const line = 74;
 
     const transformDistance = 
       length <= line ? .3

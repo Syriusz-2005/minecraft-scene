@@ -7,6 +7,7 @@ import FreezePlayer from "../lib/actions/FreezePlayer.js";
 import UnfreezePlayer from "../lib/actions/UnfreezePlayer.js";
 import UsePath from "../lib/actions/UsePath.js";
 import Wait from "../lib/actions/Wait.js";
+import { BurglarSpeech } from "../speakers/Burglar.js";
 import { fishSellerSpeech } from "../speakers/FishSeller.js";
 import { ThePlayer } from "../speakers/ThePlayer.js";
 
@@ -57,7 +58,7 @@ scene.actionTree
   .then(new Wait(4))
   .then(fishSellerSpeech.say({text: `He died for our kingdom! It's an honor and our duty!`}))
   .then(new Wait(5))
-  .then(new DisplaySentence(ThePlayer, `{"text": "I'm not sure. The war has brought to us poverty and loss."}`))
+  .then(new DisplaySentence(ThePlayer, `{"text": "I'm not sure. For me it's mainly a loss and sorrow."}`))
   .then(new Wait(5))
   .then(fishSellerSpeech.say({text: `It is a sacrifice for a greater goal. The Emperor says that our enemies would murder us all as their whole nation hates us.`}))
   .then(new Wait(6))
@@ -66,6 +67,11 @@ scene.actionTree
   .then(fishSellerSpeech.say({text: `Long live the Emperor. Long live you!`}))
   .then(new Wait(4))
   .then(new DisplaySentence(ThePlayer, `{"text": "Thank you. I hope we'll see again."}`))
+  //Burglars init
+  .then('kill @e[tag=w.burglar]')
+  .then('summon zombie -248.2 71 -23.2 {Invulnerable:true,NoAI:true,Rotation:[-132f, 0f],Tags:["w.burglar","w.burglar-1", "w.no-fire"],Silent:true,HasVisualFire:false,PersistenceRequired:true}')
+  .then('team join oponents @e[tag=w.burglar]')
+  //end of burglars init
   .then(new UnfreezePlayer())
   .concurrently({
     awaitingMethod: 'instant-skip',
@@ -78,7 +84,31 @@ scene.actionTree
     pos: [-243.69, 71.00, -29.04],
     radius: 2,
   }))
+  .then(new FreezePlayer([-243.4, 71, -29.4]))
+  .then('data merge entity @e[tag=w.burglar-1,limit=1] {HandItems: [{id: "minecraft:iron_axe",Count: 1}]}')
+  .then(new Wait(3))
+  .then(new DisplaySentence(ThePlayer, `{"text": "What do you want?!"}`))
+  .then(new Wait(4))
+  .then(BurglarSpeech.say({text: `Hey you little, We don't need any trouble, just hand us your bag and you'll never see us again!`}))
+  .then(new Wait(5))
+  .then(new DisplaySentence(ThePlayer, `{"text": "Guards? Where are the guards?"}`))
+  .then(new Wait(5))
+  .then(BurglarSpeech.say({text: `They won't help you. The Emperor doesn't care about us as long as we don't rob him.`}))
+  .then(new Wait(5))
+  .then(BurglarSpeech.say({text: `The guards are busy protecting his majesty so hand you bag now!`}))
+  .then(new Wait(4))
+  .then(BurglarSpeech.say({text: `Look behind, you're surrendered`}))
+  .then(new Wait(6))
+  .then(new DisplaySentence(ThePlayer, `{"text": "That's enough, I won't give you anything!"}`))
+  .then(new Wait(4))
+  .then(BurglarSpeech.say({text: `Kill him guys!`}))
+  .then(new Wait(3))
+  .then(`
+    execute as @e[tag=w.burglar] run data modify entity @s NoAI set value false
+    effect give @e[tag=w.burglar] glowing infinite 1 true
+    kill @e[tag=${BurglarSpeech.TransformGroup.groupTag}]
+  `)
+  .then(new UnfreezePlayer())
 
-  
 
 await scene.compile();
