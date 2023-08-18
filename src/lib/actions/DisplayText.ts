@@ -15,7 +15,7 @@ export default class DisplayText implements Action {
 
   public async compile(config: ActionConfig): CompileResult {
 
-    const text = this.source.getJson(this.message);
+    const text = this.source.getJson(this.message).replace(/'/g, "\\'");
 
     const tags: string[] = this.transformGroup ? [
       this.transformGroup.groupTag,

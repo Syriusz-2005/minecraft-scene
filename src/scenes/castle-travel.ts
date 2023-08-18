@@ -68,9 +68,16 @@ scene.actionTree
   .then(new Wait(4))
   .then(new DisplaySentence(ThePlayer, `{"text": "Thank you. I hope we'll see again."}`))
   //Burglars init
-  .then('kill @e[tag=w.burglar]')
-  .then('summon zombie -248.2 71 -23.2 {Invulnerable:true,NoAI:true,Rotation:[-132f, 0f],Tags:["w.burglar","w.burglar-1", "w.no-fire"],Silent:true,HasVisualFire:false,PersistenceRequired:true}')
-  .then('team join oponents @e[tag=w.burglar]')
+  .then(`
+    kill @e[tag=w.burglar]
+    summon zombie -248.2 71 -23.2 {Invulnerable:true,NoAI:true,Rotation:[-132f, 0f],Tags:["w.burglar","w.burglar-1", "w.no-fire"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
+
+    summon zombie -242.96 70.00 -38.69 {Invulnerable:true,NoAI:true,Rotation:[-34.10f, 6.41f],Tags:["w.burglar", "w.no-fire", "w.burglar-2"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
+
+    summon zombie -250.95 70.00 -39.43 {Invulnerable:true,NoAI:true,Rotation:[300.02f, 0.61f],Tags:["w.burglar", "w.no-fire", "w.burglar-3"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
+
+    team join oponents @e[tag=w.burglar]
+  `)
   //end of burglars init
   .then(new UnfreezePlayer())
   .concurrently({
@@ -95,9 +102,14 @@ scene.actionTree
   .then(new Wait(5))
   .then(BurglarSpeech.say({text: `They won't help you. The Emperor doesn't care about us as long as we don't rob him.`}))
   .then(new Wait(5))
-  .then(BurglarSpeech.say({text: `The guards are busy protecting his majesty so hand you bag now!`}))
+  .then(BurglarSpeech.say({text: `And so do the guards. They are busy protecting his majesty, so hand you bag now!`}))
   .then(new Wait(4))
-  .then(BurglarSpeech.say({text: `Look behind, you're surrendered`}))
+  .then(BurglarSpeech.say({text: `Look behind, you're surrounded.`}))
+  .then(`
+    summon zombie -233.67 71.00 -36.01 {Invulnerable:true,NoAI:true,Rotation:[415.68f, 8.34f],Tags:["w.burglar", "w.no-fire", "w.burglar-4"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
+
+    team join oponents @e[tag=w.burglar]
+  `)
   .then(new Wait(6))
   .then(new DisplaySentence(ThePlayer, `{"text": "That's enough, I won't give you anything!"}`))
   .then(new Wait(4))
@@ -107,6 +119,10 @@ scene.actionTree
     execute as @e[tag=w.burglar] run data modify entity @s NoAI set value false
     effect give @e[tag=w.burglar] glowing infinite 1 true
     kill @e[tag=${BurglarSpeech.TransformGroup.groupTag}]
+
+    worldborder center -245.87 -27.45
+    worldborder set 42
+    worldborder damage amount 0
   `)
   .then(new UnfreezePlayer())
 
