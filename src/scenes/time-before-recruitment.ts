@@ -55,14 +55,15 @@ TimeBeforeRecruitmentScene.actionTree
   .then(new Wait(5))
   .then(new DisplaySentence(ThePlayer, `{"text": "He taught me to fight before he died."}`))
   .then(new Wait(3))
-  .then(recruiterSpeech.say({text: `You know, I was the guy that recruited him a year ago. He told me about you and said that you were a great student.`}))
+  .then(recruiterSpeech.say({text: `You know, I was the guy that recruited him the second time. It was a year ago. He told me about you and said that you were a great student.`}))
   .then(new Wait(6))
   .then(recruiterSpeech.say({text: `Normally I don't do that, but because your dad was my friend, I'm gonna do something special for you. I'll sign you as a recruit for 'The Hawks'...`}))
   .then(new Wait(6))
   .then(new DisplaySentence(ThePlayer, `{"text": "How's that possi..."}`))
   .then(new Wait(2))
   .then(recruiterSpeech.say({text: `...Do not interrupt! You'll still be a recruit so don't expect glory and fame initially. But this is a chance for you! The Hawks are a total elite! Make the most of that unique occasion as I won't give you another one.`}))
-  .then(new Wait(10))
+  .then(new ContinueWhen('execute positioned -196.35 88.94 36.52 unless entity @a[tag=w.player,distance=..8]'))
+  .then(new Wait(5))
   .then(`
     kill @e[tag=${recruiterSpeech.TransformGroup.groupTag}]
   `)

@@ -6,7 +6,7 @@ import { Vector } from "../lib/utils/Vector.js";
 
 export const Burglar = new Speaker('Burglar', 'red');
 
-const pos: Vector = [-245.1, 72.00, -21.99];
+const pos: Vector = [-245.1, 72.00, -23];
 
 const BurglarSentence = new TransformGroup('burglar');
 
