@@ -2,7 +2,7 @@ import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
 import Scene from "../lib/Scene.js";
 import Restart from "../lib/actions/Restart.js";
 import Pathfinder from "../lib/utils/Pathfinder.js";
-import { Vector } from "../lib/utils/Vector.js";
+import { VMath, Vector } from "../lib/utils/Vector.js";
 
 const pathfinder = new Pathfinder({
   id: 'test-pathfinder',
@@ -33,11 +33,15 @@ scene.actionTree
   .then(pathfinder.summon(startPos))
   .then(`
     #say created pathfinder
+    summon villager ${VMath.toString(startPos)} {Tags: ["w.test.villager"]}
   `)
   .then(pathfinder.setPosition(startPos))
+  .then(pathfinder.connect('@e[tag=w.test.villager,limit=1]'))
   .then(pathfinder.moveTo([-237, 79.00, 22.62]))
+  .then(pathfinder.disconnect('@e[tag=w.test.villager,limit=1]'))
   .then(pathfinder.dispatch())
   .then(`
+    kill @e[tag=w.test.villager]
     #say the path is complete
   `)
   .then(new Restart())
