@@ -2,6 +2,8 @@ import { Action } from "../ActionTree.js";
 import MovePathfinderTo from "../actions/MovePathfinderTo.js";
 import RunCommand from "../actions/RunCommand.js";
 import { VMath, Vec2, Vector } from "./Vector.js";
+import * as fs from 'fs/promises';
+import { Env } from "../Env";
 
 export type PathOptions = {
   /**
@@ -17,7 +19,7 @@ export type PathOptions = {
 export type PathfinderConfig = {
   id: string;
   options: PathOptions;
-}
+} & Env;
 
 export type Behavior = {
   type: 'definite' | 'wander';
@@ -63,6 +65,17 @@ export default class Pathfinder {
     `)
   }
 
+  public connect(entitySelector: string) {
+    return new RunCommand(`
+      tag ${entitySelector} add w.${this.Tag}.pathClient
+    `);
+  }
+
+  public disconnect(entitySelector: string) {
+    return new RunCommand(`
+      tag ${entitySelector} remove w.${this.Tag}.pathClient
+    `);
+  }
 
   /**
    * 
@@ -72,5 +85,17 @@ export default class Pathfinder {
     const options = {...this.config.options, ...optionsOverride}
 
     return new MovePathfinderTo(this.Tag, pos, options);
+  }
+
+  private getPath(file: string) {
+    return `${this.config.PATH}/${file}`;
+  }
+
+  public async appendToFile(fileName: string, content: string) {
+    await fs.appendFile(this.getPath(fileName), content.replace(/\n */g, '\n'));
+  }
+
+  public async init() {
+
   }
 }

@@ -55,15 +55,6 @@ export default class Scene {
     await fs.rm(this.getPath(), {recursive: true}).catch(err => {});
     await this.mkdir();
 
-    await this.mkFile('../tick.mcfunction', `
-      execute as @a[tag=w.freeze] at @s at @e[tag=w.freezer,sort=nearest,limit=1] run tp @s ~ ~ ~
-      execute as @a[tag=w.freeze] run effect give @s jump_boost 1 128 true 
-
-      #declare score_holder #timer.60t
-      scoreboard players add #timer.60t w.internal 1
-      execute if score #timer.60t w.internal matches 60.. run scoreboard players reset #timer.60t w.internal
-    `);
-
     await this.mkFile('load.mcfunction', `
       #declare score_holder #SCENE_${this.config.sceneName}
       scoreboard players set #SCENE_${this.config.sceneName} w.scenes ${this.config.sceneIndex}

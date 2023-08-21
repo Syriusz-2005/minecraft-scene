@@ -1,6 +1,6 @@
 import Scene from "./lib/Scene.js"
 import UseCamera from "./lib/actions/UseCamera.js";
-import { NAMESPACED_PATH, PATH } from "./PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "./PATH.js";
 
 export {}
 
@@ -15,6 +15,7 @@ const startCamera = new Scene({
   PATH,
   sceneIndex: -600,
   sceneName: 'start-camera',
+  project,
 });
 
 startCamera.actionTree

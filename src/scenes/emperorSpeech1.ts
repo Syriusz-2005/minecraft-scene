@@ -1,4 +1,4 @@
-import { NAMESPACED_PATH, PATH } from "../PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
 import ActionTree from "../lib/ActionTree.js";
 import Scene from "../lib/Scene.js";
 import FreezePlayer from "../lib/actions/FreezePlayer.js";
@@ -16,6 +16,7 @@ const scene = new Scene({
   PATH,
   sceneIndex: 1000,
   sceneName: 'emperor-speech-1',
+  project,
 });
 
 //TODO: scene initialization

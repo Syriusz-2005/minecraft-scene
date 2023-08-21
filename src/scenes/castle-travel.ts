@@ -1,4 +1,4 @@
-import { NAMESPACED_PATH, PATH } from "../PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
 import ActionTree from "../lib/ActionTree.js";
 import Scene from "../lib/Scene.js";
 import ContinueWhen from "../lib/actions/ContinueWhen.js";
@@ -17,6 +17,7 @@ const scene = new Scene({
   PATH,
   sceneIndex: 1300,
   sceneName: 'castle-travel',
+  project,
 });
 
 

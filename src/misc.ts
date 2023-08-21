@@ -1,6 +1,6 @@
 import Scene from "./lib/Scene.js";
 import ContinueWhen from "./lib/actions/ContinueWhen.js";
-import { NAMESPACED_PATH, PATH } from "./PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "./PATH.js";
 import Speaker from "./lib/utils/Speaker.js";
 import DisplaySentence from "./lib/actions/DisplaySentence.js";
 import TransformGroup from "./lib/utils/TransformGroup.js";
@@ -25,6 +25,7 @@ const pathScene = new Scene({
   PATH,
   sceneIndex: 78,
   sceneName: 'path-test',
+  project,
 });
 
 pathScene.actionTree
@@ -46,6 +47,7 @@ const beggarState = new StateMachine({
   NAMESPACED_PATH,
   name: 'beggar-state',
   default: 0,
+  project,
 });
 
 await beggarState.init();
@@ -56,6 +58,7 @@ const beggarScene = new Scene({
   sceneIndex: -10000,
   sceneName: 'beggar-begging',
   autoStart: true,
+  project,
 });
 
 const beggarSentence = new TransformGroup('beggar');
@@ -134,6 +137,7 @@ const bardState = new StateMachine({
   NAMESPACED_PATH,
   name: 'bard-state',
   default: 0,
+  project,
 });
 
 await bardState.init();
@@ -144,6 +148,7 @@ const bardScene = new Scene({
   sceneIndex: 2137,
   sceneName: 'kaktis-first-scene',
   autoStart: true,
+  project,
 });
 
 const commandPart = 'execute as @a at @s run playsound minecraft:block.note_block.banjo master @s ~ ~ ~'
@@ -246,6 +251,7 @@ const transition = new Scene({
   PATH,
   sceneIndex: -145,
   sceneName: 'transition',
+  project,
 });
 
 transition.actionTree

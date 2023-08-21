@@ -22,7 +22,7 @@ export default class MovePathfinderTo implements Action {
       #MovePathfinderTo action start
 
       execute as @e[tag=${pathfinderTag}] run data merge entity @s {WanderTarget: {X:${pos[0]},Y:${pos[1]},Z:${pos[2]}}}
-      execute as @e[tag=${pathfinderTag}] run attribute @s minecraft:generic.movement_speed base set ${options.speed}
+      execute as @e[tag=${pathfinderTag}] run attribute @s minecraft:generic.movement_speed base set ${options.speed ?? .7}
     
       function ${reference}
     `);
@@ -32,7 +32,7 @@ export default class MovePathfinderTo implements Action {
     const successHolder = `#pathfinder.${config.branchIndex ?? 0}-${config.functionIndex}.${config.sceneIndex} w.internal`;
 
     await scene.mkFile(name, `
-      execute store success score ${successHolder} run execute positioned ${VMath.toString(pos)} if entity @e[tag=${pathfinderTag},distance=..${options.successRadius}]
+      execute store success score ${successHolder} run execute positioned ${VMath.toString(pos)} if entity @e[tag=${pathfinderTag},distance=..${options.successRadius ?? 2}]
 
       execute if score ${successHolder} matches 1 run function ${endFunctionReference}
       execute if score ${successHolder} matches 1 run return 1

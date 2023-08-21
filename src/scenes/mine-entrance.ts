@@ -1,4 +1,4 @@
-import { NAMESPACED_PATH, PATH } from "../PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
 import ActionTree from "../lib/ActionTree.js";
 import Scene from "../lib/Scene.js";
 import ContinueWhen from "../lib/actions/ContinueWhen.js";
@@ -31,6 +31,7 @@ const scene = new Scene({
   sceneIndex: 1350,
   sceneName: 'mine-entrance',
   autoStart: true,
+  project,
 });
 
 
