@@ -44,6 +44,6 @@ scene.actionTree
     kill @e[tag=w.test.villager]
     #say the path is complete
   `)
-  .then(new Restart())
+  // .then(new Restart())
 
 await scene.compile();
