@@ -25,6 +25,8 @@ export default class Project {
       #declare score_holder #timer.60t
       scoreboard players add #timer.60t w.internal 1
       execute if score #timer.60t w.internal matches 60.. run scoreboard players reset #timer.60t w.internal
+
+      execute as @e[tag=w.wandering-trader.pathfinder] run data merge entity @s {HandItems: []}
     `);
 
     return this;

@@ -32,13 +32,13 @@ const scene = new Scene({
 scene.actionTree
   .then(pathfinder.summon(startPos))
   .then(`
-    say created pathfinder
+    #say created pathfinder
   `)
   .then(pathfinder.setPosition(startPos))
   .then(pathfinder.moveTo([-237, 79.00, 22.62]))
   .then(pathfinder.dispatch())
   .then(`
-    say the path is complete
+    #say the path is complete
   `)
   .then(new Restart())
 
