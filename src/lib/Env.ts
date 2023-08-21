@@ -1,4 +1,4 @@
-import Project from "./globalTick.js";
+import Project from "./Project.js";
 
 
 

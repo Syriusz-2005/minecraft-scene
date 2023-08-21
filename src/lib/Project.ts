@@ -1,4 +1,5 @@
 import * as fs from 'fs/promises';
+import Pathfinder from './utils/Pathfinder.js';
 
 
 export default class Project {
@@ -24,6 +25,14 @@ export default class Project {
       #declare score_holder #timer.60t
       scoreboard players add #timer.60t w.internal 1
       execute if score #timer.60t w.internal matches 60.. run scoreboard players reset #timer.60t w.internal
+    `);
+
+    return this;
+  }
+
+  public async registerPathfinder(pathfinder: Pathfinder) {
+    await this.appendToFile('tick.mcfunction', `
+      execute as @e[tag=${pathfinder.Tag},limit=1] at @s run tp @e[tag=${pathfinder.Tag}.pathClient] @s
     `);
   }
 }

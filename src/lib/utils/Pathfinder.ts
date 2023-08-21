@@ -4,6 +4,7 @@ import RunCommand from "../actions/RunCommand.js";
 import { VMath, Vec2, Vector } from "./Vector.js";
 import * as fs from 'fs/promises';
 import { Env } from "../Env";
+import Project from "../Project.js";
 
 export type PathOptions = {
   /**
@@ -32,7 +33,7 @@ export default class Pathfinder {
   ) {}
 
   public get Tag() {
-    return `pathfinder.${this.config.id}`;
+    return `w.pathfinder.${this.config.id}`;
   }
 
   private get Selector() {
@@ -67,13 +68,13 @@ export default class Pathfinder {
 
   public connect(entitySelector: string) {
     return new RunCommand(`
-      tag ${entitySelector} add w.${this.Tag}.pathClient
+      tag ${entitySelector} add ${this.Tag}.pathClient
     `);
   }
 
   public disconnect(entitySelector: string) {
     return new RunCommand(`
-      tag ${entitySelector} remove w.${this.Tag}.pathClient
+      tag ${entitySelector} remove ${this.Tag}.pathClient
     `);
   }
 
@@ -95,7 +96,7 @@ export default class Pathfinder {
     await fs.appendFile(this.getPath(fileName), content.replace(/\n */g, '\n'));
   }
 
-  public async init() {
-
+  public async init(project: Project) {
+    await project.registerPathfinder(this);
   }
 }

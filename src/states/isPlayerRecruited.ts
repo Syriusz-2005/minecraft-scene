@@ -1,4 +1,4 @@
-import { NAMESPACED_PATH, PATH } from "../PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
 import StateMachine from "../lib/utils/StateMachine.js";
 
 
@@ -7,4 +7,5 @@ export const isPlayerRecruited = await new StateMachine({
   name: 'is-player-recruited',
   NAMESPACED_PATH,
   PATH,
+  project,
 }).init();
