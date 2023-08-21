@@ -1,3 +1,5 @@
+import { Action } from "../ActionTree.js";
+import MovePathfinderTo from "../actions/MovePathfinderTo.js";
 import RunCommand from "../actions/RunCommand.js";
 import { VMath, Vec2, Vector } from "./Vector.js";
 
@@ -46,9 +48,9 @@ export default class Pathfinder {
   /**
    * @subtick
    */
-  public resetPath() {
+  public terminatePathAndStartWandering() {
     return new RunCommand(`
-      data merge entity ${this.Selector} {WanderTarget: {}}
+      data remove entity ${this.Selector} WanderTarget
     `)
   }
 
@@ -61,23 +63,14 @@ export default class Pathfinder {
     `)
   }
 
-  /**
-   * @subtick
-   */
-  public terminateAndStartWandering() {
-    return new RunCommand(`
-      data remove entity ${this.Selector} WanderTarget
-    `);
-  }
-
 
   /**
    * 
    * @blocking
    */
-  public moveTo(pos: Vector, optionsOverride?: PathOptions) {
+  public moveTo(pos: Vector, optionsOverride?: PathOptions): Action {
     const options = {...this.config.options, ...optionsOverride}
 
-
+    return new MovePathfinderTo(this.Tag, pos, options);
   }
 }
