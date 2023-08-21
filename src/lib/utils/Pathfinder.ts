@@ -41,6 +41,24 @@ export default class Pathfinder {
   }
 
   /**
+   * @subtick
+   */
+  public summon(pos: Vector) {
+    return new RunCommand(`
+      summon wandering_trader ${VMath.toString(pos)} {Tags: ["${this.Tag}"]} 
+    `);
+  }
+
+  /**
+   * @subtick
+   */
+  public dispatch() {
+    return new RunCommand(`
+      kill @e[tag=${this.Tag}]
+    `)
+  }
+
+  /**
    * 
    * @subtick
    */
@@ -96,7 +114,7 @@ export default class Pathfinder {
     await fs.appendFile(this.getPath(fileName), content.replace(/\n */g, '\n'));
   }
 
-  public async init(project: Project) {
-    await project.registerPathfinder(this);
+  public async init() {
+    await this.config.project.registerPathfinder(this);
   }
 }
