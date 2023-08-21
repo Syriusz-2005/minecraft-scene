@@ -15,16 +15,16 @@ export type PathOptions = {
    * @default {0.7}
    */
   speed?: number;
+  timeoutBehavior?: {
+    maxTimeSeconds: number;
+    behavior: 'skip' | 'teleport';
+  }
 }
 
 export type PathfinderConfig = {
   id: string;
   options: PathOptions;
 } & Env;
-
-export type Behavior = {
-  type: 'definite' | 'wander';
-}
 
 export default class Pathfinder {
 
