@@ -4,12 +4,14 @@ import Scene from "../lib/Scene.js";
 import ContinueWhen from "../lib/actions/ContinueWhen.js";
 import DisplaySentence from "../lib/actions/DisplaySentence.js";
 import FreezePlayer from "../lib/actions/FreezePlayer.js";
+import RunScene from "../lib/actions/RunScene.js";
 import UnfreezePlayer from "../lib/actions/UnfreezePlayer.js";
 import UsePath from "../lib/actions/UsePath.js";
 import Wait from "../lib/actions/Wait.js";
 import { BurglarSpeech } from "../speakers/Burglar.js";
 import { fishSellerSpeech } from "../speakers/FishSeller.js";
 import { ThePlayer } from "../speakers/ThePlayer.js";
+import { TimeBeforeRecruitmentScene } from "./time-before-recruitment.js";
 
 
 const scene = new Scene({
@@ -130,6 +132,13 @@ scene.actionTree
   .then(`
     worldborder set 999999
   `)
+  .then(new UsePath({
+    pos: [-212, 89, 33],
+    radius: 2,
+  }))
+  .then(new DisplaySentence(ThePlayer, `{"text": "The square is empty! I indeed went way to early so I still have plenty of time..."}`))
+  .then(``)
+  .then(new RunScene(TimeBeforeRecruitmentScene))
 
 
 await scene.compile();

@@ -10,7 +10,7 @@ const pathfinder = new Pathfinder({
   PATH,
   project,
   options: {
-    speed: 1.2,
+    speed: .6,
     successRadius: 2,
   }
 });
