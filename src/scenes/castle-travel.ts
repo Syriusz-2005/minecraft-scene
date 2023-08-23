@@ -32,6 +32,9 @@ scene.actionTree
   .then('loot replace block -190 68 -89 container.0 loot w:notebook')
   .then('fill -188 71 -94 -189 72 -94 minecraft:barrier')
   .then('execute positioned -189.55 71.87 -89.00 run data modify entity @e[type=item_frame,sort=nearest,limit=1,distance=..2] Item set from block -190 68 -89 Items[{Slot:0b}]')
+  .then(`
+    effect give @a[tag=w.player] regeneration 5 10 true
+  `)
   .then(new Wait(3))
   .then(new DisplaySentence(ThePlayer, '{"text": "The last day in my precious home..."}'))
   .then(new Wait(3))
@@ -73,11 +76,11 @@ scene.actionTree
   //Burglars init
   .then(`
     kill @e[tag=w.burglar]
-    summon zombie -248.2 71 -23.2 {Invulnerable:true,NoAI:true,Rotation:[-132f, 0f],Tags:["w.burglar","w.burglar-1", "w.no-fire"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
+    summon zombie -248.2 71 -23.2 {Invulnerable:true,NoAI:true,Rotation:[-132f, 0f],Tags:["w.burglar","w.burglar-1", "w.no-fire", "mob-abilities.dasher"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
 
-    summon zombie -242.96 70.00 -38.69 {Invulnerable:true,NoAI:true,Rotation:[-34.10f, 6.41f],Tags:["w.burglar", "w.no-fire", "w.burglar-2"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
+    summon zombie -242.96 70.00 -38.69 {Invulnerable:true,NoAI:true,Rotation:[-34.10f, 6.41f],Tags:["w.burglar", "w.no-fire", "w.burglar-2", "mob-abilities.dasher"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
 
-    summon zombie -250.95 70.00 -39.43 {Invulnerable:true,NoAI:true,Rotation:[300.02f, 0.61f],Tags:["w.burglar", "w.no-fire", "w.burglar-3"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
+    summon zombie -250.95 70.00 -39.43 {Invulnerable:true,NoAI:true,Rotation:[300.02f, 0.61f],Tags:["w.burglar", "w.no-fire", "w.burglar-3", "mob-abilities.dasher"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
 
     team join oponents @e[tag=w.burglar]
   `)
@@ -96,9 +99,9 @@ scene.actionTree
   }))
   .then(new FreezePlayer([-243.4, 71, -29.4]))
   .then('data merge entity @e[tag=w.burglar-1,limit=1] {HandItems: [{id: "minecraft:iron_axe",Count: 1}]}')
-  .then(new Wait(3))
+  .then(new Wait(1))
   .then(new DisplaySentence(ThePlayer, `{"text": "What do you want?!"}`))
-  .then(new Wait(4))
+  .then(new Wait(3))
   .then(BurglarSpeech.say({text: `Hey you little, We don't need any trouble, just hand us your bag and you'll never see us again!`}))
   .then(new Wait(5))
   .then(new DisplaySentence(ThePlayer, `{"text": "Guards? Where are the guards?"}`))
@@ -109,7 +112,7 @@ scene.actionTree
   .then(new Wait(4))
   .then(BurglarSpeech.say({text: `Look behind, you're surrounded.`}))
   .then(`
-    summon zombie -233.67 71.00 -36.01 {Invulnerable:true,NoAI:true,Rotation:[415.68f, 8.34f],Tags:["w.burglar", "w.no-fire", "w.burglar-4"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
+    summon zombie -233.67 71.00 -36.01 {Invulnerable:true,NoAI:true,Rotation:[415.68f, 8.34f],Tags:["w.burglar", "w.no-fire", "w.burglar-4", "mob-abilities.dasher"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
 
     team join oponents @e[tag=w.burglar]
   `)
@@ -119,6 +122,7 @@ scene.actionTree
   .then(BurglarSpeech.say({text: `Kill him guys!`}))
   .then(new Wait(3))
   .then(`
+    execute as @e[tag=w.burglar] run data modify entity @s Invulnerable set value false
     execute as @e[tag=w.burglar] run data modify entity @s NoAI set value false
     effect give @e[tag=w.burglar] glowing infinite 1 true
     kill @e[tag=${BurglarSpeech.TransformGroup.groupTag}]
