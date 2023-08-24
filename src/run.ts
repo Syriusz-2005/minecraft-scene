@@ -10,7 +10,9 @@ import './scenes/castle-travel.js'
 import './scenes/emperorSpeech1.js'
 import './scenes/mine-entrance.js';
 import './scenes/test-pathfinding.js';
-import './scenes/time-before-recruitment.js'
+import './scenes/time-before-recruitment.js';
+import './scenes/city-camp-fast-travel.js';
+import './scenes/camp-city-fast-travel.js';
 
 const startCamera = new Scene({
   NAMESPACED_PATH,
