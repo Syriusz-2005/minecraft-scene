@@ -63,6 +63,8 @@ TimeBeforeRecruitmentScene.actionTree
   .then(new DisplaySentence(ThePlayer, `{"text": "How's that possi..."}`))
   .then(new Wait(2))
   .then(recruiterSpeech.say({text: `...Do not interrupt! You'll still be a recruit so don't expect glory and fame initially. But this is a chance for you! The Hawks are a total elite! Make the most of that unique occasion as I won't give you another one.`}))
+  .then(new Wait(5))
+  .then(recruiterSpeech.say({text: `The training camp of the Hawks formation can be found after turning right in the interesection closest to the citie's main gate. Find It and talk to the captain.`}))
   .then(isPlayerRecruited.Update(1))
   .then(new ContinueWhen('execute positioned -196.35 88.94 36.52 unless entity @a[tag=w.player,distance=..8]'))
   .then(new Wait(5))

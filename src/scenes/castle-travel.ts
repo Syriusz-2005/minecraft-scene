@@ -98,7 +98,7 @@ scene.actionTree
     radius: 2,
   }))
   .then(new FreezePlayer([-243.4, 71, -29.4]))
-  .then('data merge entity @e[tag=w.burglar-1,limit=1] {HandItems: [{id: "minecraft:iron_axe",Count: 1}]}')
+  .then('data merge entity @e[tag=w.burglar-1,limit=1] {HandItems: [{id: "minecraft:stone_sword",Count: 1}]}')
   .then(new Wait(1))
   .then(new DisplaySentence(ThePlayer, `{"text": "What do you want?!"}`))
   .then(new Wait(3))
