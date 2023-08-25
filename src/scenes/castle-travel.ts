@@ -125,7 +125,6 @@ scene.actionTree
   .then(new Fight({
     prepareEffect: new ActionTree(scene)
       .then(`
-        say running prepare effect
         kill @e[tag=w.burglar]
         summon zombie -248.2 71 -23.2 {Invulnerable:true,NoAI:true,Rotation:[-132f, 0f],Tags:["w.burglar","w.burglar-1", "w.no-fire", "mob-abilities.dasher"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
     
@@ -139,8 +138,6 @@ scene.actionTree
       `),
     skipFirstTimePreparation: true,
     startEffect: `
-      say running start effect
-
       execute as @e[tag=w.burglar] run data modify entity @s Invulnerable set value false
       execute as @e[tag=w.burglar] run data modify entity @s NoAI set value false
       effect give @e[tag=w.burglar] glowing infinite 1 true
