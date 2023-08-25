@@ -41,7 +41,7 @@ export default class UsePath implements Action {
     `);
 
     await scene.mkFile(positionedFunctionName, `
-      particle minecraft:glow_squid_ink ~ ~ ~ .1 20 .1 0 13 force
+      particle minecraft:glow_squid_ink ~ ~25 ~ .1 20 .1 0 13 force
       particle minecraft:happy_villager ~ ~ ~ ${pathConfig.radius / 2} 0 ${pathConfig.radius / 2} 0 1 normal
 
       ${pathConfig.tickSideEffect ?? ''}

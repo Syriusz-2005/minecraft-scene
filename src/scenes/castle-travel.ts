@@ -126,6 +126,7 @@ scene.actionTree
     execute as @e[tag=w.burglar] run data modify entity @s NoAI set value false
     effect give @e[tag=w.burglar] glowing infinite 1 true
     kill @e[tag=${BurglarSpeech.TransformGroup.groupTag}]
+    tag @a[tag=w.player] add w.no-healing
 
     worldborder center -245.87 -27.45
     worldborder set 42
@@ -134,6 +135,7 @@ scene.actionTree
   .then(new UnfreezePlayer())
   .then(new ContinueWhen('execute unless entity @e[tag=w.burglar]'))
   .then(`
+    tag @a[tag=w.player] remove w.no-healing
     worldborder set 999999
   `)
   .then(new UsePath({
