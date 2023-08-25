@@ -4,6 +4,7 @@ import ContinueWhen from "../lib/actions/ContinueWhen.js";
 import DisplaySentence from "../lib/actions/DisplaySentence.js";
 import UsePath from "../lib/actions/UsePath.js";
 import Wait from "../lib/actions/Wait.js";
+import RestorePoint from "../lib/utils/RestorePoint.js";
 import { recruiterSpeech } from "../speakers/Recruiter.js";
 import { ThePlayer } from "../speakers/ThePlayer.js";
 import { isPlayerRecruited } from "../states/isPlayerRecruited.js";
@@ -16,6 +17,8 @@ export const TimeBeforeRecruitmentScene = new Scene({
   sceneIndex: 9012,
   sceneName: 'time-before-recruitment',
 });
+
+
 
 TimeBeforeRecruitmentScene.actionTree
   .concurrently({

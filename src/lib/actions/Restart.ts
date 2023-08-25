@@ -1,12 +1,16 @@
 import ActionTree, { Action, ActionConfig, CompileResult } from "../ActionTree.js";
 
-
+/**
+ * Restarts the whole scene or just the current branch
+ */
 export default class Restart implements Action {
-  constructor() {}
+  constructor(private branchOnly = false) {}
 
   public async compile(config: ActionConfig): CompileResult {
     
-    const ref = config.scene.getFunctionReference(0, 0);
+    const branch = this.branchOnly ? config.branchIndex : 0; 
+
+    const ref = config.scene.getFunctionReference(branch, 0);
 
     await ActionTree.appendAction(config, `
       function ${ref} 
