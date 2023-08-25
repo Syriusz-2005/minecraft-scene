@@ -8,6 +8,7 @@
     "skipLibCheck": true,
     "moduleResolution": "Node",
     "resolveJsonModule": true,
+    "incremental": true,
 
     "isolatedModules": true,
     "strict": true,
