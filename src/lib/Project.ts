@@ -30,7 +30,8 @@ export default class Project {
       execute if score #timer.60t w.internal matches 60.. run scoreboard players reset #timer.60t w.internal
 
       execute as @e[tag=w.wandering-trader.pathfinder] run data merge entity @s {HandItems: []}
-
+      
+      execute as @a[scores={w.death=1..,w.death-ticks=1}] run title @s times 1t 30t 1t
       execute as @a[scores={w.death=1..,w.death-ticks=1}] run title @s title {"text": "You died!", "color": "red"}
       execute as @a[scores={w.death=1..,w.death-ticks=1}] run effect give @s blindness 3 1 true
       execute as @a[scores={w.death=1..,w.death-ticks=1}] run effect give @s night_vision 3 1 true
