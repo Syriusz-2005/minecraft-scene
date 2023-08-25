@@ -3,6 +3,7 @@ import ActionTree from "../lib/ActionTree.js";
 import Scene from "../lib/Scene.js";
 import ContinueWhen from "../lib/actions/ContinueWhen.js";
 import DisplaySentence from "../lib/actions/DisplaySentence.js";
+import Fight from "../lib/actions/Fight.js";
 import FreezePlayer from "../lib/actions/FreezePlayer.js";
 import Restart from "../lib/actions/Restart.js";
 import RunScene from "../lib/actions/RunScene.js";
@@ -23,8 +24,6 @@ const scene = new Scene({
   sceneName: 'castle-travel',
   project,
 });
-
-const fightRestorePoint = new RestorePoint();
 
 
 scene.actionTree
@@ -77,17 +76,54 @@ scene.actionTree
   .then(fishSellerSpeech.say({text: `Long live the Emperor. Long live you!`}))
   .then(new Wait(4))
   .then(new DisplaySentence(ThePlayer, `{"text": "Thank you. I hope we'll see again."}`))
-  .then(fightRestorePoint.setSnapshot())
-  .concurrently({awaitingMethod: 'any-finished'}, [
+  .then(`
+    kill @e[tag=w.burglar]
+    summon zombie -248.2 71 -23.2 {Invulnerable:true,NoAI:true,Rotation:[-132f, 0f],Tags:["w.burglar","w.burglar-1", "w.no-fire", "mob-abilities.dasher"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
+
+    summon zombie -242.96 70.00 -38.69 {Invulnerable:true,NoAI:true,Rotation:[-34.10f, 6.41f],Tags:["w.burglar", "w.no-fire", "w.burglar-2", "mob-abilities.dasher"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
+
+    summon zombie -250.95 70.00 -39.43 {Invulnerable:true,NoAI:true,Rotation:[300.02f, 0.61f],Tags:["w.burglar", "w.no-fire", "w.burglar-3", "mob-abilities.dasher"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
+
+    team join oponents @e[tag=w.burglar]
+  `)
+  //end of burglars init
+  .then(new UnfreezePlayer())
+  .concurrently({
+    awaitingMethod: 'instant-skip',
+  }, [
     new ActionTree(scene)
-      .then(new ContinueWhen(`execute if entity @a[tag=w.player,scores={w.death=1..}]`))
-      .then(`
-        scoreboard players reset @a[tag=w.player] w.death
-        tag @a[tag=w.player] add w.dead
-      `)
-      .then(fightRestorePoint.restore())
-    ,
-    new ActionTree(scene)
+      .then(new Wait(5))
+      .then(`kill @e[tag=${fishSellerSpeech.TransformGroup.groupTag}]`)
+  ])
+  .then(new UsePath({
+    pos: [-243.69, 71.00, -29.04],
+    radius: 2,
+  }))
+  .then(new FreezePlayer([-243.4, 71, -29.4]))
+  .then('data merge entity @e[tag=w.burglar-1,limit=1] {HandItems: [{id: "minecraft:stone_sword",Count: 1}]}')
+  .then(new Wait(1))
+  .then(new DisplaySentence(ThePlayer, `{"text": "What do you want?!"}`))
+  .then(new Wait(3))
+  .then(BurglarSpeech.say({text: `Hey you little, We don't need any trouble, just hand us your bag and you'll never see us again!`}))
+  .then(new Wait(5))
+  .then(new DisplaySentence(ThePlayer, `{"text": "Guards? Where are the guards?"}`))
+  .then(new Wait(5))
+  .then(BurglarSpeech.say({text: `They won't help you. The Emperor doesn't care about us as long as we don't rob him.`}))
+  .then(new Wait(5))
+  .then(BurglarSpeech.say({text: `And so do the guards. They are busy protecting his majesty, so hand you bag now!`}))
+  .then(new Wait(4))
+  .then(BurglarSpeech.say({text: `Look behind, you're surrounded.`}))
+  .then(`
+    summon zombie -233.67 71.00 -36.01 {Invulnerable:true,NoAI:true,Rotation:[415.68f, 8.34f],Tags:["w.burglar", "w.no-fire", "w.burglar-4", "mob-abilities.dasher"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
+
+    team join oponents @e[tag=w.burglar]
+  `)
+  .then(new Wait(6))
+  .then(new DisplaySentence(ThePlayer, `{"text": "That's enough, I won't give you anything!"}`))
+  .then(new Wait(4))
+  .then(BurglarSpeech.say({text: `Kill him guys!`}))
+  .then(new Fight({
+    prepareEffect: new ActionTree(scene)
       .then(`
         kill @e[tag=w.burglar]
         summon zombie -248.2 71 -23.2 {Invulnerable:true,NoAI:true,Rotation:[-132f, 0f],Tags:["w.burglar","w.burglar-1", "w.no-fire", "mob-abilities.dasher"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
@@ -95,61 +131,27 @@ scene.actionTree
         summon zombie -242.96 70.00 -38.69 {Invulnerable:true,NoAI:true,Rotation:[-34.10f, 6.41f],Tags:["w.burglar", "w.no-fire", "w.burglar-2", "mob-abilities.dasher"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
     
         summon zombie -250.95 70.00 -39.43 {Invulnerable:true,NoAI:true,Rotation:[300.02f, 0.61f],Tags:["w.burglar", "w.no-fire", "w.burglar-3", "mob-abilities.dasher"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
-    
-        team join oponents @e[tag=w.burglar]
-        tag @a[tag=w.player] remove w.dead
-      `)
-      //end of burglars init
-      .then(new UnfreezePlayer())
-      .concurrently({
-        awaitingMethod: 'instant-skip',
-      }, [
-        new ActionTree(scene)
-          .then(new Wait(5))
-          .then(`kill @e[tag=${fishSellerSpeech.TransformGroup.groupTag}]`)
-      ])
-      .then(new UsePath({
-        pos: [-243.69, 71.00, -29.04],
-        radius: 2,
-      }))
-      .then(new FreezePlayer([-243.4, 71, -29.4]))
-      .then('data merge entity @e[tag=w.burglar-1,limit=1] {HandItems: [{id: "minecraft:stone_sword",Count: 1}]}')
-      .then(new Wait(1))
-      .then(new DisplaySentence(ThePlayer, `{"text": "What do you want?!"}`))
-      .then(new Wait(3))
-      .then(BurglarSpeech.say({text: `Hey you little, We don't need any trouble, just hand us your bag and you'll never see us again!`}))
-      .then(new Wait(5))
-      .then(new DisplaySentence(ThePlayer, `{"text": "Guards? Where are the guards?"}`))
-      .then(new Wait(5))
-      .then(BurglarSpeech.say({text: `They won't help you. The Emperor doesn't care about us as long as we don't rob him.`}))
-      .then(new Wait(5))
-      .then(BurglarSpeech.say({text: `And so do the guards. They are busy protecting his majesty, so hand you bag now!`}))
-      .then(new Wait(4))
-      .then(BurglarSpeech.say({text: `Look behind, you're surrounded.`}))
-      .then(`
+
         summon zombie -233.67 71.00 -36.01 {Invulnerable:true,NoAI:true,Rotation:[415.68f, 8.34f],Tags:["w.burglar", "w.no-fire", "w.burglar-4", "mob-abilities.dasher"],Silent:true,HasVisualFire:false,PersistenceRequired:true}
     
         team join oponents @e[tag=w.burglar]
-      `)
-      .then(new Wait(6))
-      .then(new DisplaySentence(ThePlayer, `{"text": "That's enough, I won't give you anything!"}`))
-      .then(new Wait(4))
-      .then(BurglarSpeech.say({text: `Kill him guys!`}))
-      .then(new Wait(3))
-      .then(`
-        execute as @e[tag=w.burglar] run data modify entity @s Invulnerable set value false
-        execute as @e[tag=w.burglar] run data modify entity @s NoAI set value false
-        effect give @e[tag=w.burglar] glowing infinite 1 true
-        kill @e[tag=${BurglarSpeech.TransformGroup.groupTag}]
-        tag @a[tag=w.player] add w.no-healing
-    
-        worldborder center -245.87 -27.45
-        worldborder set 38
-        worldborder damage amount 0
-      `)
-      .then(new UnfreezePlayer())
-      .then(new ContinueWhen('execute unless entity @e[tag=w.burglar] unless entity @a[tag=w.player,tag=w.dead]'))
-  ])
+      `),
+    skipFirstTimePreparation: true,
+    startEffect: `
+      execute as @e[tag=w.burglar] run data modify entity @s Invulnerable set value false
+      execute as @e[tag=w.burglar] run data modify entity @s NoAI set value false
+      effect give @e[tag=w.burglar] glowing infinite 1 true
+      kill @e[tag=${BurglarSpeech.TransformGroup.groupTag}]
+      tag @a[tag=w.player] add w.no-healing
+      tag @a[tag=w.player] remove w.freeze
+
+      worldborder center -245.87 -27.45
+      worldborder set 38
+      worldborder damage amount 0
+    `,
+    endWhenSuccess: `execute unless entity @e[tag=w.burglar]`
+  }))
+  .then(new Wait(3))
   .then(`
     tag @a[tag=w.player] remove w.no-healing
     worldborder set 999999

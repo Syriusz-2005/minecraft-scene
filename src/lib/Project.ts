@@ -3,7 +3,10 @@ import Pathfinder from './utils/Pathfinder.js';
 
 
 export default class Project {
-  constructor(private readonly PATH: string) {}
+  constructor(
+    private readonly PATH: string, 
+    private readonly NAMESPACED_PATH: string
+  ) {}
 
   private getPath(file: string) {
     return `${this.PATH}/${file}`;
@@ -27,8 +30,19 @@ export default class Project {
       execute if score #timer.60t w.internal matches 60.. run scoreboard players reset #timer.60t w.internal
 
       execute as @e[tag=w.wandering-trader.pathfinder] run data merge entity @s {HandItems: []}
-    `);
 
+      execute as @a[tag=w.death] run scoreboard players add @s w.death-ticks 1
+      execute as @a[tag=w.death] run tag @s add w.freeze
+      execute as @a[tag=w.death] run effect give @s blindness 1 1 true
+      execute as @a[tag=w.death] run effect give @s night_vision 1 1 true
+
+      execute as @a[tag=w.death,scores={w.death-ticks=59..}] run function ${this.NAMESPACED_PATH}/end-death
+    `);
+    await this.mkFile('end-death.mcfunction', `
+      tag @s remove w.death
+      scoreboard players reset @s w.death-ticks
+      tag @s remove w.freeze
+    `)
     return this;
   }
 
