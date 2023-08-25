@@ -31,16 +31,17 @@ export default class Project {
 
       execute as @e[tag=w.wandering-trader.pathfinder] run data merge entity @s {HandItems: []}
 
-      execute as @a[tag=w.death] run scoreboard players add @s w.death-ticks 1
-      execute as @a[tag=w.death] run tag @s add w.freeze
-      execute as @a[tag=w.death] run effect give @s blindness 1 1 true
-      execute as @a[tag=w.death] run effect give @s night_vision 1 1 true
+      execute as @a[scores={w.death=1..,w.death-ticks=1}] run effect give @s blindness 3 1 true
+      execute as @a[scores={w.death=1..,w.death-ticks=1}] run effect give @s night_vision 3 1 true
+      execute as @a[scores={w.death=1..}] run scoreboard players add @s w.death-ticks 1
+      execute as @a[scores={w.death=1..}] run tag @s add w.freeze
 
-      execute as @a[tag=w.death,scores={w.death-ticks=59..}] run function ${this.NAMESPACED_PATH}/end-death
+      execute as @a[scores={w.death-ticks=59..}] run function ${this.NAMESPACED_PATH}/end-death
     `);
     await this.mkFile('end-death.mcfunction', `
       tag @s remove w.death
       scoreboard players reset @s w.death-ticks
+      scoreboard players reset @s w.death
       tag @s remove w.freeze
     `)
     return this;

@@ -46,7 +46,7 @@ export default class Fight implements Action {
         branchIndex: (config.branchIndex ?? 0) + 1,
         functionIndex: 0,
       });
-      await scene.appendToFile(`${(config.branchIndex ?? 0) + 1}-${endFunctionIndex}`, `
+      await scene.appendToFile(`${(config.branchIndex ?? 0) + 1}-${endFunctionIndex}.mcfunction`, `
         #injected by Fight action  
         execute unless score ${delayedFightStartScore} matches 1.. run function ${startFightRef}
       `);
