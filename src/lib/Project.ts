@@ -12,6 +12,10 @@ export default class Project {
     return `${this.PATH}/${file}`;
   }
 
+  public get Path() {
+    return `${this.PATH}`;
+  }
+
   private async mkFile(fileName: string, content: string) {
     await fs.writeFile(this.getPath(fileName), content.replace(/\n */g, '\n'));
   }
