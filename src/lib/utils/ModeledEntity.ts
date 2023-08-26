@@ -47,7 +47,7 @@ export default class ModeledEntity {
       scoreboard players operation #temp.modelId w.internal = @s w.modelId
 
       tag @s add w.entity.current
-      execute as @e[tag=${modelTag}] if score @s w.modelId = #temp.modelId w.internal run tp @s @e[tag=w.entity.current,sort=nearest,limit=1]
+      execute as @e[tag=${modelTag}] if score @s w.modelId = #temp.modelId w.internal at @e[tag=w.entity.current,sort=nearest,limit=1] run tp @s ~ ~ ~ ~ 0
       tag @s remove w.entity.current
     `);
 
@@ -56,6 +56,23 @@ export default class ModeledEntity {
       scoreboard players set #temp.modelCount w.internal 0
 
       execute as @e[tag=${skeletonEntityTag}] if score @s w.modelId = #temp.modelId w.internal run scoreboard players add #temp.modelCount w.internal 1
+
+      execute store result score @s w.cx run data get entity @s Pos[0] 1000
+      execute store result score @s w.cy run data get entity @s Pos[1] 1000
+      execute store result score @s w.cz run data get entity @s Pos[2] 1000
+
+      scoreboard players set #temp.isWalking w.internal 0
+
+      execute unless score @s w.cx = @s w.x run scoreboard players set #temp.isWalking w.internal 1
+      execute unless score @s w.cx = @s w.x run scoreboard players set #temp.isWalking w.internal 1
+      execute unless score @s w.cx = @s w.x run scoreboard players set #temp.isWalking w.internal 1
+
+      execute if score #temp.isWalking w.internal matches 1 run function animated_java:lava_spider/animations/${walkAnimation}/resume
+      execute if score #temp.isWalking w.internal matches 0 run function animated_java:lava_spider/animations/${walkAnimation}/stop
+
+      execute store result score @s w.x run data get entity @s Pos[0] 1000
+      execute store result score @s w.y run data get entity @s Pos[1] 1000
+      execute store result score @s w.z run data get entity @s Pos[2] 1000
 
       execute if score #temp.modelCount w.internal matches 0 run function animated_java:${modelName}/remove/this
       execute if score #temp.modelCount w.internal matches 0 run return 1
