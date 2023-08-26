@@ -20,6 +20,10 @@ export default class Project {
     await fs.appendFile(this.getPath(fileName), content.replace(/\n */g, '\n'));
   }
 
+  public async addFile(file: string, content: string) {
+    return this.mkFile(file, content);
+  }
+
   public async init() {
     await this.mkFile('tick.mcfunction', `
       execute as @a[tag=w.freeze] at @s at @e[tag=w.freezer,sort=nearest,limit=1] run tp @s ~ ~ ~
@@ -53,5 +57,9 @@ export default class Project {
     await this.appendToFile('tick.mcfunction', `
       execute as @e[tag=${pathfinder.Tag},limit=1] at @s run tp @e[tag=${pathfinder.Tag}.pathClient] @s
     `);
+  }
+
+  public async appendtoTick(commands: string) {
+    await this.appendToFile('tick.mcfunction', commands);
   }
 }
