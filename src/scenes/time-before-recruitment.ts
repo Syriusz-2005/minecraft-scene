@@ -74,5 +74,12 @@ TimeBeforeRecruitmentScene.actionTree
   .then(`
     kill @e[tag=${recruiterSpeech.TransformGroup.groupTag}]
   `)
+  .then(new UsePath({
+    pos: [-306, 80, -343],
+    radius: 3,
+  }))
+  .then(`
+    say the player enters the Hawk's training camp
+  `)
 
 await TimeBeforeRecruitmentScene.compile();
