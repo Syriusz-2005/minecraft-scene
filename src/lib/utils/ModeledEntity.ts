@@ -33,6 +33,7 @@ export default class ModeledEntity {
       scoreboard players add %lastModelId w.internal 1
       effect give @s invisibility infinite 1 true
       scoreboard players operation @s w.modelId = %lastModelId w.internal
+      data merge entity @s {Silent:true,PersistenceRequired:true}
 
       function animated_java:${modelName}/summon
       execute as @e[tag=${modelTag},tag=!w.after-summoning] run scoreboard players operation @s w.modelId = %lastModelId w.internal
@@ -47,7 +48,7 @@ export default class ModeledEntity {
       scoreboard players operation #temp.modelId w.internal = @s w.modelId
 
       tag @s add w.entity.current
-      execute as @e[tag=${modelTag}] if score @s w.modelId = #temp.modelId w.internal at @e[tag=w.entity.current,sort=nearest,limit=1] run tp @s ~ ~ ~ ~ 0
+      execute as @e[tag=${modelTag}] if score @s w.modelId = #temp.modelId w.internal at @e[tag=w.entity.current,sort=nearest,limit=1] facing entity @p eyes run tp @s ~ ~ ~ ~ 0
       tag @s remove w.entity.current
     `);
 
