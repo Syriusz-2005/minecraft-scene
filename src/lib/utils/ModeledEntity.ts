@@ -11,6 +11,10 @@ export type ModeledEntityConfig = {
    * @default "damage"
    */
   damageVariant?: string;
+    /**
+   * @default "main"
+   */
+  mainVariant?: string;
   skeletonEntityTag: string;
 }
 
@@ -22,7 +26,7 @@ export default class ModeledEntity {
 
   public async init() {
     const {project, config} = this;
-    const {walkAnimation = 'walk', modelName, damageVariant = 'damage', skeletonEntityTag} = config;
+    const {walkAnimation = 'walk', modelName, damageVariant = 'damage', mainVariant = 'main', skeletonEntityTag} = config;
 
     await fs.mkdir(project.Path + '/entity').catch(() => {});
     await fs.mkdir(project.Path + `/entity/${modelName}`).catch(() => {});
@@ -43,13 +47,31 @@ export default class ModeledEntity {
       #execute as @e[tag=${modelTag}] run function animated_java:lava_spider/remove/this
     `);
 
+    await project.addFile(`/entity/${modelName}/apply-damage-variant.mcfunction`, `
+      function animated_java:${modelName}/apply_variant/${damageVariant}
+      tag @e[tag=w.entity.current,limit=1] add w.damage-applied
+    `);
+
+    await project.addFile(`/entity/${modelName}/apply-main-variant.mcfunction`, `
+      execute as @e[tag=${modelTag}] if score @s w.modelId = #temp.modelId w.internal run function animated_java:${modelName}/apply_variant/${mainVariant}
+      tag @s remove w.damage-applied
+    `);
+
     await project.addFile(`/entity/${modelName}/tick-as-entity.mcfunction`, `
       execute unless score @s w.modelId matches -2143124312..2132323132 run function w:generated/entity/${modelName}/assign-model
       scoreboard players operation #temp.modelId w.internal = @s w.modelId
+      execute store result score #temp.currentHealth w.internal run data get entity @s Health
+      execute store result score #temp.hitTime w.internal run data get entity @s HurtTime
 
       tag @s add w.entity.current
       execute as @e[tag=${modelTag}] if score @s w.modelId = #temp.modelId w.internal at @e[tag=w.entity.current,sort=nearest,limit=1] facing entity @p eyes run tp @s ~ ~ ~ ~ 0
+      
+      execute unless score #temp.hitTime w.internal matches 0 as @e[tag=${modelTag}] if score @s w.modelId = #temp.modelId w.internal run function w:generated/entity/${modelName}/apply-damage-variant
+      execute if entity @s[tag=w.damage-applied] if score #temp.hitTime w.internal matches 0 run function w:generated/entity/${modelName}/apply-main-variant
+
       tag @s remove w.entity.current
+
+      execute store result score @s w.modelSkeleton.lastHp run data get entity @s Health
     `);
 
     await project.addFile(`/entity/${modelName}/tick-as-model.mcfunction`, `
