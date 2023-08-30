@@ -5,6 +5,8 @@ import DisplaySentence from "../lib/actions/DisplaySentence.js";
 import UsePath from "../lib/actions/UsePath.js";
 import Wait from "../lib/actions/Wait.js";
 import RestorePoint from "../lib/utils/RestorePoint.js";
+import { captainSpeech } from "../speakers/Captain.js";
+import { minerSpeech } from "../speakers/Miners.js";
 import { recruiterSpeech } from "../speakers/Recruiter.js";
 import { ThePlayer } from "../speakers/ThePlayer.js";
 import { isPlayerRecruited } from "../states/isPlayerRecruited.js";
@@ -67,7 +69,7 @@ TimeBeforeRecruitmentScene.actionTree
   .then(new Wait(2))
   .then(recruiterSpeech.say({text: `...Do not interrupt! You'll still be a recruit so don't expect glory and fame initially. But this is a chance for you! The Hawks are a total elite! Make the most of that unique occasion as I won't give you another one.`}))
   .then(new Wait(5))
-  .then(recruiterSpeech.say({text: `The training camp of the Hawks formation can be found after turning right in the interesection closest to the citie's main gate. Find It and talk to the captain.`}))
+  .then(recruiterSpeech.say({text: `The training camp of the Hawks formation can be found after turning right in the interesection closest to the city's main gate but the Captain currently inspects the sulfur Mine. You can go directly to him to introduce yourself.`}))
   .then(isPlayerRecruited.Update(1))
   .then(new ContinueWhen('execute positioned -196.35 88.94 36.52 unless entity @a[tag=w.player,distance=..8]'))
   .then(new Wait(5))
@@ -75,11 +77,31 @@ TimeBeforeRecruitmentScene.actionTree
     kill @e[tag=${recruiterSpeech.TransformGroup.groupTag}]
   `)
   .then(new UsePath({
-    pos: [-306, 80, -343],
+    pos: [-319, 64, -87],
     radius: 3,
   }))
+  .then(new ContinueWhen(`execute positioned -299 11.5 -103.5 if entity @a[tag=w.player,distance=..6]`))
+  .then(captainSpeech.say({text: 'Who are you?'}))
+  .then(new Wait(2))
+  .then(captainSpeech.sayAs({text: `I'm a new recruit to the Hawks formation sir.`}, ThePlayer))
+  .then(new Wait(3))
+  .then(captainSpeech.say({text: `Great! You must go to the camp then...`}))
+  .then(new Wait(1))
+  .then(minerSpeech.say({text: 'Sir, sir! We could here the hiss once again! There must be something!'}))
+  .then(new Wait(3))
+  .then(captainSpeech.say({text: `I told you, there's nothing there, you can blow up this wall right away.`}))
+  .then(new Wait(3))
+  .then(captainSpeech.say({text: `Listen, you: I gotta go, stay with the miners as they won't make any progress without the emotional support.`}))
+  .then(new Wait(5))
+  .then(captainSpeech.say({text: `Show them that there's nothing behind that wall.`}))
+  .then(new Wait(3))
+  .then(captainSpeech.sayAs({text: `Yes sir!`}, ThePlayer))
+  .then(new Wait(2))
+  .then(`say The captain goes away...`)
+  .then(new ContinueWhen(`execute positioned -299 11.5 -103.5 unless entity @a[tag=w.player,distance=..6]`))
   .then(`
-    say the player enters the Hawk's training camp
+    kill @e[tag=${captainSpeech.TransformGroup.groupTag}]
+    kill @e[tag=${minerSpeech.TransformGroup.groupTag}]
   `)
 
 await TimeBeforeRecruitmentScene.compile();

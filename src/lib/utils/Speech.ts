@@ -19,6 +19,10 @@ export default class Speech {
     return new DisplayText(this.pos, this.speaker, JSON.stringify(text instanceof Array ? text : [text]), this.transformGroup, this.rotation)
   }
 
+  public sayAs(text: TextComponent | TextComponent[], speaker: Speaker) {
+    return new DisplayText(this.pos, speaker, JSON.stringify(text instanceof Array ? text : [text]), this.transformGroup, this.rotation);
+  }
+
   public get TransformGroup() {
     return this.transformGroup;
   }
