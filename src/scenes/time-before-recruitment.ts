@@ -98,6 +98,7 @@ TimeBeforeRecruitmentScene.actionTree
   .then(CaptainPathfinder.setPause(true))
   .then(`
     summon villager -298.41 11.00 -106.38 {NoAI:true,Tags:["w.entity.captain", "${CaptainPathfinder.Tag}.pathClient"]}
+    clone -286 21 -94 -281 25 -101 -286 7 -101
   `)
   .then(new ContinueWhen(`execute positioned -299 11.5 -103.5 if entity @a[tag=w.player,distance=..6]`))
   .then(captainSpeech.say({text: 'Who are you?'}))
