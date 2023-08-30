@@ -35,6 +35,7 @@ export default class Fight implements Action {
     if (typeof fightConfig.prepareEffect === 'string') {
       await scene.mkFile(prepareFightName, `
         ${fightConfig.prepareEffect}
+        scoreboard players set ${triesScoreholder} 1
         execute unless score ${delayedFightStartScore} matches 1.. run function ${startFightRef}
       `);
     } else {
@@ -58,7 +59,8 @@ export default class Fight implements Action {
       
       scoreboard players set ${delayedFightStartScore} 0
       ${fightConfig.skipFirstTimePreparation ? `
-        execute unless score ${triesScoreholder} matches 1.. run function ${prepareFightRef}
+        execute if score ${triesScoreholder} matches 1.. run function ${prepareFightRef}
+        execute unless score ${triesScoreholder} matches 1.. run function ${startFightRef}
       ` : `
         function ${prepareFightRef}
       `}
@@ -98,6 +100,8 @@ export default class Fight implements Action {
     `);
 
     await scene.mkFile(endFunctionName, `
+      scoreboard players set ${triesScoreholder} 0
+
       #Run after Fight action
     `);
 
