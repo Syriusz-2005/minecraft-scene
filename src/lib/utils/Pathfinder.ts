@@ -71,7 +71,7 @@ export default class Pathfinder {
    */
   public terminatePathAndStartWandering() {
     return new RunCommand(`
-      data remove entity ${this.Selector} WanderTarget
+    execute as ${this.Selector} run data remove entity @s WanderTarget
     `)
   }
 
@@ -80,7 +80,7 @@ export default class Pathfinder {
    */
   public setPause(isPaused: boolean) {
     return new RunCommand(`
-      data merge entity ${this.Selector} {NoAI: ${isPaused}}
+      execute as ${this.Selector} run data merge entity @s {NoAI: ${isPaused}}
     `)
   }
 

@@ -1,9 +1,11 @@
 import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
+import ActionTree from "../lib/ActionTree.js";
 import Scene from "../lib/Scene.js";
 import ContinueWhen from "../lib/actions/ContinueWhen.js";
 import DisplaySentence from "../lib/actions/DisplaySentence.js";
 import UsePath from "../lib/actions/UsePath.js";
 import Wait from "../lib/actions/Wait.js";
+import Pathfinder from "../lib/utils/Pathfinder.js";
 import RestorePoint from "../lib/utils/RestorePoint.js";
 import { captainSpeech } from "../speakers/Captain.js";
 import { minerSpeech } from "../speakers/Miners.js";
@@ -20,7 +22,18 @@ export const TimeBeforeRecruitmentScene = new Scene({
   sceneName: 'time-before-recruitment',
 });
 
+const CaptainPathfinder = new Pathfinder({
+  id: 'captain-in-the-mine',
+  NAMESPACED_PATH,
+  PATH,
+  project,
+  options: {
+    successRadius: 2,
+    speed: 0.6,
+  }
+});
 
+await CaptainPathfinder.init();
 
 TimeBeforeRecruitmentScene.actionTree
   .concurrently({
@@ -80,6 +93,12 @@ TimeBeforeRecruitmentScene.actionTree
     pos: [-319, 64, -87],
     radius: 3,
   }))
+  .then(CaptainPathfinder.summon([-298.41, 11.00, -106.38]))
+  .then(CaptainPathfinder.setPosition([-298.41, 11.00, -106.38], [415.99, -4.17]))
+  .then(CaptainPathfinder.setPause(true))
+  .then(`
+    summon villager -298.41 11.00 -106.38 {NoAI:true,Tags:["w.entity.captain", "${CaptainPathfinder.Tag}.pathClient"]}
+  `)
   .then(new ContinueWhen(`execute positioned -299 11.5 -103.5 if entity @a[tag=w.player,distance=..6]`))
   .then(captainSpeech.say({text: 'Who are you?'}))
   .then(new Wait(2))
@@ -97,7 +116,12 @@ TimeBeforeRecruitmentScene.actionTree
   .then(new Wait(3))
   .then(captainSpeech.sayAs({text: `Yes sir!`}, ThePlayer))
   .then(new Wait(2))
-  .then(`say The captain goes away...`)
+  .then(CaptainPathfinder.setPause(false))
+  .concurrently({awaitingMethod: 'instant-skip'}, [
+    new ActionTree(TimeBeforeRecruitmentScene)
+      .then(CaptainPathfinder.moveTo([-322.7, 10, -104.5]))
+      .then(CaptainPathfinder.dispatch())
+  ])
   .then(new ContinueWhen(`execute positioned -299 11.5 -103.5 unless entity @a[tag=w.player,distance=..6]`))
   .then(`
     kill @e[tag=${captainSpeech.TransformGroup.groupTag}]
