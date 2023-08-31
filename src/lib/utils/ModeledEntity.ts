@@ -43,8 +43,6 @@ export default class ModeledEntity {
       execute as @e[tag=${modelTag},tag=!w.after-summoning] run scoreboard players operation @s w.modelId = %lastModelId w.internal
       
       execute as @e[tag=${modelTag},distance=..10] if score @s w.modelId = %lastModelId w.internal run tag @s add w.after-summoning
-
-      #execute as @e[tag=${modelTag}] run function animated_java:lava_spider/remove/this
     `);
 
     await project.addFile(`/entity/${modelName}/apply-damage-variant.mcfunction`, `
@@ -90,8 +88,8 @@ export default class ModeledEntity {
       execute unless score @s w.cx = @s w.x run scoreboard players set #temp.isWalking w.internal 1
       execute unless score @s w.cx = @s w.x run scoreboard players set #temp.isWalking w.internal 1
 
-      execute if score #temp.isWalking w.internal matches 1 run function animated_java:lava_spider/animations/${walkAnimation}/resume
-      execute if score #temp.isWalking w.internal matches 0 run function animated_java:lava_spider/animations/${walkAnimation}/stop
+      execute if score #temp.isWalking w.internal matches 1 run function animated_java:${modelName}/animations/${walkAnimation}/resume
+      execute if score #temp.isWalking w.internal matches 0 run function animated_java:${modelName}/animations/${walkAnimation}/stop
 
       execute store result score @s w.x run data get entity @s Pos[0] 1000
       execute store result score @s w.y run data get entity @s Pos[1] 1000

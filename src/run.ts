@@ -17,6 +17,7 @@ import './models/lavaSpider.js';
 import './scenes/the-mine.js';
 import './scenes/crossroads-city-fast-travel.js';
 import './scenes/city-crossroads-fast-travel.js';
+import './models/forestGurdian.js';
 
 
 const startCamera = new Scene({
