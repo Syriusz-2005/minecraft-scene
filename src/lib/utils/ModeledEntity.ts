@@ -69,7 +69,9 @@ export default class ModeledEntity {
 
     await project.addFile(`/entity/${modelName}/on-default-attack.mcfunction`, `
       advancement revoke @s only w:generated/${modelName}_attacked
-      say attacked the player
+      #applying the attack animation
+
+      execute as @e[tag=${modelTag}] if score @s w.modelId = #temp.modelId w.internal run function animated_java:${modelName}/animations/${attackAnimation}/play
     `);
 
     await project.addFile(`/entity/${modelName}/assign-model.mcfunction`, `
