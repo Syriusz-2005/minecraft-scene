@@ -1,10 +1,12 @@
 import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
+import ActionTree from "../lib/ActionTree.js";
 import Scene from "../lib/Scene.js";
 import ContinueWhen from "../lib/actions/ContinueWhen.js";
 import Fight from "../lib/actions/Fight.js";
 import FreezePlayer from "../lib/actions/FreezePlayer.js";
 import UnfreezePlayer from "../lib/actions/UnfreezePlayer.js";
 import UseCamera from "../lib/actions/UseCamera.js";
+import UsePath from "../lib/actions/UsePath.js";
 import Wait from "../lib/actions/Wait.js";
 import { Miner2, minerSpeech } from "../speakers/MinerSpeech.js";
 import { ThePlayer } from "../speakers/ThePlayer.js";
@@ -154,6 +156,22 @@ scene.actionTree
     say Isn't it risky? It's close to the nest!
     say We will mine carefully. Let's go to the camp! And one more think: Keep everything what you've seen here for yourself.
   `)
-  // .then(new UnfreezePlayer())
+  .then(new UsePath({
+    pos: [-279, 80, -327],
+    radius: 3,
+  }))
+  .concurrently({awaitingMethod: 'all-finished'}, [
+    new ActionTree(scene)
+      .then(new UsePath({
+        pos: [-373, 88, -330],
+        radius: 2,
+      }))
+    ,
+    new ActionTree(scene)
+      .then(new UsePath({
+        pos: [-373, 88, -347],
+        radius: 2,
+      }))
+  ])
  
   await scene.compile();

@@ -26,7 +26,7 @@ const scene = new Scene({
   project,
   sceneIndex: -5603,
   sceneName: 'test-pathfinding',
-  autoStart: true,
+  autoStart: false,
 });
 
 scene.actionTree

@@ -140,9 +140,9 @@ export default class ModeledEntity {
       execute if score #temp.modelCount w.internal matches 0 run return 1
     `);
 
-    await project.appendtoTick(`
-      execute as @e[tag=${skeletonEntityTag}] at @s run function w:generated/entity/${modelName}/tick-as-entity
-      execute as @e[tag=${modelTag}] at @s run function w:generated/entity/${modelName}/tick-as-model
+    await project.appendToAllEntities(`
+      execute if entity @s[tag=${skeletonEntityTag}] run function w:generated/entity/${modelName}/tick-as-entity
+      execute if entity @s[tag=${modelTag}] run function w:generated/entity/${modelName}/tick-as-model
     `);
   }
 }

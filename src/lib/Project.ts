@@ -36,8 +36,6 @@ export default class Project {
       #declare score_holder #timer.60t
       scoreboard players add #timer.60t w.internal 1
       execute if score #timer.60t w.internal matches 60.. run scoreboard players reset #timer.60t w.internal
-
-      execute as @e[tag=w.wandering-trader.pathfinder] run data merge entity @s {HandItems: []}
       
       execute as @a[scores={w.death=1..,w.death-ticks=1}] run title @s times 1t 30t 1t
       execute as @a[scores={w.death=1..,w.death-ticks=1}] run title @s title {"text": "You died!", "color": "red"}
@@ -48,6 +46,11 @@ export default class Project {
       execute as @a[scores={w.death=1..}] run scoreboard players add @s w.death-ticks 1
 
       execute as @a[scores={w.death-ticks=59..}] run function ${this.NAMESPACED_PATH}/end-death
+
+      execute as @e at @s run function ${this.NAMESPACED_PATH}/tick_as_all
+    `);
+    await this.mkFile('tick_as_all.mcfunction', `
+      execute if entity @s[tag=w.wandering-trader.pathfinder] run data merge entity @s {HandItems: []}
     `);
     await this.mkFile('end-death.mcfunction', `
       tag @s remove w.death
@@ -66,5 +69,9 @@ export default class Project {
 
   public async appendtoTick(commands: string) {
     await this.appendToFile('tick.mcfunction', commands);
+  }
+
+  public async appendToAllEntities(commands: string) {
+    await this.appendToFile('tick_as_all.mcfunction', commands);
   }
 }
