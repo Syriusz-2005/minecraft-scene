@@ -2,6 +2,9 @@ import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
 import Scene from "../lib/Scene.js";
 import ContinueWhen from "../lib/actions/ContinueWhen.js";
 import Fight from "../lib/actions/Fight.js";
+import FreezePlayer from "../lib/actions/FreezePlayer.js";
+import UnfreezePlayer from "../lib/actions/UnfreezePlayer.js";
+import UseCamera from "../lib/actions/UseCamera.js";
 import Wait from "../lib/actions/Wait.js";
 import { Miner2, minerSpeech } from "../speakers/MinerSpeech.js";
 import { ThePlayer } from "../speakers/ThePlayer.js";
@@ -121,7 +124,36 @@ scene.actionTree
   .then(`
     worldborder set 99999
   `)
-
-
-
+  .then(new ContinueWhen(`execute positioned -222.38 -15.00 -66.19 if entity @a[distance=..4.3]`))
+  .then(`
+    spawnpoint @s
+  `)
+  .then(new UseCamera({
+    anchorPoints: [
+      {
+        position: [-222.05, -13.04, -83.45],
+        rotation: [-205.58, 17.99],
+        durationTo: 1,
+      },
+      {
+        position: [-220.3, -13, -69.5],
+        rotation: [166, 10],
+        durationTo: 4,
+      }
+    ]
+  }))
+  // .then(new FreezePlayer())
+  .then(`
+    execute in minecraft:overworld run tp @a[tag=w.player] -220.42 -14.00 -68.28 -306.38 13.24
+    gamemode adventure @a[tag=w.player]
+    say We've found it!
+    say What?
+    say We've found the magnetite!
+    say There's also a giant spider nest over there, It might be dangerous!
+    say Yes, better not interrupt the Mother, She usually lays somewhere near. Let's go back then. I will tell the miners that they can come and work once again as we have a precious mineral to extract...
+    say Isn't it risky? It's close to the nest!
+    say We will mine carefully. Let's go to the camp! And one more think: Keep everything what you've seen here for yourself.
+  `)
+  // .then(new UnfreezePlayer())
+ 
   await scene.compile();
