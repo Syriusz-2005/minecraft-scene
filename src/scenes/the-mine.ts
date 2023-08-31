@@ -26,6 +26,16 @@ const summonSpiders2 = `
   execute positioned -230 1 -111 run summon minecraft:skeleton ~ ~ ~ {Tags:["w.lavaSpider.skeleton", "mob-abilities.cobweb-thrower","w.lavaSpider.second"],HandItems:[{},{}],DeathLootTable:"health:burglar",Attributes:[{Name:"minecraft:generic.follow_range",Base: 40}], NoAI:true}
 `;
 
+const summonSpiders3 = `
+  kill @e[tag=w.lavaSpider.third]
+
+
+  summon minecraft:skeleton -250 -12 -120 {Tags:["w.lavaSpider.skeleton", "mob-abilities.cobweb-thrower","w.lavaSpider.third"],HandItems:[{},{}],DeathLootTable:"health:burglar",Attributes:[{Name:"minecraft:generic.follow_range",Base: 40}], NoAI:true}
+  summon minecraft:skeleton -241 -12 -119 {Tags:["w.lavaSpider.skeleton", "mob-abilities.cobweb-thrower","w.lavaSpider.third"],HandItems:[{},{}],DeathLootTable:"health:burglar",Attributes:[{Name:"minecraft:generic.follow_range",Base: 40}], NoAI:true}
+  summon minecraft:skeleton -241 -11 -126 {Tags:["w.lavaSpider.skeleton", "mob-abilities.cobweb-thrower","w.lavaSpider.third"],HandItems:[{},{}],DeathLootTable:"health:burglar",Attributes:[{Name:"minecraft:generic.follow_range",Base: 40}], NoAI:true}
+
+`;
+
 const scene = new Scene({
   NAMESPACED_PATH,
   PATH,
@@ -41,6 +51,7 @@ scene.actionTree
     clone -286 21 -94 -281 25 -101 -286 7 -101
     ${summonSpiders}
     ${summonSpiders2}
+    ${summonSpiders3}
   `)
   .then(minerSpeech.sayAs({text: `I'm here to guard you, guys. You can safely destroy the wall.`}, ThePlayer))
   .then(new Wait(3))
@@ -92,9 +103,25 @@ scene.actionTree
     `
   }))
   .then(`
-    say nice!
     worldborder set 99999
   `)
+  .then(new ContinueWhen(`execute if entity @a[x=-235,y=-7,z=-131,dz=8,dy=10]`))
+  .then(new Fight({
+    endWhenSuccess: `execute unless entity @e[tag=w.lavaSpider.third]`,
+    skipFirstTimePreparation: true,
+    prepareEffect: `
+      ${summonSpiders3}
+    `,
+    startEffect: `
+      execute as @e[tag=w.lavaSpider.third] run data merge entity @s {NoAI:false}
+      worldborder center -244 -120
+      worldborder set 25
+    `
+  }))
+  .then(`
+    worldborder set 99999
+  `)
+
 
 
   await scene.compile();
