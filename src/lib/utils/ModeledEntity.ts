@@ -3,6 +3,7 @@ import * as fs from 'fs/promises';
 
 export type ModeledEntityConfig = {
   modelName: string;
+  skeletonEntityTag: string;
   /**
    * @default "walk"
    */
@@ -15,7 +16,10 @@ export type ModeledEntityConfig = {
    * @default "main"
    */
   mainVariant?: string;
-  skeletonEntityTag: string;
+  /**
+   * @default "attack"
+   */
+  attackAnimation?: string;
 }
 
 export default class ModeledEntity {
@@ -26,12 +30,47 @@ export default class ModeledEntity {
 
   public async init() {
     const {project, config} = this;
-    const {walkAnimation = 'walk', modelName, damageVariant = 'damage', mainVariant = 'main', skeletonEntityTag} = config;
+    const {
+      modelName, 
+      skeletonEntityTag,
+      walkAnimation = 'walk', 
+      mainVariant = 'main', 
+      damageVariant = 'damage', 
+      attackAnimation = 'attack',
+    } = config;
 
     await fs.mkdir(project.Path + '/entity').catch(() => {});
     await fs.mkdir(project.Path + `/entity/${modelName}`).catch(() => {});
+    await fs.mkdir(project.Path + `../../../advancements`).catch(() => {});
+    await fs.mkdir(project.Path + `../../../advancements/generated`).catch(() => {});
 
     const modelTag = `aj.${modelName}.root`;
+
+    await project.addFile(`../../advancements/generated/${modelName}_attacked.json`, JSON.stringify({
+      "criteria": {
+        "hit_player": {
+          "trigger": "entity_hurt_player",
+          "conditions": {
+            "damage": {
+              "source_entity": {
+                "nbt": `{Tags:[\"${skeletonEntityTag}\"]}`,
+              }
+            }
+          }
+        }
+      },
+      "requirements": [
+        ["hit_player"]
+      ],
+      "rewards": {
+        "function": `w:generated/entity/${modelName}/on-default-attack`
+      },
+    }));
+
+    await project.addFile(`/entity/${modelName}/on-default-attack.mcfunction`, `
+      advancement revoke @s only w:generated/${modelName}_attacked
+      say attacked the player
+    `);
 
     await project.addFile(`/entity/${modelName}/assign-model.mcfunction`, `
       scoreboard players add %lastModelId w.internal 1
