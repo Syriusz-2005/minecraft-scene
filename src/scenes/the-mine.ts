@@ -41,6 +41,24 @@ const summonSpiders3 = `
 
 `;
 
+const commonTags = 'Silent:true,HasVisualFire:false,PersistenceRequired:true,DeathLootTable:"health:burglar",NoAI:true,Invulnerable:true'
+const summonArenaFight = `
+  kill @e[tag=w.enemy.fight]
+  summon zombie -391.7 88 -341.1 {Rotation:[32f, 7f],Tags:["w.burglar", "w.no-fire", "mob-abilities.dasher", "w.enemy.fight"],${commonTags}}
+
+  summon zombie -396 88 -327.6 {Rotation:[-173.10f, 6.41f],Tags:["w.burglar", "w.no-fire", "mob-abilities.dasher", "w.enemy.fight"],${commonTags}}
+
+  summon zombie -403.5 88 -333.5 {Rotation:[-91f, 5f],Tags:["w.burglar", "w.no-fire", "mob-abilities.dasher", "w.enemy.fight"],${commonTags}}
+`;
+
+const summonArena2Fight = `
+  kill @e[tag=w.enemy.fight]
+  ${summonArenaFight}
+
+  summon minecraft:skeleton -400 88 -340.5 {Tags:["w.lavaSpider.skeleton", "mob-abilities.cobweb-thrower","w.enemy.fight"],HandItems:[{},{}],DeathLootTable:"health:burglar", NoAI:true,Attributes:[{Name:"minecraft:generic.follow_range",Base: 40}],ArmorItems: [{}, {}, {}, {id: "minecraft:leather_helmet",Count:1}]}
+  summon minecraft:skeleton -404 88 -329 {Tags:["w.lavaSpider.skeleton", "mob-abilities.cobweb-thrower","w.enemy.fight"],HandItems:[{},{}],DeathLootTable:"health:burglar", NoAI:true,Attributes:[{Name:"minecraft:generic.follow_range",Base: 40}],ArmorItems: [{}, {}, {}, {id: "minecraft:leather_helmet",Count:1}]}
+`;
+
 const scene = new Scene({
   NAMESPACED_PATH,
   PATH,
@@ -154,7 +172,7 @@ scene.actionTree
     say There's also a giant spider nest over there, It might be dangerous!
     say Yes, better not interrupt the Mother, She usually lays somewhere near. Let's go back then. I will tell the miners that they can come and work once again as we have a precious mineral to extract...
     say Isn't it risky? It's close to the nest!
-    say We will mine carefully. Let's go to the camp! And one more think: Keep everything what you've seen here for yourself.
+    say We will mine carefully. Let's go to the camp! And one more thing: Keep everything what you've seen here for yourself.
   `)
   .then(new UsePath({
     pos: [-279, 80, -327],
@@ -165,6 +183,56 @@ scene.actionTree
       .then(new UsePath({
         pos: [-373, 88, -330],
         radius: 2,
+      }))
+      .then(`
+        say Hello recruit: I'm the teacher around here. We need to test your fighting skills, step in the ring when you're ready.
+      `)
+      .then(new UsePath({
+        pos: [-392, 88, -334],
+        radius: 2,
+      }))
+      .then(`
+        ${summonArenaFight}
+        worldborder center -399.01 -334.01
+        #worldborder set 19
+      `)
+      .then(`title @a title {"text": "3"}`)
+      .then(new Wait(1))
+      .then(`title @a title {"text": "2"}`)
+      .then(new Wait(1))
+      .then(`title @a title {"text": "1"}`)
+      .then(new Wait(1))
+      .then(`title @a title {"text": "Go!"}`)
+      .then(new Fight({
+        prepareEffect: `
+          ${summonArenaFight}
+        `,
+        skipFirstTimePreparation: true,
+        startEffect: `
+          execute as @e[tag=w.enemy.fight] run data merge entity @s {NoAI:false,Invulnerable:false}
+        `,
+        endWhenSuccess: `execute unless entity @e[tag=w.enemy.fight]`
+      }))
+      .then(`
+        say done
+        ${summonArena2Fight}
+      `)
+      .then(`title @a title {"text": "3"}`)
+      .then(new Wait(1))
+      .then(`title @a title {"text": "2"}`)
+      .then(new Wait(1))
+      .then(`title @a title {"text": "1"}`)
+      .then(new Wait(1))
+      .then(`title @a title {"text": "Go!"}`)
+      .then(new Fight({
+        prepareEffect: `
+          ${summonArena2Fight}
+        `,
+        skipFirstTimePreparation: true,
+        startEffect: `
+          execute as @e[tag=w.enemy.fight] run data merge entity @s {NoAI:false,Invulnerable:false}
+        `,
+        endWhenSuccess: `execute unless entity @e[tag=w.enemy.fight]`
       }))
     ,
     new ActionTree(scene)

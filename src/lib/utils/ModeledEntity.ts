@@ -126,8 +126,8 @@ export default class ModeledEntity {
       scoreboard players set #temp.isWalking w.internal 0
 
       execute unless score @s w.cx = @s w.x run scoreboard players set #temp.isWalking w.internal 1
-      execute unless score @s w.cx = @s w.x run scoreboard players set #temp.isWalking w.internal 1
-      execute unless score @s w.cx = @s w.x run scoreboard players set #temp.isWalking w.internal 1
+      execute unless score @s w.cy = @s w.y run scoreboard players set #temp.isWalking w.internal 1
+      execute unless score @s w.cz = @s w.z run scoreboard players set #temp.isWalking w.internal 1
 
       execute if score #temp.isWalking w.internal matches 1 run function animated_java:${modelName}/animations/${walkAnimation}/resume
       execute if score #temp.isWalking w.internal matches 0 run function animated_java:${modelName}/animations/${walkAnimation}/stop
