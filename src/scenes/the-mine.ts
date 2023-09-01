@@ -234,6 +234,10 @@ scene.actionTree
         `,
         endWhenSuccess: `execute unless entity @e[tag=w.enemy.fight]`
       }))
+      .then(`
+        say Congratulations, that was great! You've got a great potential to become the master of blade.
+        say Now test yourself in the range.
+      `)
     ,
     new ActionTree(scene)
       .then(new UsePath({
