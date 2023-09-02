@@ -4,12 +4,14 @@ import Scene from "../lib/Scene.js";
 import ContinueWhen from "../lib/actions/ContinueWhen.js";
 import Fight from "../lib/actions/Fight.js";
 import FreezePlayer from "../lib/actions/FreezePlayer.js";
+import RunScene from "../lib/actions/RunScene.js";
 import UnfreezePlayer from "../lib/actions/UnfreezePlayer.js";
 import UseCamera from "../lib/actions/UseCamera.js";
 import UsePath from "../lib/actions/UsePath.js";
 import Wait from "../lib/actions/Wait.js";
 import { Miner2, minerSpeech } from "../speakers/MinerSpeech.js";
 import { ThePlayer } from "../speakers/ThePlayer.js";
+import { TheLordMurderActionScene } from "./TheLordMurderAction.js";
 
 const summonSpiders = `
   kill @e[tag=w.lavaSpider.first]
@@ -235,7 +237,7 @@ scene.actionTree
         endWhenSuccess: `execute unless entity @e[tag=w.enemy.fight]`
       }))
       .then(`
-        say Congratulations, that was great! You've got a great potential to become the master of blade.
+        say Congratulations, that was great! You've got a potential to become the master of blade.
         say Now test yourself in the range.
       `)
     ,
@@ -245,5 +247,7 @@ scene.actionTree
         radius: 2,
       }))
   ])
+  .then(`say The next day...`)
+  .then(new RunScene(TheLordMurderActionScene))
  
   await scene.compile();
