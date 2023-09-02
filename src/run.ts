@@ -18,6 +18,8 @@ import './scenes/the-mine.js';
 import './scenes/crossroads-city-fast-travel.js';
 import './scenes/city-crossroads-fast-travel.js';
 import './models/forestGurdian.js';
+import './models/SmallCrab.js';
+import './models/largeCrab.js';
 
 
 const startCamera = new Scene({
