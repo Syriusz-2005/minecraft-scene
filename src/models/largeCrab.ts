@@ -7,4 +7,5 @@ const largeCrab = new ModeledEntity(project, {
   skeletonEntityTag: 'w.largeCrab.skeleton',
 });
 
+
 await largeCrab.init();
