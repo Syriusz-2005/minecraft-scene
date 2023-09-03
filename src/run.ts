@@ -20,6 +20,7 @@ import './scenes/city-crossroads-fast-travel.js';
 import './models/forestGurdian.js';
 import './models/SmallCrab.js';
 import './models/largeCrab.js';
+import './scenes/MineElevator.js';
 import Wait from "./lib/actions/Wait.js";
 import { openingNarrativeSpeech } from "./speakers/openingNarrative.js";
 import RunScene from "./lib/actions/RunScene.js";
