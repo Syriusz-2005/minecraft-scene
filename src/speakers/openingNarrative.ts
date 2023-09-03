@@ -10,7 +10,7 @@ const pos: Vector = [-158.95, -11.00, 95.45];
 const sentence = new TransformGroup('speech.narrator');
 
 
-export const openingNarrativeSpeech = new Speech(new EmptySpeaker(), pos, sentence, [270.50, 5.16]);
+export const openingNarrativeSpeech = new Speech(new EmptySpeaker(), pos, sentence, [-90, 0], 'w:warland');
 
 
 

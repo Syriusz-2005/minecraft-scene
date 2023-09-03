@@ -54,7 +54,7 @@ startCamera.actionTree
     ]
   }))
   .then(`
-    spectate @a[tag=w.player] @e[type=armor_stand,tag=w.menu2Marker,limit=1]
+    spectate @e[type=armor_stand,tag=w.menu2Marker,limit=1] @a[tag=w.player,limit=1]
   `)
   .then(new Wait(2))
   .then(openingNarrativeSpeech.say({text: 'A long long time ago, a kingdom lived in war...'}))
@@ -62,13 +62,14 @@ startCamera.actionTree
   .then(openingNarrativeSpeech.say({text: 'The emperor, ruler of this kingdom has one day spoken:'}))
   .then(new Wait(6))
   .then(openingNarrativeSpeech.say({text: `Look around, this is our kingdom. We built It with our own hands, and now we must protect it from evil. The oponent kingdom is a threat to all of us, and the terrorists are destabilizing us from the inside.`}))
-  .then(new Wait(7))
+  .then(new Wait(11))
   .then(openingNarrativeSpeech.say({text: `In those hard times, we need you, all of you to stand together and fight for our land.`}))
   .then(new Wait(6))
   .then(openingNarrativeSpeech.say({text: `Tomorrow men at the age of eighteen must appear on the square to be recruited to the army.`}))
   .then(new Wait(6))
   .then(openingNarrativeSpeech.say({text: `Including you.`}))
   .then(new Wait(6))
+  .then(openingNarrativeSpeech.hide())
 
 
   

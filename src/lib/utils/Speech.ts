@@ -14,14 +14,15 @@ export default class Speech {
     private pos: Vector,
     private transformGroup: TransformGroup,
     private rotation?: Vec2,
+    private dim?: string,
   ) {}
 
   public say(text: TextComponent | TextComponent[]) {
-    return new DisplayText(this.pos, this.speaker, JSON.stringify(text instanceof Array ? text : [text]), this.transformGroup, this.rotation)
+    return new DisplayText(this.pos, this.speaker, JSON.stringify(text instanceof Array ? text : [text]), this.transformGroup, this.rotation, this.dim);
   }
 
   public sayAs(text: TextComponent | TextComponent[], speaker: Speaker) {
-    return new DisplayText(this.pos, speaker, JSON.stringify(text instanceof Array ? text : [text]), this.transformGroup, this.rotation);
+    return new DisplayText(this.pos, speaker, JSON.stringify(text instanceof Array ? text : [text]), this.transformGroup, this.rotation, this.dim);
   }
 
   public hide() {
