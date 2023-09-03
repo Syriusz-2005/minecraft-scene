@@ -42,6 +42,7 @@ export default class Project {
       execute as @a[scores={w.death=1..,w.death-ticks=1}] run effect give @s blindness 3 1 true
       execute as @a[scores={w.death=1..,w.death-ticks=1}] run effect give @s night_vision 3 1 true
       execute as @a[scores={w.death=1..,w.death-ticks=1}] run tag @s add w.freeze
+      execute as @a[scores={w.death=1..,w.death-ticks=1}] run effect give @s slowness 3 10 true
       execute as @a[scores={w.death=1..,w.death-ticks=1}] at @s align y run summon marker ~ ~ ~ {Tags: ["w.freezer"]}
       execute as @a[scores={w.death=1..}] run scoreboard players add @s w.death-ticks 1
 

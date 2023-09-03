@@ -10,6 +10,7 @@ import RunScene from "../lib/actions/RunScene.js";
 import UnfreezePlayer from "../lib/actions/UnfreezePlayer.js";
 import UsePath from "../lib/actions/UsePath.js";
 import Wait from "../lib/actions/Wait.js";
+import { getClearLastFight } from "../lib/utils/ClearLastFight.js";
 import RestorePoint from "../lib/utils/RestorePoint.js";
 import { BurglarSpeech } from "../speakers/Burglar.js";
 import { fishSellerSpeech } from "../speakers/FishSeller.js";
@@ -25,9 +26,11 @@ const scene = new Scene({
   project,
 });
 
+export {scene as CastleTravelScene};
 
 const summonBurglars = `
-  kill @e[tag=w.burglar]
+  ${getClearLastFight('w.burglar')}
+
   summon zombie -248.2 71 -23.2 {Invulnerable:true,NoAI:true,Rotation:[-132f, 0f],Tags:["w.burglar","w.burglar-1", "w.no-fire", "mob-abilities.dasher"],Silent:true,HasVisualFire:false,PersistenceRequired:true,DeathLootTable:"health:burglar"}
 
   summon zombie -242.96 70.00 -38.69 {Invulnerable:true,NoAI:true,Rotation:[-34.10f, 6.41f],Tags:["w.burglar", "w.no-fire", "w.burglar-2", "mob-abilities.dasher"],Silent:true,HasVisualFire:false,PersistenceRequired:true,DeathLootTable:"health:burglar"}

@@ -22,6 +22,8 @@ import './models/SmallCrab.js';
 import './models/largeCrab.js';
 import Wait from "./lib/actions/Wait.js";
 import { openingNarrativeSpeech } from "./speakers/openingNarrative.js";
+import RunScene from "./lib/actions/RunScene.js";
+import { CastleTravelScene } from "./scenes/castle-travel.js";
 
 
 const startCamera = new Scene({
@@ -70,7 +72,7 @@ startCamera.actionTree
   .then(openingNarrativeSpeech.say({text: `Including you.`}))
   .then(new Wait(6))
   .then(openingNarrativeSpeech.hide())
-
+  .then(new RunScene(CastleTravelScene))
 
   
 

@@ -55,7 +55,7 @@ export default class Fight implements Action {
 
 
     await ActionTree.appendAction(config, `
-      ${spawnpointSet ? 'execute as @a[tag=w.player] at @s run spawnpoint @s ~ ~ ~' : ''}
+      ${spawnpointSet ? 'execute as @a[tag=w.player] at @s align y run spawnpoint @s ~ ~ ~' : ''}
       
       scoreboard players set ${delayedFightStartScore} 0
       ${fightConfig.skipFirstTimePreparation ? `
