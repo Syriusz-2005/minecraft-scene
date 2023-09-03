@@ -40,7 +40,8 @@ export default class DisplayMenu implements Action {
     await scene.mkFile(tickFunctionName, `
       execute if score ${stateStore} matches 0 run return 0
 
-      execute store success score ${skipStore} run ${menuConfig.skipWhen}
+      ${menuConfig.skipWhen !== undefined ? `execute store success score ${skipStore} run ${menuConfig.skipWhen}` : `scoreboard players set ${skipStore} 0`}
+      
       execute if score ${skipStore} matches 1.. run tellraw @a {"text":"Skipped the dialouge...", "color": "red"}
       execute if score ${skipStore} matches 1.. run scoreboard players set ${stateStore} 0
       execute if score ${skipStore} matches 1.. run function ${endFunctionReference}

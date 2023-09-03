@@ -21,7 +21,7 @@ scene.actionTree
     tag @s add w.player
     gamemode spectator @s
     spectate 4b46e8fb-7bb9-4fc1-9014-17b8748f1bc1
-    tellraw @a {"text": "The Soul destroyers map\nDemo 1\n\nMake sure you have the options set up correctly:\n\nFOV: max 80\nbrightness: normal (50)\nRender distance: 16 chunks\nFOV effects: off (0%)\nGraphics: Fabulous"}
+    tellraw @a {"text": "The Soul destroyers map\\nDemo 1\\n\\nMake sure you have the options set up correctly:\\n\\nFOV: max 80\\nbrightness: normal (50)\\nRender distance: 16 chunks\\nFOV effects: off (0%)\\nGraphics: Fabulous"}
   `)
   .then(new DisplayMenu({
     preText: `[{"text":"Start the game when you are ready:"}]`,
