@@ -181,10 +181,24 @@ scene.actionTree
     say Isn't it risky? It's close to the nest!
     say We will mine carefully. Let's go to the camp! And one more thing: Keep everything what you've seen here for yourself.
   `)
+  .then(new ContinueWhen(`execute positioned -322.29 10.00 -104.36 if entity @a[tag=w.player,distance=..1]`))
+  .then(`
+    effect give @a minecraft:darkness 3
+    effect give @a minecraft:blindness 3
+    execute as @a at @s run playsound minecraft:entity.minecart.riding master @s ~ ~ ~
+  `)
+  .then(new Wait(2))
+  .then(`
+    tag @s add w.player.justElevated
+    execute at @a[tag=w.player] run teleport @p ~ ~54 ~
+  `)
   .then(new UsePath({
     pos: [-279, 80, -327],
     radius: 3,
   }))
+  .then(`
+    tag @s remove w.player.justElevated
+  `)
   .concurrently({awaitingMethod: 'all-finished'}, [
     new ActionTree(scene)
       .then(new UsePath({

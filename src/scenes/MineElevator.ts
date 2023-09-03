@@ -16,7 +16,7 @@ const scene = new Scene({
 });
 
 scene.actionTree
-  .then(new ContinueWhen(`execute positioned -322.63 64.00 -104.46 if entity @a[tag=w.player,distance=..1]`))
+  .then(new ContinueWhen(`execute positioned -322.63 64.00 -104.46 if entity @a[tag=w.player,distance=..1,tag=!w.player.justElevated]`))
   .then(`
     effect give @a minecraft:darkness 3
     effect give @a minecraft:blindness 3
