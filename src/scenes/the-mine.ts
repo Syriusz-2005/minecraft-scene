@@ -73,6 +73,7 @@ const scene = new Scene({
   sceneName: 'the-mine',
 });
 
+export {scene as TheMineScene};
 
 scene.actionTree
   .then(`

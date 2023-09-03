@@ -3,6 +3,7 @@ import ActionTree from "../lib/ActionTree.js";
 import Scene from "../lib/Scene.js";
 import ContinueWhen from "../lib/actions/ContinueWhen.js";
 import DisplaySentence from "../lib/actions/DisplaySentence.js";
+import RunScene from "../lib/actions/RunScene.js";
 import UsePath from "../lib/actions/UsePath.js";
 import Wait from "../lib/actions/Wait.js";
 import Pathfinder from "../lib/utils/Pathfinder.js";
@@ -12,6 +13,7 @@ import { minerSpeech } from "../speakers/Miners.js";
 import { recruiterSpeech } from "../speakers/Recruiter.js";
 import { ThePlayer } from "../speakers/ThePlayer.js";
 import { isPlayerRecruited } from "../states/isPlayerRecruited.js";
+import { TheMineScene } from "./the-mine.js";
 
 
 export const TimeBeforeRecruitmentScene = new Scene({
@@ -120,13 +122,14 @@ TimeBeforeRecruitmentScene.actionTree
   .then(CaptainPathfinder.setPause(false))
   .concurrently({awaitingMethod: 'instant-skip'}, [
     new ActionTree(TimeBeforeRecruitmentScene)
-      .then(CaptainPathfinder.moveTo([-322.7, 10, -104.5]))
+      .then(CaptainPathfinder.moveTo([-318, 10, -104]))
       .then(CaptainPathfinder.dispatch())
   ])
-  .then(new ContinueWhen(`execute positioned -299 11.5 -103.5 unless entity @a[tag=w.player,distance=..6]`))
+  .then(new Wait(5))
   .then(`
     kill @e[tag=${captainSpeech.TransformGroup.groupTag}]
     kill @e[tag=${minerSpeech.TransformGroup.groupTag}]
   `)
+  .then(new RunScene(TheMineScene))
 
 await TimeBeforeRecruitmentScene.compile();
