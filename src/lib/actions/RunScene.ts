@@ -11,7 +11,7 @@ export default class RunScene implements Action {
     
 
     await ActionTree.appendAction(config, `
-      scoreboard players set #w.gameState w.scenes ${this.scene.config.sceneIndex}
+      function ${this.scene.config.NAMESPACED_PATH}/${this.scene.config.sceneName}/0-0
     `);
 
     return {
