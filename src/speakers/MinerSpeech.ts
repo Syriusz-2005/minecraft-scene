@@ -4,7 +4,7 @@ import TransformGroup from "../lib/utils/TransformGroup.js";
 import { Vector } from "../lib/utils/Vector.js";
 
 
-const pos: Vector = [-285.5, 8.6, -95];
+const pos: Vector = [-286.5, 8.6, -95];
 
 
 export const Miner1 = new Speaker('First miner', 'green');
