@@ -140,7 +140,7 @@ scene.actionTree
     startEffect: `
       execute as @e[tag=w.burglar] run data modify entity @s Invulnerable set value false
       execute as @e[tag=w.burglar] run data modify entity @s NoAI set value false
-      effect give @e[tag=w.burglar] glowing infinite 1 true
+      
       kill @e[tag=${BurglarSpeech.TransformGroup.groupTag}]
       tag @a[tag=w.player] add w.no-healing
       ${UnfreezePlayer.Commands}
