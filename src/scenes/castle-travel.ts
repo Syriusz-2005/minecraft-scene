@@ -53,6 +53,7 @@ scene.actionTree
     execute as @a[tag=w.player] run function techsword:give_sword
     function w:generated/reset-state-machines
     time set 23100
+    fill -321 67 -98 -318 64 -98 minecraft:spruce_fence
   `)
   .then(`
     effect give @a[tag=w.player] regeneration 5 10 true

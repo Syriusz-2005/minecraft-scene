@@ -92,6 +92,7 @@ TimeBeforeRecruitmentScene.actionTree
   .then(new Wait(5))
   .then(`
     kill @e[tag=${recruiterSpeech.TransformGroup.groupTag}]
+    fill -318 64 -98 -321 66 -98 air
   `)
   .then(new UsePath({
     pos: [-319, 64, -87],
