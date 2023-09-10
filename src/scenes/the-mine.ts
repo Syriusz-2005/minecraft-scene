@@ -29,7 +29,7 @@ const summonSpiders2 = `
   
   execute positioned -227.39 1.00 -99.81 run summon minecraft:skeleton ~ ~ ~ {Tags:["w.lavaSpider.skeleton", "mob-abilities.cobweb-thrower","w.lavaSpider.second"],HandItems:[{},{}],DeathLootTable:"health:burglar",Attributes:[{Name:"minecraft:generic.follow_range",Base: 40}], NoAI:true}
 
-  execute positioned -228 10 -111 run summon minecraft:skeleton ~ ~ ~ {Tags:["w.lavaSpider.skeleton", "mob-abilities.cobweb-thrower","w.lavaSpider.second"],HandItems:[{},{}],DeathLootTable:"health:burglar",Attributes:[{Name:"minecraft:generic.follow_range",Base: 40}], NoAI:true}
+  execute positioned -228 1 -111 run summon minecraft:skeleton ~ ~ ~ {Tags:["w.lavaSpider.skeleton", "mob-abilities.cobweb-thrower","w.lavaSpider.second"],HandItems:[{},{}],DeathLootTable:"health:burglar",Attributes:[{Name:"minecraft:generic.follow_range",Base: 40}], NoAI:true}
 
   execute positioned -232 1 -113 run summon minecraft:skeleton ~ ~ ~ {Tags:["w.lavaSpider.skeleton", "mob-abilities.cobweb-thrower","w.lavaSpider.second"],HandItems:[{},{}],DeathLootTable:"health:burglar",Attributes:[{Name:"minecraft:generic.follow_range",Base: 40}], NoAI:true}
 
