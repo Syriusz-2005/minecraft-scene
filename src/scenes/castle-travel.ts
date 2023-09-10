@@ -50,6 +50,11 @@ scene.actionTree
   .then('fill -188 71 -94 -189 72 -94 minecraft:barrier')
   .then('execute positioned -189.55 71.87 -89.00 run data modify entity @e[type=item_frame,sort=nearest,limit=1,distance=..2] Item set from block -190 68 -89 Items[{Slot:0b}]')
   .then(`
+    execute as @a[tag=w.player] run function techsword:give_sword
+    function w:generated/reset-state-machines
+    time set 23100
+  `)
+  .then(`
     effect give @a[tag=w.player] regeneration 5 10 true
   `)
   .then(new Wait(3))
@@ -91,6 +96,9 @@ scene.actionTree
   .then(new Wait(4))
   .then(fishSellerSpeech.sayAs({text: "Thank you. I hope we'll see again."}, ThePlayer))
   .then(summonBurglars)
+  .then(`
+    time add 100
+  `)
   .then(new UnfreezePlayer())
   .concurrently({
     awaitingMethod: 'instant-skip',

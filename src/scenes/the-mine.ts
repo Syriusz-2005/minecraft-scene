@@ -189,7 +189,7 @@ scene.actionTree
   `)
   .then(new Wait(2))
   .then(`
-    tag @s add w.player.justElevated
+    tag @a[tag=w.player] add w.player.justElevated
     execute at @a[tag=w.player] run teleport @p ~ ~54 ~
   `)
   .then(new UsePath({
@@ -197,7 +197,7 @@ scene.actionTree
     radius: 3,
   }))
   .then(`
-    tag @s remove w.player.justElevated
+    tag @a[tag=w.player] remove w.player.justElevated
   `)
   .concurrently({awaitingMethod: 'all-finished'}, [
     new ActionTree(scene)
