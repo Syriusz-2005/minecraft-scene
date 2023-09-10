@@ -21,6 +21,7 @@ import './models/largeCrab.js';
 import './scenes/MineElevator.js';
 import './scenes/mainMenu.js';
 import './startCamera.js'
-import './models/bandit.js'
+import './models/bandit.js';
+import './models/captain.js';
 
 console.timeEnd('Compiled in');
