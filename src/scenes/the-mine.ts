@@ -236,7 +236,7 @@ scene.actionTree
       .then(`
         ${summonArenaFight}
         worldborder center -399.01 -334.01
-        #worldborder set 19
+        worldborder set 19
       `)
       .then(`title @a title {"text": "3"}`)
       .then(new Wait(1))

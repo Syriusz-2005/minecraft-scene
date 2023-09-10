@@ -20,6 +20,10 @@ export type ModeledEntityConfig = {
    * @default "attack"
    */
   attackAnimation?: string;
+  /**
+   * @default "facing_player"
+   */
+  rotation?: 'inherit' | 'facing_player';
 }
 
 export default class ModeledEntity {
@@ -37,6 +41,7 @@ export default class ModeledEntity {
       mainVariant = 'main', 
       damageVariant = 'damage', 
       attackAnimation = 'attack',
+      rotation = 'facing_player',
     } = config;
 
     await fs.mkdir(project.Path + '/entity').catch(() => {});
@@ -104,7 +109,11 @@ export default class ModeledEntity {
 
 
       tag @s add w.entity.current
-      execute as @e[tag=${modelTag}] if score @s w.modelId = #temp.modelId w.internal at @e[tag=w.entity.current,sort=nearest,limit=1] facing entity @p eyes run tp @s ~ ~ ~ ~ 0
+      ${rotation === 'facing_player' 
+        ? `execute as @e[tag=${modelTag}] if score @s w.modelId = #temp.modelId w.internal at @e[tag=w.entity.current,sort=nearest,limit=1] facing entity @p eyes run tp @s ~ ~ ~ ~ 0` 
+        : `execute as @e[tag=${modelTag}] if score @s w.modelId = #temp.modelId w.internal at @e[tag=w.entity.current,sort=nearest,limit=1] rotated as @e[tag=w.entity.current,sort=nearest,limit=1] run tp @s ~ ~ ~ ~ 0
+      `}
+      
       
       execute unless score #temp.hitTime w.internal matches 0 as @e[tag=${modelTag}] if score @s w.modelId = #temp.modelId w.internal run function w:generated/entity/${modelName}/apply-damage-variant
       execute if entity @s[tag=w.damage-applied] if score #temp.hitTime w.internal matches 0 run function w:generated/entity/${modelName}/apply-main-variant
