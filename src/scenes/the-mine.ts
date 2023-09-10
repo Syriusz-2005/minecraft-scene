@@ -79,6 +79,7 @@ scene.actionTree
   .then(`
     item replace block -329 10 -112 container.13 with minecraft:flint_and_steel
     clone -286 21 -94 -281 25 -101 -286 7 -101
+    time add 400
     ${summonSpiders}
     ${summonSpiders2}
     ${summonSpiders3}
