@@ -6,13 +6,13 @@ import DisplaySentence from "../lib/actions/DisplaySentence.js";
 import RunScene from "../lib/actions/RunScene.js";
 import UsePath from "../lib/actions/UsePath.js";
 import Wait from "../lib/actions/Wait.js";
-import Pathfinder from "../lib/utils/Pathfinder.js";
 import RestorePoint from "../lib/utils/RestorePoint.js";
 import { captainSpeech } from "../speakers/Captain.js";
 import { minerSpeech } from "../speakers/Miners.js";
 import { recruiterSpeech } from "../speakers/Recruiter.js";
 import { ThePlayer } from "../speakers/ThePlayer.js";
 import { isPlayerRecruited } from "../states/isPlayerRecruited.js";
+import { CaptainPathfinder } from "./CaptainPathfinder.js";
 import { TheMineScene } from "./the-mine.js";
 
 
@@ -22,17 +22,6 @@ export const TimeBeforeRecruitmentScene = new Scene({
   project,
   sceneIndex: 9012,
   sceneName: 'time-before-recruitment',
-});
-
-const CaptainPathfinder = new Pathfinder({
-  id: 'captain-in-the-mine',
-  NAMESPACED_PATH,
-  PATH,
-  project,
-  options: {
-    successRadius: 2,
-    speed: 0.6,
-  }
 });
 
 await CaptainPathfinder.init();

@@ -11,3 +11,6 @@ export const Captain = new Speaker('captain', 'green');
 const captainSentence = new TransformGroup('speech.captain');
 
 export const captainSpeech = new Speech(Captain, pos, captainSentence);
+
+
+export const MineCaptainSpeech = new Speech(Captain, [-223, -13.7, -64], captainSentence);

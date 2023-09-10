@@ -13,6 +13,8 @@ import { getClearLastFight } from "../lib/utils/ClearLastFight.js";
 import { Miner2, minerSpeech } from "../speakers/MinerSpeech.js";
 import { ThePlayer } from "../speakers/ThePlayer.js";
 import { TheLordMurderActionScene } from "./TheLordMurderAction.js";
+import { CaptainPathfinder } from "./CaptainPathfinder.js";
+import { MineCaptainSpeech } from "../speakers/Captain.js";
 
 const summonSpiders = `
   ${getClearLastFight('w.lavaSpider.first')}
@@ -156,33 +158,51 @@ scene.actionTree
   .then(`
     spawnpoint @s
   `)
-  .then(new UseCamera({
-    anchorPoints: [
-      {
-        position: [-222.05, -13.04, -83.45],
-        rotation: [-205.58, 17.99],
-        durationTo: 1,
-      },
-      {
-        position: [-220.3, -13, -69.5],
-        rotation: [166, 10],
-        durationTo: 4,
-      }
-    ]
-  }))
+  .concurrently({awaitingMethod: 'any-finished',}, [
+    new ActionTree(scene)
+      .then(new UseCamera({
+        anchorPoints: [
+          {
+            position: [-222.05, -13.04, -83.45],
+            rotation: [-205.58, 17.99],
+            durationTo: 1,
+          },
+          {
+            position: [-220.3, -13, -69.5],
+            rotation: [166, 10],
+            durationTo: 10.5,
+          }
+        ]
+      }))
+    ,new ActionTree(scene)
+      .then(CaptainPathfinder.summon([-225.5, -16, -92]))
+      .then(CaptainPathfinder.moveTo([-224.7, -14, -71.2]))
+  ])
   // .then(new FreezePlayer())
+  .then(CaptainPathfinder.setPause(true))
+  .then(CaptainPathfinder.setPosition([-224.70, -14.00, -67.22], [243.62, 5.59]))
   .then(`
     execute in minecraft:overworld run tp @a[tag=w.player] -220.42 -14.00 -68.28 -306.38 13.24
     gamemode adventure @a[tag=w.player]
-    say We've found it!
-    say What?
-    say We've found the magnetite!
-    say There's also a giant spider nest over there, It might be dangerous!
-    say Yes, better not interrupt the Mother, She usually lays somewhere near. Let's go back then. I will tell the miners that they can come and work once again as we have a precious mineral to extract...
-    say Isn't it risky? It's close to the nest!
-    say We will mine carefully. Let's go to the camp! And one more thing: Keep everything what you've seen here for yourself.
   `)
+  .then(new Wait(1))
+  .then(MineCaptainSpeech.say({text: `We've finally found it!`}))
+  .then(new Wait(3))
+  .then(MineCaptainSpeech.sayAs({text: `Found what?`}, ThePlayer))
+  .then(new Wait(3))
+  .then(MineCaptainSpeech.say({text: `Do you see this purple ore? It's a magnetite. Our alchemists require it to continue their work...`}))
+  .then(new Wait(6))
+  .then(MineCaptainSpeech.sayAs({text: `There's also a giant spider nest over there, It might be dangerous!`}, ThePlayer))
+  .then(new Wait(6))
+  .then(MineCaptainSpeech.say({text: `Yes, better not interrupt the Mother, She usually lays somewhere near. Let's go back then. I will tell the miners that they can come and work once again as we have a precious mineral to extract...`}))
+  .then(new Wait(11))
+  .then(MineCaptainSpeech.sayAs({text: `Isn't it risky? It's close to the nest! We don't really know what forces live there...`}, ThePlayer))
+  .then(new Wait(7))
+  .then(MineCaptainSpeech.say({text: `We will mine carefully. Let's go to the camp! And one more thing: Keep everything what you've seen here for yourself.`}))
+  .then(new Wait(6))
   .then(new ContinueWhen(`execute positioned -322.29 10.00 -104.36 if entity @a[tag=w.player,distance=..1]`))
+  .then(MineCaptainSpeech.hide())
+  .then(CaptainPathfinder.dispatch())
   .then(`
     effect give @a minecraft:darkness 3
     effect give @a minecraft:blindness 3
