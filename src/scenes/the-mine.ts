@@ -15,6 +15,7 @@ import { ThePlayer } from "../speakers/ThePlayer.js";
 import { TheLordMurderActionScene } from "./TheLordMurderAction.js";
 import { CaptainPathfinder } from "./CaptainPathfinder.js";
 import { MineCaptainSpeech } from "../speakers/Captain.js";
+import { TrainerSpeech } from "../speakers/Trainer.js";
 
 const summonSpiders = `
   ${getClearLastFight('w.lavaSpider.first')}
@@ -226,13 +227,12 @@ scene.actionTree
         pos: [-373, 88, -330],
         radius: 2,
       }))
-      .then(`
-        say Hello recruit: I'm the teacher around here. We need to test your fighting skills, step in the ring when you're ready.
-      `)
+      .then(TrainerSpeech.say({text: `Hello recruit. I'm the trainer around here. We need to test your fighting skills, so step in the ring when you're ready.`}))
       .then(new UsePath({
         pos: [-392, 88, -334],
         radius: 2,
       }))
+      .then(TrainerSpeech.hide())
       .then(`
         ${summonArenaFight}
         worldborder center -399.01 -334.01
@@ -256,7 +256,6 @@ scene.actionTree
         endWhenSuccess: `execute unless entity @e[tag=w.enemy.fight]`
       }))
       .then(`
-        say done
         ${summonArena2Fight}
       `)
       .then(`title @a title {"text": "3"}`)
@@ -277,9 +276,10 @@ scene.actionTree
         endWhenSuccess: `execute unless entity @e[tag=w.enemy.fight]`
       }))
       .then(`
-        say Congratulations, that was great! You've got a potential to become the master of blade.
-        say Now test yourself in the range.
+        worldborder set 99999
+
       `)
+      .then(TrainerSpeech.say({text: `Congratulations, that was great! You've got a potential to become the master of blade. Now test yourself in the range.`}))
     ,
     new ActionTree(scene)
       .then(new UsePath({
@@ -287,7 +287,9 @@ scene.actionTree
         radius: 2,
       }))
   ])
-  .then(`say The next day...`)
+  .then(`say This is the end of the first playable demo. We hope you had at least a little bit of fun!`)
+  .then(new Wait(10))
+  .then(TrainerSpeech.hide())
   .then(new RunScene(TheLordMurderActionScene))
  
   await scene.compile();
