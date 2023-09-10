@@ -96,11 +96,12 @@ export default class ModeledEntity {
       tag @s remove w.damage-applied
     `);
 
-    await project.addFile(`/entity/${modelName}/tick-as-entity.mcfunction`, `
+    await project.addFile(`/entity/${modelName}/tick-as-entity.mcfunction`, ` 
       execute unless score @s w.modelId matches -2143124312..2132323132 run function w:generated/entity/${modelName}/assign-model
       scoreboard players operation #temp.modelId w.internal = @s w.modelId
       execute store result score #temp.currentHealth w.internal run data get entity @s Health
       execute store result score #temp.hitTime w.internal run data get entity @s HurtTime
+
 
       tag @s add w.entity.current
       execute as @e[tag=${modelTag}] if score @s w.modelId = #temp.modelId w.internal at @e[tag=w.entity.current,sort=nearest,limit=1] facing entity @p eyes run tp @s ~ ~ ~ ~ 0
@@ -119,6 +120,9 @@ export default class ModeledEntity {
 
       execute as @e[tag=${skeletonEntityTag}] if score @s w.modelId = #temp.modelId w.internal run scoreboard players add #temp.modelCount w.internal 1
 
+      execute if score #temp.modelCount w.internal matches 0 run function animated_java:${modelName}/remove/this
+      execute if score #temp.modelCount w.internal matches 0 run return 1
+
       execute store result score @s w.cx run data get entity @s Pos[0] 2000
       execute store result score @s w.cy run data get entity @s Pos[1] 2000
       execute store result score @s w.cz run data get entity @s Pos[2] 2000
@@ -129,15 +133,18 @@ export default class ModeledEntity {
       execute unless score @s w.cy = @s w.y run scoreboard players set #temp.isWalking w.internal 1
       execute unless score @s w.cz = @s w.z run scoreboard players set #temp.isWalking w.internal 1
 
-      execute if score #temp.isWalking w.internal matches 1 run function animated_java:${modelName}/animations/${walkAnimation}/resume
-      execute if score #temp.isWalking w.internal matches 0 run function animated_java:${modelName}/animations/${walkAnimation}/stop
+      execute unless entity @s[tag=w.model.isWalking] if score #temp.isWalking w.internal matches 1 run function animated_java:${modelName}/animations/${walkAnimation}/resume
+      execute if entity @s[tag=w.model.isWalking] if score #temp.isWalking w.internal matches 0 run function animated_java:${modelName}/animations/${walkAnimation}/stop
+      
+      execute if score #temp.isWalking w.internal matches 1 run tag @s add w.model.isWalking
+      execute if score #temp.isWalking w.internal matches 0 run tag @s remove w.model.isWalking
+
 
       execute store result score @s w.x run data get entity @s Pos[0] 2000
       execute store result score @s w.y run data get entity @s Pos[1] 2000
       execute store result score @s w.z run data get entity @s Pos[2] 2000
 
-      execute if score #temp.modelCount w.internal matches 0 run function animated_java:${modelName}/remove/this
-      execute if score #temp.modelCount w.internal matches 0 run return 1
+
     `);
 
     await project.appendToAllEntities(`
