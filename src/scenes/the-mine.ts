@@ -84,12 +84,12 @@ scene.actionTree
     ${summonSpiders2}
     ${summonSpiders3}
   `)
-  .then(minerSpeech.sayAs({text: `I'm here to guard you, guys. You can safely destroy the wall.`}, ThePlayer))
+  .then(minerSpeech.sayAs({text: `I'm here to guard you guys. You can safely destroy the wall.`}, ThePlayer))
   .then(new Wait(3))
-  .then(minerSpeech.say({text: `Do it yourself then. We've heard disturbing noises from behind it.`}))
-  .then(new Wait(3))
-  .then(minerSpeech.sayAs({text: `The barrel with gunpowder is already in place. The flint and steel can be found behind the shaft.`}, Miner2))
-  .then(new Wait(4))
+  .then(minerSpeech.say({text: `Do it yourself then. We've heard disturbing noises from behind it. We ain't doing that!`}))
+  .then(new Wait(6))
+  .then(minerSpeech.sayAs({text: `The barrel with gunpowder is already in place. The flint and steel can be found behind the shaft. Do It yourself if you're so brave!`}, Miner2))
+  .then(new Wait(5))
   .then(new ContinueWhen(`execute positioned -289.04 8.00 -98.62 unless entity @a[tag=w.player,distance=..6]`))
   .then(minerSpeech.hide())
   .then(`
