@@ -52,6 +52,8 @@ TimeBeforeRecruitmentScene.actionTree
   ])
   .then(`
     time add 300
+    function animated_java:recruiter/remove/all
+    execute positioned -190.86 89.00 39.13 rotated -987.59 -0.23 run function animated_java:recruiter/summon
   `)
   .then(new UsePath({
     pos: [-212, 89, 33],
@@ -59,7 +61,7 @@ TimeBeforeRecruitmentScene.actionTree
   }))
   .then(recruiterSpeech.say({text: 'Hey, you, come over here!'}))
   .then(new UsePath({
-    pos: [-195, 89, 39],
+    pos: [-197, 89, 39],
     radius: 2,
   }))
   .then(recruiterSpeech.say({text: `You're the first today. Name?`}))

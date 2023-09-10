@@ -7,7 +7,7 @@ import { Vector } from "../lib/utils/Vector.js";
 
 export const Recruiter = new Speaker('Recruiter', 'green');
 
-const pos: Vector = [-190, 90.2, 44]
+const pos: Vector = [-193.5, 90, 42.5]
 
 const recruiterSentence = new TransformGroup('speech.recruiter');
 
