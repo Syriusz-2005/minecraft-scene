@@ -23,5 +23,6 @@ import './scenes/mainMenu.js';
 import './startCamera.js'
 import './models/bandit.js';
 import './models/captain.js';
+import './models/miner.js';
 
 console.timeEnd('Compiled in');

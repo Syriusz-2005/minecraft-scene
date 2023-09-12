@@ -16,6 +16,7 @@ import { TheLordMurderActionScene } from "./TheLordMurderAction.js";
 import { CaptainPathfinder } from "./CaptainPathfinder.js";
 import { MineCaptainSpeech } from "../speakers/Captain.js";
 import { TrainerSpeech } from "../speakers/Trainer.js";
+import { miner1Pathfinder, miner2Pathfinder } from "../models/miner.js";
 
 const summonSpiders = `
   ${getClearLastFight('w.lavaSpider.first')}
@@ -95,8 +96,19 @@ scene.actionTree
   .then(new Wait(5))
   .then(new ContinueWhen(`execute positioned -289.04 8.00 -98.62 unless entity @a[tag=w.player,distance=..6]`))
   .then(minerSpeech.hide())
+  .then(miner1Pathfinder.setPause(false))
+  .then(miner2Pathfinder.setPause(false))
+  .concurrently({awaitingMethod: 'instant-skip'}, [
+    new ActionTree(scene)
+      .then(miner1Pathfinder.moveTo([-289.3, 10, -111.7]))
+      .then(miner1Pathfinder.setPause(true))
+      .then(miner1Pathfinder.setPosition([-289.6, 10, -111.5], [9, 11]))
+    ,new ActionTree(scene)
+      .then(miner2Pathfinder.moveTo([-292.5, 8, -106.5]))
+      .then(miner2Pathfinder.setPause(true))
+      .then(miner2Pathfinder.setPosition([-292.51, 8.00, -106.53], [693.33, 5.09]))
+  ])
   .then(`
-    say *The miners are changing their positions to some safer ones*
     say *You can safely fuse the tnt*
   `)
   .then(new ContinueWhen(`execute positioned -285.30 7.80 -95.25 if entity @e[type=tnt,distance=..40,nbt={Fuse:2s}]`))
@@ -221,6 +233,8 @@ scene.actionTree
   .then(`
     tag @a[tag=w.player] remove w.player.justElevated
   `)
+  .then(miner1Pathfinder.dispatch())
+  .then(miner2Pathfinder.dispatch())
   .concurrently({awaitingMethod: 'all-finished'}, [
     new ActionTree(scene)
       .then(new UsePath({

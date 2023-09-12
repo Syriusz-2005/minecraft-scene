@@ -6,7 +6,9 @@ import DisplaySentence from "../lib/actions/DisplaySentence.js";
 import RunScene from "../lib/actions/RunScene.js";
 import UsePath from "../lib/actions/UsePath.js";
 import Wait from "../lib/actions/Wait.js";
+import Pathfinder from "../lib/utils/Pathfinder.js";
 import RestorePoint from "../lib/utils/RestorePoint.js";
+import { miner1Pathfinder, miner2Pathfinder } from "../models/miner.js";
 import { captainSpeech } from "../speakers/Captain.js";
 import { minerSpeech } from "../speakers/Miners.js";
 import { recruiterSpeech } from "../speakers/Recruiter.js";
@@ -25,6 +27,8 @@ export const TimeBeforeRecruitmentScene = new Scene({
 });
 
 await CaptainPathfinder.init();
+
+
 
 TimeBeforeRecruitmentScene.actionTree
   .concurrently({
@@ -93,6 +97,12 @@ TimeBeforeRecruitmentScene.actionTree
   .then(`
     clone -286 21 -94 -281 25 -101 -286 7 -101
   `)
+  .then(miner1Pathfinder.summon([-289.3, 7, -92.3]))
+  .then(miner1Pathfinder.setPosition([-289.3, 7, -92.3], [170, 0]))
+  .then(miner2Pathfinder.summon([-287.3, 8, -91.3]))
+  .then(miner2Pathfinder.setPosition([-287.3, 8, -91.3], [157, 0]))
+  .then(miner1Pathfinder.setPause(true))
+  .then(miner2Pathfinder.setPause(true))
   .then(new ContinueWhen(`execute positioned -299 11.5 -103.5 if entity @a[tag=w.player,distance=..6]`))
   .then(captainSpeech.say({text: 'Who are you?'}))
   .then(new Wait(2))
