@@ -121,7 +121,7 @@ scene.actionTree
   .then(new Wait(5))
   .then(BurglarSpeech.sayAs({text: "Guards? Where are the guards?"}, ThePlayer))
   .then(new Wait(5))
-  .then(BurglarSpeech.say({text: `HaHaHa... They won't help you. The Emperor doesn't care about us as long as we don't rob him.`}))
+  .then(BurglarSpeech.say({text: `Hahaha... They won't help you. The Emperor doesn't care about us as long as we don't rob him.`}))
   .then(new Wait(6))
   .then(BurglarSpeech.say({text: `...And so do the guards. They are busy protecting his majesty, so hand you bag now! So naive...`}))
   .then(new Wait(5))

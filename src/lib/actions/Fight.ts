@@ -91,6 +91,7 @@ export default class Fight implements Action {
 
     await scene.mkFile(processDeathName, `
       scoreboard players set ${delayedFightStartScore} 1
+      kill @e[tag=w.soul]
       function ${prepareFightRef}
 
       schedule function ${processReborningRef} 3s
