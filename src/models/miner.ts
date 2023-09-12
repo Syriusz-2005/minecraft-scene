@@ -7,6 +7,7 @@ export const miner = new ModeledEntity(project, {
   modelName: 'miner',
   skeletonEntityTag: 'w.miner',
   rotation: 'inherit',
+  walkAnimation: 'walking',
 });
 
 
@@ -19,7 +20,7 @@ export const miner1Pathfinder = new Pathfinder({
   project,
   id: 'miner_1',
   options: {
-    successRadius: 1,
+    successRadius: 2.3,
   },
   extraCustomTag: 'w.miner',
 });
@@ -29,7 +30,7 @@ export const miner2Pathfinder = new Pathfinder({
   project,
   id: 'miner_2',
   options: {
-    successRadius: 1,
+    successRadius: 2.3,
   },
   extraCustomTag: 'w.miner',
 });

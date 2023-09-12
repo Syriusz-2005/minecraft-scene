@@ -8,7 +8,7 @@ export const CaptainPathfinder = new Pathfinder({
   PATH,
   project,
   options: {
-    successRadius: 2,
+    successRadius: 2.5,
     speed: 0.6,
   }
 });
