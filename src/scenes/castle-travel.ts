@@ -74,7 +74,7 @@ scene.actionTree
     pos: [-214.09, 70.00, -90.18],
     radius: 2,
   }))
-  .then(new FreezePlayer([-214.09, 70.00, -90.18]))
+  .then(new FreezePlayer([-214.09, 70.00, -89.5]))
   .then(new Wait(1))
   .then(`
     fill -321 67 -98 -318 64 -98 minecraft:spruce_fence
