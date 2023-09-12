@@ -2,6 +2,7 @@ import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
 import ActionTree from "../lib/ActionTree.js";
 import Scene from "../lib/Scene.js";
 import ContinueWhen from "../lib/actions/ContinueWhen.js";
+import DisplayGoal from "../lib/actions/DisplayGoal.js";
 import DisplaySentence from "../lib/actions/DisplaySentence.js";
 import Fight from "../lib/actions/Fight.js";
 import FreezePlayer from "../lib/actions/FreezePlayer.js";
@@ -70,6 +71,7 @@ scene.actionTree
   .then(new ContinueWhen(`execute if entity @a[tag=w.player,nbt={Inventory:[{id:"minecraft:written_book"}]}]`))
   .then('fill -188 71 -94 -189 72 -94 air')
   .then(new DisplaySentence(ThePlayer, `{"text": "I'm ready to go!"}`))
+  .then(new DisplayGoal([{text: `Go to the main square near the castle.`}]))
   .then(new UsePath({
     pos: [-214.09, 70.00, -90.18],
     radius: 2,
@@ -179,6 +181,7 @@ scene.actionTree
   }))
   .then(new DisplaySentence(ThePlayer, `{"text": "I didn't expect to be the first one here! I need to find something to do, I still have plenty of time..."}`))
   .then(``)
+  .then(new DisplayGoal([{text: `Wander around the city until the sun rises...`}]))
   .then(new RunScene(TimeBeforeRecruitmentScene))
 
 

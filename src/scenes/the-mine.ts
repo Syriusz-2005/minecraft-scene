@@ -17,6 +17,7 @@ import { CaptainPathfinder } from "./CaptainPathfinder.js";
 import { MineCaptainSpeech } from "../speakers/Captain.js";
 import { TrainerSpeech } from "../speakers/Trainer.js";
 import { miner1Pathfinder, miner2Pathfinder } from "../models/miner.js";
+import DisplayGoal from "../lib/actions/DisplayGoal.js";
 
 const summonSpiders = `
   ${getClearLastFight(['w.lavaSpider.first'])}
@@ -217,6 +218,7 @@ scene.actionTree
   .then(new Wait(7))
   .then(MineCaptainSpeech.say({text: `We will mine carefully. Let's go to the camp! And one more thing: Keep everything what you've seen here for yourself.`}))
   .then(new Wait(6))
+  .then(new DisplayGoal([{text: `Go to the training camp.`}]))
   .then(new ContinueWhen(`execute positioned -322.29 10.00 -104.36 if entity @a[tag=w.player,distance=..1]`))
   .then(MineCaptainSpeech.hide())
   .then(CaptainPathfinder.dispatch())

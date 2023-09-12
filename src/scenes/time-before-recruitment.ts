@@ -2,6 +2,7 @@ import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
 import ActionTree from "../lib/ActionTree.js";
 import Scene from "../lib/Scene.js";
 import ContinueWhen from "../lib/actions/ContinueWhen.js";
+import DisplayGoal from "../lib/actions/DisplayGoal.js";
 import DisplaySentence from "../lib/actions/DisplaySentence.js";
 import RunScene from "../lib/actions/RunScene.js";
 import UsePath from "../lib/actions/UsePath.js";
@@ -48,6 +49,7 @@ TimeBeforeRecruitmentScene.actionTree
     function animated_java:recruiter/remove/all
     execute positioned -190.86 89.00 39.13 rotated -987.59 -0.23 run function animated_java:recruiter/summon
   `)
+  .then(new DisplayGoal([{text: `Go back to the main square.`}]))
   .then(new UsePath({
     pos: [-212, 89, 33],
     radius: 2,
@@ -83,6 +85,7 @@ TimeBeforeRecruitmentScene.actionTree
   .then(isPlayerRecruited.Update(1))
   .then(new ContinueWhen('execute positioned -196.35 88.94 36.52 unless entity @a[tag=w.player,distance=..8]'))
   .then(new Wait(6))
+  .then(new DisplayGoal([{text: `Find the captain in the sulfur mine next to the city.`}]))
   .then(`
     kill @e[tag=${recruiterSpeech.TransformGroup.groupTag}]
     fill -318 64 -98 -321 66 -98 air
