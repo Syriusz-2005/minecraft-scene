@@ -74,15 +74,15 @@ TimeBeforeRecruitmentScene.actionTree
   .then(recruiterSpeech.say({text: `You know, I was the guy that recruited him the second time. It was a year ago. He told me about you and said that you were a great student.`}))
   .then(new Wait(6))
   .then(recruiterSpeech.say({text: `Normally I don't do that, but because your dad was my friend, I'm gonna do something special for you. I'll sign you as a recruit for 'The Hawks'...`}))
-  .then(new Wait(8))
+  .then(new Wait(10))
   .then(recruiterSpeech.sayAs({text: "How's that possi..."}, ThePlayer))
-  .then(new Wait(3))
+  .then(new Wait(4))
   .then(recruiterSpeech.say({text: `...Do not interrupt! You'll still be a recruit so don't expect glory and fame initially. But this is a chance for you! The Hawks are an elite! Make the most of that unique occasion as nobody will give you another one.`}))
-  .then(new Wait(8))
-  .then(recruiterSpeech.say({text: `The training camp of the Hawks formation can be found after turning right in the interesection closest to the city's main gate but the Captain currently inspects the sulfur Mine. You can go directly to him to introduce yourself.`}))
+  .then(new Wait(10))
+  .then(recruiterSpeech.say({text: `The training camp of the Hawks formation can be found after turning right in the intersection closest to the city's main gate but the Captain currently inspects the sulfur Mine. You can go directly to him to introduce yourself.`}))
   .then(isPlayerRecruited.Update(1))
   .then(new ContinueWhen('execute positioned -196.35 88.94 36.52 unless entity @a[tag=w.player,distance=..8]'))
-  .then(new Wait(5))
+  .then(new Wait(6))
   .then(`
     kill @e[tag=${recruiterSpeech.TransformGroup.groupTag}]
     fill -318 64 -98 -321 66 -98 air

@@ -76,6 +76,9 @@ scene.actionTree
   }))
   .then(new FreezePlayer([-214.09, 70.00, -90.18]))
   .then(new Wait(1))
+  .then(`
+    fill -321 67 -98 -318 64 -98 minecraft:spruce_fence
+  `)
   .then(fishSellerSpeech.say({text: `Hey, where are ye going?`}))
   .then(new Wait(3))
   .then(fishSellerSpeech.sayAs({text: `Haven't you listened to the emperor's speech yesterday? I'm 18 so I'm going to war! I'll be a recruit.`}, ThePlayer))
@@ -117,7 +120,7 @@ scene.actionTree
   .then(new Wait(1))
   .then(BurglarSpeech.sayAs({text: "What do you want?!"}, ThePlayer))
   .then(new Wait(3))
-  .then(BurglarSpeech.say({text: `We don't need any trouble, just hand us your bag and you'll never see us again!`}))
+  .then(BurglarSpeech.say({text: `We don't want to cause a commotion, so hand over everything you have and let us go our separate ways.`}))
   .then(new Wait(5))
   .then(BurglarSpeech.sayAs({text: "Guards? Where are the guards?"}, ThePlayer))
   .then(new Wait(5))
