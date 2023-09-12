@@ -109,6 +109,9 @@ export default class UseCamera implements Action {
 
         execute as @e[tag=w.camera-marker] at @s run tp @s ~${posDeltaPerTick[0]} ~${posDeltaPerTick[1]} ~${posDeltaPerTick[2]} ~${rotationDeltaPerTick[0]} ~${rotationDeltaPerTick[1]}
         execute as @a[tag=w.player] at @s run tp @s ~${posDeltaPerTick[0]} ~${posDeltaPerTick[1]} ~${posDeltaPerTick[2]} ~${rotationDeltaPerTick[0]} ~${rotationDeltaPerTick[1]}
+        scoreboard players reset %isRiding w.internal
+        execute as @a[tag=w.player] store success score %isRiding w.internal on vehicle if entity @s
+        execute unless score %isRiding w.internal matches 1 as @a[tag=w.player] run spectate @e[tag=w.camera-marker,sort=nearest,limit=1] 
 
         scoreboard players add ${scoreHolderName} w.internal 1
       `);

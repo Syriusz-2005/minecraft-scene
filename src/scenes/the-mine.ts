@@ -308,6 +308,6 @@ scene.actionTree
   .then(`say This is the end of the first playable demo. We hope you had at least a little bit of fun!`)
   .then(new Wait(10))
   .then(TrainerSpeech.hide())
-  .then(new RunScene(TheLordMurderActionScene))
+  // .then(new RunScene(TheLordMurderActionScene))
  
   await scene.compile();

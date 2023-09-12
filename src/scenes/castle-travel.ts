@@ -60,16 +60,16 @@ scene.actionTree
     effect give @a[tag=w.player] regeneration 5 10 true
   `)
   .then(new Wait(3))
-  .then(new DisplaySentence(ThePlayer, '{"text": "The last day in my home..."}'))
+  .then(new DisplaySentence(ThePlayer, '{"text": "Ah, my last day in this house..."}'))
   .then(new Wait(3))
   .then(new DisplaySentence(ThePlayer, `{"text": "Let's move on already!"}`))
   .then(new Wait(4))
-  .then(new DisplaySentence(ThePlayer, `{"text": "If only my dad was here with me. I would really use his help right now."}`))
+  .then(new DisplaySentence(ThePlayer, `{"text": "If only my dad was here with me. I could really use his help right now."}`))
   .then(new Wait(5))
-  .then(new DisplaySentence(ThePlayer, `{"text": "Let's just take the notebook, the sword and go to the main square. Better be first or they'll put me in the worst unit possible. The ones that are used literally as canon fodders."}`))
+  .then(new DisplaySentence(ThePlayer, `{"text": "Ok so i need to get my sword and the notebook. I better hurry or they'll put me in the worst unit possible."}`))
   .then(new ContinueWhen(`execute if entity @a[tag=w.player,nbt={Inventory:[{id:"minecraft:written_book"}]}]`))
   .then('fill -188 71 -94 -189 72 -94 air')
-  .then(new DisplaySentence(ThePlayer, `{"text": "Let's go!"}`))
+  .then(new DisplaySentence(ThePlayer, `{"text": "I'm ready to go!"}`))
   .then(new UsePath({
     pos: [-214.09, 70.00, -90.18],
     radius: 2,
@@ -79,25 +79,27 @@ scene.actionTree
   .then(`
     fill -321 67 -98 -318 64 -98 minecraft:spruce_fence
   `)
-  .then(fishSellerSpeech.say({text: `Hey, where are ye going?`}))
+  .then(fishSellerSpeech.say({text: `Hey buddy! Where are ye going?`}))
   .then(new Wait(3))
-  .then(fishSellerSpeech.sayAs({text: `Haven't you listened to the emperor's speech yesterday? I'm 18 so I'm going to war! I'll be a recruit.`}, ThePlayer))
+  .then(fishSellerSpeech.sayAs({text: `Haven't you heard the Emperor's speech yesterday? I'm 18, so I'm going to war. I need to sign up for the army`}, ThePlayer))
   .then(new Wait(5))
-  .then(fishSellerSpeech.say({text: `Ah, the War..., maybe finally your training will pay off. I've heard that you know some neat tricks with a sword.`}))
+  .then(fishSellerSpeech.say({text: `Ah, the War... Perhaps your training will finally pay off. I've heard you're quite good with a sword.`}))
   .then(new Wait(6))
-  .then(fishSellerSpeech.say({text: `Speaking of which, is that your father's blade?`}))
+  .then(fishSellerSpeech.say({text: `Speaking of which, that's your father's sword, isn't it?`}))
   .then(new Wait(4))
-  .then(fishSellerSpeech.sayAs({text:"Yes, my father gave it along with his final notes."}, ThePlayer))
+  .then(fishSellerSpeech.sayAs({text:"Yes, he left it to me along with his will."}, ThePlayer))
   .then(new Wait(4))
   .then(fishSellerSpeech.say({text: `He died for our kingdom! It's an honor and our duty!`}))
   .then(new Wait(5))
   .then(fishSellerSpeech.sayAs({text: "I'm not sure. For me it's mainly a loss and sorrow."}, ThePlayer))
   .then(new Wait(5))
-  .then(fishSellerSpeech.say({text: `It is a sacrifice for a greater goal. The Emperor says that our enemies would murder us all If they had a joice.`}))
+  .then(fishSellerSpeech.say({text: `It is a sacrifice for a greater goal. The Emperor said that our enemies are merciless creatures who would not hesitate to kill us given the chance.`}))
   .then(new Wait(6))
   .then(fishSellerSpeech.say({text: `That's why we need an army. To protect us from them, and from the terrorists.`}))
   .then(new Wait(5))
-  .then(fishSellerSpeech.say({text: `Long live the Emperor. Long live you!`}))
+  .then(fishSellerSpeech.say({text: `Now go son, or you'll miss the recruitment`}))
+  .then(new Wait(5))
+  .then(fishSellerSpeech.say({text: `Long live the Emperor! Long live you!`}))
   .then(new Wait(4))
   .then(fishSellerSpeech.sayAs({text: "Thank you. I hope we'll see again."}, ThePlayer))
   .then(summonBurglars)
@@ -120,15 +122,15 @@ scene.actionTree
   .then(new Wait(1))
   .then(BurglarSpeech.sayAs({text: "What do you want?!"}, ThePlayer))
   .then(new Wait(3))
-  .then(BurglarSpeech.say({text: `We don't want to cause a commotion, so hand over everything you have and let us go our separate ways.`}))
+  .then(BurglarSpeech.say({text: `We don't want to cause a commotion, so hand over everything you have and let's go our separate ways.`}))
   .then(new Wait(5))
-  .then(BurglarSpeech.sayAs({text: "Guards? Where are the guards?"}, ThePlayer))
+  .then(BurglarSpeech.sayAs({text: "Huh? Guards! Where are the Guards!?"}, ThePlayer))
   .then(new Wait(5))
-  .then(BurglarSpeech.say({text: `Hahaha... They won't help you. The Emperor doesn't care about us as long as we don't rob him.`}))
+  .then(BurglarSpeech.say({text: `Hahaha... They won't help you. The Emperor doesn't care about our mischief as long as we don't rob him.`}))
   .then(new Wait(6))
-  .then(BurglarSpeech.say({text: `...And so do the guards. They are busy protecting his majesty, so hand you bag now! So naive...`}))
+  .then(BurglarSpeech.say({text: `...And so do the guards. They are busy protecting his majesty, so hand your bag, NOW!`}))
   .then(new Wait(5))
-  .then(BurglarSpeech.say({text: `Look behind, you're surrounded.`}))
+  .then(BurglarSpeech.say({text: `Look behind you. You've got nowhere to run.`}))
   .then(`
     summon zombie -233.67 71.00 -36.01 {Invulnerable:true,NoAI:true,Rotation:[415.68f, 8.34f],Tags:["w.burglar", "w.no-fire", "w.burglar-4", "mob-abilities.dasher"],Silent:true,HasVisualFire:false,PersistenceRequired:true,DeathLootTable:"health:burglar"}
 
@@ -137,7 +139,9 @@ scene.actionTree
   .then(new Wait(6))
   .then(BurglarSpeech.sayAs({text: "That's enough, I won't give you anything!"}, ThePlayer))
   .then(new Wait(4))
-  .then(BurglarSpeech.say({text: `Let's get Kill him guys!`}))
+  .then(BurglarSpeech.say({text: `Well, we could have settled it peacefully, but if you insist...`}))
+  .then(new Wait(4))
+  .then(BurglarSpeech.say({text: `Let's get him guys!`}))
   .then(new Fight({
     prepareEffect: new ActionTree(scene)
       .then(`
@@ -173,7 +177,7 @@ scene.actionTree
     pos: [-212, 89, 33],
     radius: 2,
   }))
-  .then(new DisplaySentence(ThePlayer, `{"text": "The square is empty! I indeed went way to early so I still have plenty of time..."}`))
+  .then(new DisplaySentence(ThePlayer, `{"text": "I didn't expect to be the first one here! I need to find something to do, I still have plenty of time..."}`))
   .then(``)
   .then(new RunScene(TimeBeforeRecruitmentScene))
 
