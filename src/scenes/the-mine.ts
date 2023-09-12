@@ -80,6 +80,10 @@ const scene = new Scene({
 export {scene as TheMineScene};
 
 scene.actionTree
+  .then(new UsePath({
+    pos: [-290.2, 8, -99],
+    radius: 1.5,
+  }))
   .then(`
     item replace block -329 10 -112 container.13 with minecraft:flint_and_steel
     clone -286 21 -94 -281 25 -101 -286 7 -101
