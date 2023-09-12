@@ -162,12 +162,15 @@ export default class ModeledEntity {
       execute if score #temp.isWalking w.internal matches 0 run tag @s remove w.model.isWalking
 
       ${animationVariants.reduce((acc, variant) => {
-        
+        const tag = `w.internal.hasAnimation.${variant.applyVariant}`;
         return acc + `
           execute as @e[tag=${skeletonEntityTag}] if score @s w.modelId = #temp.modelId w.internal store success score #temp.success w.internal run ${variant.when}
           execute if score #temp.success w.internal matches 1 if score #temp.isWalking w.internal matches 1 run function animated_java:${modelName}/animations/${walkAnimation}/stop
           execute if score #temp.success w.internal matches 1 run function animated_java:${modelName}/animations/${variant.applyVariant}/resume
-          execute if score #temp.success w.internal matches 0 run function animated_java:${modelName}/animations/${variant.applyVariant}/stop
+          execute if score #temp.success w.internal matches 0 if entity @s[tag=${tag}] run function animated_java:${modelName}/animations/${variant.applyVariant}/stop
+          execute if score #temp.success w.internal matches 0 if entity @s[tag=${tag}] run tag @s remove w.model.isWalking
+          execute if score #temp.success w.internal matches 0 if entity @s[tag=${tag}] run tag @s remove ${tag}
+          execute if score #temp.success w.internal matches 1 run tag @s add ${tag}
           execute if score #temp.success w.internal matches 1 run return 1
         `;
       },'')}
