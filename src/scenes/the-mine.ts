@@ -109,7 +109,7 @@ scene.actionTree
       .then(miner2Pathfinder.setPosition([-292.51, 8.00, -106.53], [693.33, 5.09]))
   ])
   .then(`
-    say *You can safely fuse the tnt*
+
   `)
   .then(new ContinueWhen(`execute positioned -285.30 7.80 -95.25 if entity @e[type=tnt,distance=..40,nbt={Fuse:2s}]`))
   .then(`
