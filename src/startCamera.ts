@@ -16,7 +16,7 @@ const startCamera = new Scene({
 export { startCamera };
 startCamera.actionTree
   .then(`
-    tag @s add w.player
+    tag @a add w.player
   `)
   .then(new UseCamera({
     anchorPoints: [
