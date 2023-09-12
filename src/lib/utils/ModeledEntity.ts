@@ -1,6 +1,11 @@
 import Project from "../Project.js";
 import * as fs from 'fs/promises';
 
+export type AnimationVariant = {
+  when: string;
+  applyVariant: string;
+}
+
 export type ModeledEntityConfig = {
   modelName: string;
   skeletonEntityTag: string;
@@ -24,6 +29,8 @@ export type ModeledEntityConfig = {
    * @default "facing_player"
    */
   rotation?: 'inherit' | 'facing_player';
+
+  animationVariants?: AnimationVariant[];
 }
 
 export default class ModeledEntity {
@@ -42,6 +49,7 @@ export default class ModeledEntity {
       damageVariant = 'damage', 
       attackAnimation = 'attack',
       rotation = 'facing_player',
+      animationVariants = [],
     } = config;
 
     await fs.mkdir(project.Path + '/entity').catch(() => {});
@@ -142,18 +150,28 @@ export default class ModeledEntity {
       execute unless score @s w.cy = @s w.y run scoreboard players set #temp.isWalking w.internal 1
       execute unless score @s w.cz = @s w.z run scoreboard players set #temp.isWalking w.internal 1
 
-      execute unless entity @s[tag=w.model.isWalking] if score #temp.isWalking w.internal matches 1 run function animated_java:${modelName}/animations/${walkAnimation}/resume
-      execute if entity @s[tag=w.model.isWalking] if score #temp.isWalking w.internal matches 0 run function animated_java:${modelName}/animations/${walkAnimation}/stop
-      
-      execute if score #temp.isWalking w.internal matches 1 run tag @s add w.model.isWalking
-      execute if score #temp.isWalking w.internal matches 0 run tag @s remove w.model.isWalking
-
-
       execute store result score @s w.x run data get entity @s Pos[0] 2000
       execute store result score @s w.y run data get entity @s Pos[1] 2000
       execute store result score @s w.z run data get entity @s Pos[2] 2000
 
 
+      execute unless entity @s[tag=w.model.isWalking] if score #temp.isWalking w.internal matches 1 run function animated_java:${modelName}/animations/${walkAnimation}/resume
+      execute if entity @s[tag=w.model.isWalking] if score #temp.isWalking w.internal matches 0 run function animated_java:${modelName}/animations/${walkAnimation}/stop
+
+      execute if score #temp.isWalking w.internal matches 1 run tag @s add w.model.isWalking
+      execute if score #temp.isWalking w.internal matches 0 run tag @s remove w.model.isWalking
+
+      ${animationVariants.reduce((acc, variant) => {
+        
+        return acc + `
+          execute as @e[tag=${skeletonEntityTag}] if score @s w.modelId = #temp.modelId w.internal store success score #temp.success w.internal run ${variant.when}
+          execute if score #temp.success w.internal matches 1 if score #temp.isWalking w.internal matches 1 run function animated_java:${modelName}/animations/${walkAnimation}/stop
+          execute if score #temp.success w.internal matches 1 run function animated_java:${modelName}/animations/${variant.applyVariant}/resume
+          execute if score #temp.success w.internal matches 0 run function animated_java:${modelName}/animations/${variant.applyVariant}/stop
+          execute if score #temp.success w.internal matches 1 run return 1
+        `;
+      },'')}
+      
     `);
 
     await project.appendToAllEntities(`
