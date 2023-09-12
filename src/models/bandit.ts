@@ -15,3 +15,17 @@ const bandit = new ModeledEntity(project, {
 });
 
 await bandit.init();
+
+const banditWithKnife = new ModeledEntity(project, {
+  modelName: 'bandit_with_a_knife',
+  skeletonEntityTag: 'w.burglar.with_knife',
+  attackAnimation: 'attack',
+  animationVariants: [
+    {
+      when: `execute if score @s mob-abilities.dash.dashing-ticks matches 1..`,
+      applyVariant: 'charge',
+    }
+  ],
+});
+
+await banditWithKnife.init();

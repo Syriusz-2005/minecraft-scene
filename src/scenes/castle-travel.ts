@@ -29,9 +29,10 @@ const scene = new Scene({
 export {scene as CastleTravelScene};
 
 const summonBurglars = `
-  ${getClearLastFight('w.burglar')}
+  ${getClearLastFight(['w.burglar', 'w.burglar.with_knife'])}
 
-  summon zombie -248.2 71 -23.2 {Invulnerable:true,NoAI:true,Rotation:[-132f, 0f],Tags:["w.burglar","w.burglar-1", "w.no-fire", "mob-abilities.dasher"],Silent:true,HasVisualFire:false,PersistenceRequired:true,DeathLootTable:"health:burglar"}
+  summon zombie -248.2 71 -23.2 {Invulnerable:true,NoAI:true,Rotation:[-132f, 0f],Tags:["w.burglar-1", "w.no-fire", "mob-abilities.dasher", "w.burglar.with_knife"],Silent:true,HasVisualFire:false,PersistenceRequired:true,DeathLootTable:"health:burglar"}
+  effect give @e[tag=w.burglar.with_knife] strength infinite 1 true
 
   summon zombie -242.96 70.00 -38.69 {Invulnerable:true,NoAI:true,Rotation:[-34.10f, 6.41f],Tags:["w.burglar", "w.no-fire", "w.burglar-2", "mob-abilities.dasher"],Silent:true,HasVisualFire:false,PersistenceRequired:true,DeathLootTable:"health:burglar"}
 
@@ -113,7 +114,6 @@ scene.actionTree
     radius: 2,
   }))
   .then(new FreezePlayer([-243.4, 71, -29.4]))
-  .then('data merge entity @e[tag=w.burglar-1,limit=1] {HandItems: [{id: "minecraft:stone_sword",Count: 1}]}')
   .then(new Wait(1))
   .then(BurglarSpeech.sayAs({text: "What do you want?!"}, ThePlayer))
   .then(new Wait(3))
@@ -147,8 +147,10 @@ scene.actionTree
     skipFirstTimePreparation: true,
     startEffect: `
       execute as @e[tag=w.burglar] run data modify entity @s Invulnerable set value false
+      execute as @e[tag=w.burglar.with_knife] run data modify entity @s Invulnerable set value false
       execute as @e[tag=w.burglar] run data modify entity @s NoAI set value false
-      
+      execute as @e[tag=w.burglar.with_knife] run data modify entity @s NoAI set value false
+
       kill @e[tag=${BurglarSpeech.TransformGroup.groupTag}]
       tag @a[tag=w.player] add w.no-healing
       ${UnfreezePlayer.Commands}
@@ -157,7 +159,7 @@ scene.actionTree
       worldborder set 38
       worldborder damage amount 0
     `,
-    endWhenSuccess: `execute unless entity @e[tag=w.burglar]`
+    endWhenSuccess: `execute unless entity @e[tag=w.burglar] unless entity @e[tag=w.burglar.with_knife]`
   }))
   .then(new Wait(3))
   .then(`

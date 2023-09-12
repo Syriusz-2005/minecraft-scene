@@ -1,8 +1,8 @@
 
 
 
-export const getClearLastFight = (tag: string) => `
+export const getClearLastFight = (tags: string[]) => `
   gamerule doMobLoot false
-  kill @e[tag=${tag}]
+  ${tags.reduce((acc, tag) => acc + `kill @e[tag=${tag}]`, '')}
   gamerule doMobLoot true
 `

@@ -19,7 +19,7 @@ import { TrainerSpeech } from "../speakers/Trainer.js";
 import { miner1Pathfinder, miner2Pathfinder } from "../models/miner.js";
 
 const summonSpiders = `
-  ${getClearLastFight('w.lavaSpider.first')}
+  ${getClearLastFight(['w.lavaSpider.first'])}
 
   execute positioned -249.84 1.00 -104.42 run summon minecraft:skeleton ~ ~ ~ {Tags:["w.lavaSpider.skeleton", "mob-abilities.cobweb-thrower","w.lavaSpider.first"],HandItems:[{},{}],DeathLootTable:"health:burglar",Attributes:[{Name:"minecraft:generic.follow_range",Base: 40}], NoAI:true}
 
@@ -29,7 +29,7 @@ const summonSpiders = `
 `;
 
 const summonSpiders2 = `
-  ${getClearLastFight('w.lavaSpider.second')}
+  ${getClearLastFight(['w.lavaSpider.second'])}
   
   execute positioned -227.39 1.00 -99.81 run summon minecraft:skeleton ~ ~ ~ {Tags:["w.lavaSpider.skeleton", "mob-abilities.cobweb-thrower","w.lavaSpider.second"],HandItems:[{},{}],DeathLootTable:"health:burglar",Attributes:[{Name:"minecraft:generic.follow_range",Base: 40}], NoAI:true}
 
@@ -41,7 +41,7 @@ const summonSpiders2 = `
 `;
 
 const summonSpiders3 = `
-  ${getClearLastFight('w.lavaSpider.third')}
+  ${getClearLastFight(['w.lavaSpider.third'])}
 
 
   summon minecraft:skeleton -250 -12 -120 {Tags:["w.lavaSpider.skeleton", "mob-abilities.cobweb-thrower","w.lavaSpider.third"],HandItems:[{},{}],DeathLootTable:"health:burglar",Attributes:[{Name:"minecraft:generic.follow_range",Base: 40}], NoAI:true}
@@ -52,7 +52,7 @@ const summonSpiders3 = `
 
 const commonTags = 'Silent:true,HasVisualFire:false,PersistenceRequired:true,DeathLootTable:"health:burglar",NoAI:true,Invulnerable:true'
 const summonArenaFight = `
-  ${getClearLastFight('w.enemy.fight')}
+  ${getClearLastFight(['w.enemy.fight'])}
   summon zombie -391.7 88 -341.1 {Rotation:[32f, 7f],Tags:["w.burglar", "w.no-fire", "mob-abilities.dasher", "w.enemy.fight"],${commonTags}}
 
   summon zombie -396 88 -327.6 {Rotation:[-173.10f, 6.41f],Tags:["w.burglar", "w.no-fire", "mob-abilities.dasher", "w.enemy.fight"],${commonTags}}
@@ -61,7 +61,7 @@ const summonArenaFight = `
 `;
 
 const summonArena2Fight = `
-  ${getClearLastFight('w.enemy.fight')}
+  ${getClearLastFight(['w.enemy.fight'])}
 
   ${summonArenaFight}
 

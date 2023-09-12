@@ -119,7 +119,7 @@ export default class ModeledEntity {
       tag @s add w.entity.current
       ${rotation === 'facing_player' 
         ? `execute as @e[tag=${modelTag}] if score @s w.modelId = #temp.modelId w.internal at @e[tag=w.entity.current,sort=nearest,limit=1] facing entity @p eyes run tp @s ~ ~ ~ ~ 0` 
-        : `execute as @e[tag=${modelTag}] if score @s w.modelId = #temp.modelId w.internal at @e[tag=w.entity.current,sort=nearest,limit=1] rotated as @e[tag=w.entity.current,sort=nearest,limit=1] run tp @s ~ ~ ~ ~ 0
+        : `execute as @e[tag=${modelTag}] if score @s w.modelId = #temp.modelId w.internal at @e[tag=w.entity.current,sort=nearest,limit=1] anchored eyes rotated as @e[tag=w.entity.current,sort=nearest,limit=1] run tp @s ~ ~ ~ ~ 0
       `}
       
       
