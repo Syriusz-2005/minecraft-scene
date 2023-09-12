@@ -24,7 +24,7 @@ scene.actionTree
   `)
   .then(new Wait(2))
   .then(`
-    execute at @a[tag=w.player] run teleport @p ~ ~-54 ~
+    execute at @a[tag=w.player,tag=!w.player.justElevated] run teleport @p ~ ~-54 ~
   `)
   .then(new Restart())
 
