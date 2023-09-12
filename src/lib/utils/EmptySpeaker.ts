@@ -4,6 +4,7 @@ import Speaker from "./Speaker.js";
 export default class EmptySpeaker implements Speaker {
   name = 'no-name';
   color = 'black';
+  bold = false;
   public getJson(message: string): string {
     const msg = JSON.parse(message);
 

@@ -40,7 +40,10 @@ scene.actionTree
         content: 'Credits',
         then: new ActionTree(scene)
           .then(`
-            tellraw @a {"text": "\\n\\n\\n\\n\\n\\n\\n\\nDevelopers:\\n\\n _Syriusz_, kakti, Technicman, Catandon, mikib27, lukaszysz, Ciamciam, Watsug \\n"}
+            tellraw @a {"text": "\\n\\n\\n\\n\\n\\n\\n\\n"}
+            tellraw @a {"text": "External resources:\\n"}
+            function w:utils/show_resources
+            tellraw @a {"text": "\\n\\nDevelopers:\\n\\n _Syriusz_, kakti, Technicman, Catandon, mikib27, lukaszysz, Ciamciam \\n"}
 
           `)
           .then(new DisplayMenu({
