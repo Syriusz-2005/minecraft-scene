@@ -14,4 +14,5 @@ const cliffhornTheme = new Configurator()
     end: 166.95,
   });
 
+  
 await new Compiler('cliffhorn_theme.mp3', './src/musicOut/').compile(cliffhornTheme);
