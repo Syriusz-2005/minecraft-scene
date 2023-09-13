@@ -2,6 +2,7 @@ import { NAMESPACED_PATH, PATH, project } from "./PATH.js";
 
 
 
+
 console.time('Compiled in');
 import './misc.js'
 import './scenes/castle-travel.js'
@@ -24,5 +25,7 @@ import './startCamera.js'
 import './models/bandit.js';
 import './models/captain.js';
 import './models/miner.js';
+import './music/CliffhornTheme.js';
+
 
 console.timeEnd('Compiled in');
