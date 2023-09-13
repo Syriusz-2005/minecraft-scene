@@ -66,8 +66,8 @@ const summonArena2Fight = `
 
   ${summonArenaFight}
 
-  summon minecraft:skeleton -400 88 -340.5 {Tags:["w.lavaSpider.skeleton", "mob-abilities.cobweb-thrower","w.enemy.fight"],HandItems:[{},{}],DeathLootTable:"health:burglar", NoAI:true,Attributes:[{Name:"minecraft:generic.follow_range",Base: 40}],ArmorItems: [{}, {}, {}, {id: "minecraft:leather_helmet",Count:1}]}
-  summon minecraft:skeleton -404 88 -329 {Tags:["w.lavaSpider.skeleton", "mob-abilities.cobweb-thrower","w.enemy.fight"],HandItems:[{},{}],DeathLootTable:"health:burglar", NoAI:true,Attributes:[{Name:"minecraft:generic.follow_range",Base: 40}],ArmorItems: [{}, {}, {}, {id: "minecraft:leather_helmet",Count:1}]}
+  summon minecraft:skeleton -400 88 -340.5 {Tags:["w.lavaSpider.skeleton", "mob-abilities.cobweb-thrower","w.enemy.fight"],HandItems:[{},{}],DeathLootTable:"health:burglar", NoAI:true,Attributes:[{Name:"minecraft:generic.follow_range",Base: 40}],ArmorItems: [{}, {}, {}, {id: "minecraft:air",Count:1}]}
+  summon minecraft:skeleton -404 88 -329 {Tags:["w.lavaSpider.skeleton", "mob-abilities.cobweb-thrower","w.enemy.fight"],HandItems:[{},{}],DeathLootTable:"health:burglar", NoAI:true,Attributes:[{Name:"minecraft:generic.follow_range",Base: 40}],ArmorItems: [{}, {}, {}, {id: "minecraft:air",Count:1}]}
 `;
 
 const scene = new Scene({
