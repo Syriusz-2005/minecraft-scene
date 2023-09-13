@@ -307,8 +307,23 @@ scene.actionTree
         pos: [-373, 88, -347],
         radius: 2,
       }))
+      .then(`
+        give @a[tag=w.player] crossbow
+      `)
+      .then(`title @a title {"text": "3"}`)
+      .then(new Wait(1))
+      .then(`title @a title {"text": "2"}`)
+      .then(new Wait(1))
+      .then(`title @a title {"text": "1"}`)
+      .then(new Wait(1))
+      .then(`title @a title {"text": "Go!"}`)
+      .then(`
+        function mechanics:shooting_range/api/start
+      `)
   ])
-  .then(`say This is the end of the first playable demo. We hope you had at least a little bit of fun!`)
+  .then(`
+    tellraw @a {"text": "Thank you for giving us a chance!", "color": "gold", "bold": true, "underlined": true}
+    tellraw @a {"text":"This is the end of the first playable demo. We hope you had at least a little bit of fun! Keep in mind that the stuff you see on this map WILL change in the future. Many things you saw were just a placeholder for something better. Also the story will take much longer (You've seen around 1/5 of the whole story). Though the demo is short, we've put a lot of work to get to this stage. 200 hours of the world beeing open, but multiple people were working there simultanously."}`)
   .then(new Wait(10))
   .then(TrainerSpeech.hide())
   // .then(new RunScene(TheLordMurderActionScene))
