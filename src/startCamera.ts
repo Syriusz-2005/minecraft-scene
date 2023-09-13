@@ -17,6 +17,7 @@ export { startCamera };
 startCamera.actionTree
   .then(`
     tag @a add w.player
+    tag @a remove w.initialized
   `)
   .then(new UseCamera({
     anchorPoints: [

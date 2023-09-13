@@ -25,6 +25,7 @@ scene.actionTree
     function animated_java:recruiter/remove/all
     team join w.noCollision @a[tag=w.player]
     tag @s add w.initialized
+    execute as @e[tag=aj.demo_title.root] run function animated_java:demo_title/animations/loop/play
   `)
   .then(new DisplayMenu({
     preText: `[{"text":"Start the game when you are ready:"}]`,
