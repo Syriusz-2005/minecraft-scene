@@ -231,6 +231,7 @@ scene.actionTree
   .then(`
     tag @a[tag=w.player] add w.player.justElevated
     execute at @a[tag=w.player] run teleport @p ~ ~54 ~
+    execute at @a[tag=w.player] run spawnpoint @s
   `)
   .then(new UsePath({
     pos: [-279, 80, -327],
