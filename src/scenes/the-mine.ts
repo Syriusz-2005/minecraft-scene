@@ -309,6 +309,7 @@ scene.actionTree
       }))
       .then(`
         give @a[tag=w.player] crossbow
+        give @a[tag=w.player] arrow 64
       `)
       .then(`title @a title {"text": "3"}`)
       .then(new Wait(1))
