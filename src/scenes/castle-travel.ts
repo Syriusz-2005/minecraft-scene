@@ -56,6 +56,7 @@ scene.actionTree
     function w:generated/reset-state-machines
     time set 23100
     fill -321 67 -98 -318 64 -98 minecraft:spruce_fence
+    function music:cliffhorn_theme/play
   `)
   .then(`
     effect give @a[tag=w.player] regeneration 5 10 true
