@@ -41,7 +41,7 @@ startCamera.actionTree
   }))
   .then(`
     spectate @e[type=armor_stand,tag=w.menu2Marker,limit=1] @a[tag=w.player,limit=1]
-    function effect:cursed_forest/remove_ambient
+    function effect:desaturation/remove
   `)
   .then(new Wait(2))
   .then(openingNarrativeSpeech.say({ text: 'A long long time ago, a kingdom lived at war...' }))

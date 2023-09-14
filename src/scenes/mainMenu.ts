@@ -29,7 +29,7 @@ scene.actionTree
     function animated_java:recruiter/remove/all
     team join w.noCollision @a[tag=w.player]
     tag @s add w.initialized
-    function effect:cursed_forest/apply_ambient
+    function effect:desaturation/apply
   `)
   .then(new Wait(1))
   .then(`
