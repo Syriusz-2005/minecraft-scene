@@ -55,7 +55,11 @@ export default class Fight implements Action {
 
 
     await ActionTree.appendAction(config, `
-      ${spawnpointSet ? 'execute as @a[tag=w.player] at @s align y run spawnpoint @s ~ ~ ~' : ''}
+      ${spawnpointSet ? `
+        execute as @a[tag=w.player] at @s align y unless block ~ ~-1 ~ air run spawnpoint @s ~ ~ ~ ~ ~
+        execute as @a[tag=w.player] at @s align y if block ~ ~-1 ~ air run spawnpoint @s ~ ~-1 ~ ~ ~
+        execute as @a[tag=w.player] at @s align y if block ~ ~-1 ~ air if block ~ ~-2 ~ air run spawnpoint @s ~ ~-2 ~ ~ ~
+      ` : ''}
       tag @a[tag=w.player] add w.no-healing
       
       scoreboard players set ${delayedFightStartScore} 0
