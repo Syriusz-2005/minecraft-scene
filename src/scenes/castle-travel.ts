@@ -131,7 +131,7 @@ scene.actionTree
   .then(new Wait(5))
   .then(BurglarSpeech.say({text: `Hahaha... They won't help you. The Emperor doesn't care about our mischief as long as we don't rob him.`}))
   .then(new Wait(6))
-  .then(BurglarSpeech.say({text: `...And so do the guards. They are busy protecting his majesty, so hand your bag, NOW!`}))
+  .then(BurglarSpeech.say({text: `...And so do the guards. They are busy protecting his majesty, so hand over your bag, NOW!`}))
   .then(new Wait(5))
   .then(BurglarSpeech.say({text: `Look behind you. You've got nowhere to run.`}))
   .then(`
@@ -145,6 +145,7 @@ scene.actionTree
   .then(BurglarSpeech.say({text: `Well, we could have settled it peacefully, but if you insist...`}))
   .then(new Wait(4))
   .then(BurglarSpeech.say({text: `Let's get him guys!`}))
+  .then(new Wait(2))
   .then(new Fight({
     prepareEffect: new ActionTree(scene)
       .then(`

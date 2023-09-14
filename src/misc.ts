@@ -106,7 +106,7 @@ beggarScene.actionTree
       {
         content: 'No',
         then: new ActionTree(beggarScene)
-          .then(new DisplaySentence(ThePlayer, '[{"text": "Not now, I\'m sorry."}]'))
+          .then(new DisplaySentence(ThePlayer, '[{"text": "Not now, I`m sorry."}]'))
           .then(new Wait(3))
           .then(playSpeakSound)
           .then(beggarSpeech.say({text: 'Come back later, please.'}))

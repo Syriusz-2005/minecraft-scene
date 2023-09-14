@@ -93,11 +93,11 @@ scene.actionTree
     ${summonSpiders2}
     ${summonSpiders3}
   `)
-  .then(minerSpeech.sayAs({text: `I'm here to guard you guys. You can safely destroy the wall.`}, ThePlayer))
+  .then(minerSpeech.sayAs({text: `I'm here to guard you guys. You can safely destroy the wall now.`}, ThePlayer))
   .then(new Wait(3))
-  .then(minerSpeech.say({text: `Do it yourself then. We've heard disturbing noises from behind it. We ain't doing that!`}))
+  .then(minerSpeech.say({text: `Do it yourself then. We've heard weird noises from behind that wall. We're not taking any chances!`}))
   .then(new Wait(6))
-  .then(minerSpeech.sayAs({text: `The barrel with gunpowder is already in place. The flint and steel can be found behind the shaft. Do It yourself if you're so brave!`}, Miner2))
+  .then(minerSpeech.sayAs({text: `The barrel with gunpowder is already in place. The flint and steel can be found behind the lift. Do It yourself if you're so brave!`}, Miner2))
   .then(new Wait(5))
   .then(new ContinueWhen(`execute positioned -289.04 8.00 -98.62 unless entity @a[tag=w.player,distance=..6]`))
   .then(minerSpeech.hide())
@@ -204,19 +204,19 @@ scene.actionTree
     gamemode adventure @a[tag=w.player]
   `)
   .then(new Wait(1))
-  .then(MineCaptainSpeech.say({text: `We've finally found it!`}))
+  .then(MineCaptainSpeech.say({text: `I can't believe it. We've finally found it!`}))
   .then(new Wait(3))
-  .then(MineCaptainSpeech.sayAs({text: `Found what?`}, ThePlayer))
+  .then(MineCaptainSpeech.sayAs({text: `Huh? Found what?`}, ThePlayer))
   .then(new Wait(3))
-  .then(MineCaptainSpeech.say({text: `Do you see this purple ore? It's a magnetite. Our alchemists require it to continue their work...`}))
+  .then(MineCaptainSpeech.say({text: `Do you see this purple ore? It's magnetite. Our alchemists require it to continue their work...`}))
   .then(new Wait(6))
   .then(MineCaptainSpeech.sayAs({text: `There's also a giant spider nest over there, It might be dangerous!`}, ThePlayer))
   .then(new Wait(6))
-  .then(MineCaptainSpeech.say({text: `Yes, better not interrupt the Mother, She usually lays somewhere near. Let's go back then. I will tell the miners that they can come and work once again as we have a precious mineral to extract...`}))
+  .then(MineCaptainSpeech.say({text: `Yeah, better not interrupt the Mother, she may be laying somewhere. Let's go back then. I will tell the miners that they can come and work here as we have a precious mineral to extract...`}))
   .then(new Wait(11))
-  .then(MineCaptainSpeech.sayAs({text: `Isn't it risky? It's close to the nest! We don't really know what forces live there...`}, ThePlayer))
+  .then(MineCaptainSpeech.sayAs({text: `Isn't it risky? It's close to the nest! We don't really know what creature lives there...`}, ThePlayer))
   .then(new Wait(7))
-  .then(MineCaptainSpeech.say({text: `We will mine carefully. Let's go to the camp! And one more thing: Keep everything what you've seen here for yourself.`}))
+  .then(MineCaptainSpeech.say({text: `They need to be carefull then. Let's go to the camp now! And one more thing: Keep everything you've seen here to yourself.`}))
   .then(new Wait(6))
   .then(new DisplayGoal([{text: `Go to the training camp.`}]))
   .then(new ContinueWhen(`execute positioned -322.29 10.00 -104.36 if entity @a[tag=w.player,distance=..1]`))
@@ -248,7 +248,7 @@ scene.actionTree
         pos: [-373, 88, -330],
         radius: 2,
       }))
-      .then(TrainerSpeech.say({text: `Hello recruit. I'm the trainer around here. We need to test your fighting skills, so step in the ring when you're ready.`}))
+      .then(TrainerSpeech.say({text: `Recruit! I'm the coach around here. We need to test what you can do with a sword! Enter the arena when you're ready.`}))
       .then(new UsePath({
         pos: [-392, 88, -334],
         radius: 2,
@@ -300,7 +300,7 @@ scene.actionTree
         worldborder set 99999
 
       `)
-      .then(TrainerSpeech.say({text: `Congratulations, that was great! You've got a potential to become the master of blade. Now test yourself in the range.`}))
+      .then(TrainerSpeech.say({text: `Not bad! You have the potential to become Master of the Blade one day. Now, test yourself in the shooting range.`}))
     ,
     new ActionTree(scene)
       .then(new UsePath({
@@ -324,9 +324,12 @@ scene.actionTree
   ])
   .then(`
     tellraw @a {"text": "Thank you for giving us a chance!", "color": "gold", "bold": true, "underlined": true}
-    tellraw @a {"text":"This is the end of the first playable demo. We hope you had at least a little bit of fun! Keep in mind that the stuff you see on this map WILL change in the future. Many things you saw were just a placeholder for something better. Also the story will take much longer (You've seen around 1/5 of the whole story). Though the demo is short, we've put a lot of work to get to this stage. 200 hours of the world beeing open, but multiple people were working there simultanously."}`)
+    tellraw @a {"text":"This is the end of the first playable demo. We hope you had at least a little bit of fun! Keep in mind that the stuff you see on this map WILL change in the future. Many things you saw were just a placeholder for something better. Also the story will take much longer (You've seen around 1/5 of the whole story). Though the demo is short, we've put a lot of work to get to this stage, 200 hours of the world beeing open to be exact."}`)
   .then(new Wait(10))
   .then(TrainerSpeech.hide())
+  .then(`
+    execute in w:warland run tp @a[tag=w.player] -138.09 -11.00 89.23 630.90 1.22
+  `)
   // .then(new RunScene(TheLordMurderActionScene))
  
   await scene.compile();
