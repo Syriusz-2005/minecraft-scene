@@ -81,7 +81,7 @@ export default class Fight implements Action {
       execute if entity @a[tag=w.player,scores={w.death=1..}] run function ${processDeathRef}
       execute if entity @a[tag=w.player,scores={w.death=1..}] run return 1
 
-
+      scoreboard players set #fight.success w.internal 0
       execute store success score #fight.success w.internal run ${fightConfig.endWhenSuccess}
       execute if score #fight.success w.internal matches 1.. run function ${endFunctionRef}
       execute if score #fight.success w.internal matches 1.. run return 1
