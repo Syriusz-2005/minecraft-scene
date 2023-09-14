@@ -25,6 +25,7 @@ scene.actionTree
     tellraw @a {"text": "\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n"}
     tellraw @a {"text": "The Soul destroyers map", "color": "aqua", "bold": true, "underlined": true}
     tellraw @a {"text": "              Demo 1\\n", "color": "#8f8f8f"}
+    tellraw @a {"text": "*Contains around 20 minutes of basic gameplay*", "color": "#8f8f8f"}
     function animated_java:recruiter/remove/all
     team join w.noCollision @a[tag=w.player]
     tag @s add w.initialized
@@ -43,7 +44,7 @@ scene.actionTree
           .then(`
             tellraw @a {"text": "\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n"}
             tellraw @a {"text": "Please, set up your game as follows:", "bold": true}
-            tellraw @a {"text": "\\nFOV: max 80\\nbrightness: normal (50)\\nRender distance: 16 chunks\\nFOV effects: off (0%)\\nGraphics: Fabulous"}
+            tellraw @a {"text": "\\nFOV: max 80\\nbrightness: default (50)\\nRender distance: 16 chunks\\nFOV effects: off (0%)\\nGraphics: Fabulous"}
             tellraw @a {"text": "\\nIgnoring this settings may result in some serious problems on the map!","underlined":true,"color":"red"}
           `)
           .then(new DisplayMenu({
