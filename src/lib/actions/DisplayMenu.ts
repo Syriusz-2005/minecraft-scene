@@ -9,6 +9,10 @@ export type MenuOption = {
 
 export type MenuConfig = {
   preText?: string;
+  /**
+   * @default {false}
+   */
+  disablePadding?: boolean;
   options: MenuOption[];
   skipWhen?: string;
 }
@@ -24,7 +28,7 @@ export default class DisplayMenu implements Action {
     let index = config.functionIndex;
 
     const text: any[] = [
-      {text: '\n\n\n'},
+      {text: menuConfig.disablePadding === true ? '\n' : '\n\n\n'},
       {text: '> ', color: 'red', bold: true},
        ...(menuConfig.preText ? JSON.parse(menuConfig.preText) : []),
       {text: '\n\n'},
