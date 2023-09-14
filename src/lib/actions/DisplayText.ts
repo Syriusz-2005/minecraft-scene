@@ -40,6 +40,7 @@ export default class DisplayText implements Action {
         execute as @e[tag=${this.transformGroup.groupTag}] at @s run tp @s ~ ~${transformDistance} ~
       ` : ''}
 
+      execute as @a at @s run playsound minecraft:entity.villager.ambient master @s
       execute in ${this.dim ?? 'overworld'} run summon text_display ${this.position[0]} ${this.position[1]} ${this.position[2]} {billboard: ${this.rotation ? '"fixed"' : '"vertical"'}, text: '${text}', teleport_duration: 4, Tags: ${JSON.stringify(tags)} ${this.rotation ? `, Rotation: [${this.rotation[0]}f, ${this.rotation[1]}f]` : ''}}
     `);
 
