@@ -20,7 +20,7 @@ const guard1Path = new Pathfinder({
   project,
   PATH,
   options: {
-    speed: 0.54,
+    speed: 0.52,
     successRadius: 3.5,
   },
   extraCustomTag: 'w.burglar',
@@ -32,13 +32,27 @@ const guard2Path = new Pathfinder({
   project,
   PATH,
   options: {
-    speed: 0.54,
+    speed: 0.53,
     successRadius: 3.5,
-  }
+  },
+  extraCustomTag: 'w.burglar',
+});
+
+const guard3Path = new Pathfinder({
+  id: 'guard_3',
+  NAMESPACED_PATH,
+  project,
+  PATH,
+  options: {
+    speed: 0.53,
+    successRadius: 3.5,
+  },
+  extraCustomTag: 'w.burglar',
 });
 
 await guard1Path.init();
 await guard2Path.init();
+await guard3Path.init();
 await horsePath.init();
 
 const scene = new Scene({
@@ -57,7 +71,10 @@ scene.actionTree
   .then(horsePath.setPosition([-1058.55, 86.00, -268.76]))
   .then(horsePath.connect(`@e[tag=w.lordHorse]`))
 
-  .then(guard1Path.summon([-1058.55, 86.00, -272.76]))
+  .then(guard1Path.summon([-1058.55, 85.00, -272.76]))
+  .then(guard2Path.summon([-1057, 85.00, -272.76]))
+  .then(guard3Path.summon([-1058, 85.00, -274.76]))
+
 
   .concurrently({awaitingMethod: 'all-finished'}, [
     new ActionTree(scene)
@@ -67,9 +84,20 @@ scene.actionTree
     ,new ActionTree(scene)
       .then(guard1Path.moveTo([-1069, 90, -243]))
       .then(guard1Path.setPause(true))
+
+    ,new ActionTree(scene)
+      .then(guard2Path.moveTo([-1067, 90, -243]))
+      .then(guard2Path.setPause(true))
+
+    ,new ActionTree(scene)
+      .then(guard3Path.moveTo([-1069, 90, -246]))
+      .then(guard3Path.setPause(true))
   ])
   .then(horsePath.setPause(false))
   .then(guard1Path.setPause(false))
+  .then(guard2Path.setPause(false))
+  .then(guard3Path.setPause(false))
+
 
   .concurrently({awaitingMethod: 'all-finished'}, [
     new ActionTree(scene)
@@ -80,9 +108,19 @@ scene.actionTree
       .then(guard1Path.moveTo([-1074, 91, -220]))
       .then(guard1Path.setPause(true))
 
+    ,new ActionTree(scene)
+      .then(guard2Path.moveTo([-1072, 91, -220]))
+      .then(guard2Path.setPause(true))
+
+    ,new ActionTree(scene)
+      .then(guard3Path.moveTo([-1074, 91, -223]))
+      .then(guard3Path.setPause(true))
   ])
   .then(horsePath.setPause(false))
   .then(guard1Path.setPause(false))
+  .then(guard2Path.setPause(false))
+  .then(guard3Path.setPause(false))
+
 
   .concurrently({awaitingMethod: 'all-finished'}, [
     new ActionTree(scene)
@@ -92,23 +130,46 @@ scene.actionTree
     ,new ActionTree(scene)
       .then(guard1Path.moveTo([-1097, 90, -210]))
       .then(guard1Path.setPause(true))
+
+    ,new ActionTree(scene)
+      .then(guard2Path.moveTo([-1095, 91, -210]))
+      .then(guard2Path.setPause(true))
+
+    ,new ActionTree(scene)
+      .then(guard3Path.moveTo([-1097, 91, -212]))
+      .then(guard3Path.setPause(true))
   ])
   .then(horsePath.setPause(false))
   .then(guard1Path.setPause(false))
+  .then(guard2Path.setPause(false))
+  .then(guard3Path.setPause(false))
+
 
   .concurrently({awaitingMethod: 'all-finished'}, [
     new ActionTree(scene)
-      .then(horsePath.moveTo([-1129, 89, -210]))
+      .then(horsePath.moveTo([-1129, 89, -210], {speed: 0.43}))
       .then(horsePath.setPause(true))
     
     ,new ActionTree(scene)
       .then(guard1Path.moveTo([-1127, 89, -210]))
       .then(guard1Path.setPause(true))
+
+    ,new ActionTree(scene)
+      .then(guard2Path.moveTo([-1127, 91, -212]))
+      .then(guard2Path.setPause(true))
+    
+    ,new ActionTree(scene)
+      .then(guard3Path.moveTo([-1124, 91, -210]))
+      .then(guard3Path.setPause(true))
   ])
   .then(horsePath.setPause(false))
   .then(guard1Path.setPause(false))
+  .then(guard2Path.setPause(false))
+  .then(guard3Path.setPause(false))
 
   .then(horsePath.dispatch())
   .then(guard1Path.dispatch())
+  .then(guard2Path.dispatch())
+  .then(guard3Path.dispatch())
 
 await scene.compile();
