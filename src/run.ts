@@ -27,6 +27,6 @@ import './models/captain.js';
 import './models/miner.js';
 import './music/CliffhornTheme.js';
 import './scenes/Evaporation.js';
-
+import './models/Lord.js';
 
 console.timeEnd('Compiled in');

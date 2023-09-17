@@ -50,13 +50,9 @@ export default class Concurrently implements Action {
         endFunctionIndex,
       });
 
+      index += endFunctionIndex - index;
       branchIndex++;
     }
-
-    if (awaitingMethod === 'instant-skip') return {
-      endFunctionIndex: index,
-    }
-
 
     const repeatFunctionReference = scene.getFunctionReference(config.branchIndex, ++index, this.SUFFIX)
     const repeatFunctionNane = scene.getFunctionName(config.branchIndex, index, this.SUFFIX);
@@ -75,9 +71,12 @@ export default class Concurrently implements Action {
       ${awaitingMethod === 'any-finished' ? `
         execute if score ${successesCounter} w.internal matches 1.. run function ${endingFunctionReference}
         execute if score ${successesCounter} w.internal matches 1.. run return 1
-      ` : `
+      ` : awaitingMethod === 'all-finished' ? `
         execute if score ${successesCounter} w.internal matches ${this.actions.length} run function ${endingFunctionReference}
         execute if score ${successesCounter} w.internal matches ${this.actions.length} run return 1
+      ` : `
+        function ${endingFunctionReference}
+        return 1
       `}
 
       schedule function ${repeatFunctionReference} 1t
