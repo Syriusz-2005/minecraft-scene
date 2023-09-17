@@ -26,6 +26,7 @@ import './models/bandit.js';
 import './models/captain.js';
 import './models/miner.js';
 import './music/CliffhornTheme.js';
+import './scenes/Evaporation.js';
 
 
 console.timeEnd('Compiled in');
