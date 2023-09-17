@@ -68,7 +68,6 @@ scene.actionTree
       .then(guard1Path.moveTo([-1069, 90, -243]))
       .then(guard1Path.setPause(true))
   ])
-  .then('say hi')
   .then(horsePath.setPause(false))
   .then(guard1Path.setPause(false))
 
@@ -82,9 +81,34 @@ scene.actionTree
       .then(guard1Path.setPause(true))
 
   ])
+  .then(horsePath.setPause(false))
+  .then(guard1Path.setPause(false))
 
-  .then(horsePath.moveTo([-1097, 90, -207]))
-  .then(horsePath.moveTo([-1129, 89, -210]))
+  .concurrently({awaitingMethod: 'all-finished'}, [
+    new ActionTree(scene)
+      .then(horsePath.moveTo([-1097, 90, -207]))
+      .then(horsePath.setPause(true))
+    
+    ,new ActionTree(scene)
+      .then(guard1Path.moveTo([-1097, 90, -210]))
+      .then(guard1Path.setPause(true))
+  ])
+  .then(horsePath.setPause(false))
+  .then(guard1Path.setPause(false))
+
+  .concurrently({awaitingMethod: 'all-finished'}, [
+    new ActionTree(scene)
+      .then(horsePath.moveTo([-1129, 89, -210]))
+      .then(horsePath.setPause(true))
+    
+    ,new ActionTree(scene)
+      .then(guard1Path.moveTo([-1127, 89, -210]))
+      .then(guard1Path.setPause(true))
+  ])
+  .then(horsePath.setPause(false))
+  .then(guard1Path.setPause(false))
+
   .then(horsePath.dispatch())
+  .then(guard1Path.dispatch())
 
 await scene.compile();
