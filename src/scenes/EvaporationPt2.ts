@@ -1,0 +1,40 @@
+import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
+import Scene from "../lib/Scene.js";
+import UnfreezePlayer from "../lib/actions/UnfreezePlayer.js";
+
+
+const scene = new Scene({
+  NAMESPACED_PATH,
+  PATH,
+  project,
+  sceneIndex: 2569,
+  sceneName: 'evaporation-pt-2',
+});
+export {scene as Evaporation2Scene}
+
+scene.actionTree
+  .then(`
+    kill @e[tag=mechanics.witness]
+    kill @e[tag=mechanics.hiding_spot]
+
+    execute positioned -1076.69 92.00 -193.51 run function mechanics:visibility/summon_hiding_spot
+    execute positioned -1096.70 90.00 -185.53 run function mechanics:visibility/summon_hiding_spot
+    execute positioned -1090.38 92.00 -198.56 run function mechanics:visibility/summon_hiding_spot
+    execute positioned -1096.59 91.00 -177.48 run function mechanics:visibility/summon_hiding_spot
+    execute positioned -1113.00 89.00 -173.49 run function mechanics:visibility/summon_hiding_spot
+    execute positioned -1125.59 88.88 -171.54 run function mechanics:visibility/summon_hiding_spot
+    execute positioned -1134.70 88.00 -176.31 run function mechanics:visibility/summon_hiding_spot
+    execute positioned -1134.57 89.00 -190.35 run function mechanics:visibility/summon_hiding_spot
+    execute positioned -1125.54 88.00 -191.58 run function mechanics:visibility/summon_hiding_spot
+    execute positioned -1108.70 88.00 -202.55 run function mechanics:visibility/summon_hiding_spot
+    execute positioned -1115.29 88.00 -198.56 run function mechanics:visibility/summon_hiding_spot
+    execute positioned -1127.70 90.00 -200.42 run function mechanics:visibility/summon_hiding_spot
+  `)
+  .then(new UnfreezePlayer())
+  .then(`
+    scoreboard players set $stealthTime w.internal 1000
+    scoreboard players set @a mechanics.exposure 0
+    execute positioned -1143 90 -193 run function mechanics:visibility/summon_witness
+  `)
+
+await scene.compile();

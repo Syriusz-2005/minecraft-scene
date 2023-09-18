@@ -1,7 +1,11 @@
 import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
 import ActionTree from "../lib/ActionTree.js";
 import Scene from "../lib/Scene.js";
+import FreezePlayer from "../lib/actions/FreezePlayer.js";
+import RunScene from "../lib/actions/RunScene.js";
+import UnfreezePlayer from "../lib/actions/UnfreezePlayer.js";
 import Pathfinder from "../lib/utils/Pathfinder.js";
+import { Evaporation2Scene } from "./EvaporationPt2.js";
 
 const horsePath = new Pathfinder({
   id: 'the-lord-horse',
@@ -23,7 +27,7 @@ const guard1Path = new Pathfinder({
     speed: 0.52,
     successRadius: 3.5,
   },
-  extraCustomTag: 'w.burglar',
+  extraCustomTag: 'w.lordGuard.skeleton',
 });
 
 const guard2Path = new Pathfinder({
@@ -35,7 +39,7 @@ const guard2Path = new Pathfinder({
     speed: 0.53,
     successRadius: 3.5,
   },
-  extraCustomTag: 'w.burglar',
+  extraCustomTag: 'w.lordGuard.skeleton',
 });
 
 const guard3Path = new Pathfinder({
@@ -47,7 +51,7 @@ const guard3Path = new Pathfinder({
     speed: 0.53,
     successRadius: 3.5,
   },
-  extraCustomTag: 'w.burglar',
+  extraCustomTag: 'w.lordGuard.skeleton',
 });
 
 await guard1Path.init();
@@ -65,8 +69,20 @@ const scene = new Scene({
 
 scene.actionTree
   .then(`
+    kill @e[tag=mechanics.witness]
+    kill @e[tag=w.lord.skeleton]
+    kill @e[tag=w.lordHorse]
+    kill @e[tag=mechanics.hiding_spot]
+    time set 20000
+    scoreboard players set $stealthTime w.internal 1000
+    scoreboard players set @a mechanics.exposure 0
     summon horse -1058.55 86.00 -268.76 {Tags: ["w.lordHorse"],NoAI:true,Passengers:[{id: "minecraft:villager",Silent:true,Invulnerable:true,Tags:["w.lord.skeleton"]}]}
+
+    execute in minecraft:overworld run tp @a[tag=w.player] -1076.39 92.00 -193.30 -174.01 10.87
+    scoreboard players set @a[tag=w.player] mechanics.exposure 0
+    execute as @a[tag=w.player] at @s run spawnpoint @s
   `)
+  .then(new FreezePlayer())
   .then(horsePath.summon([-1058.55, 86.00, -268.76]))
   .then(horsePath.setPosition([-1058.55, 86.00, -268.76]))
   .then(horsePath.connect(`@e[tag=w.lordHorse]`))
@@ -171,5 +187,7 @@ scene.actionTree
   .then(guard1Path.dispatch())
   .then(guard2Path.dispatch())
   .then(guard3Path.dispatch())
+
+  .then(new RunScene(Evaporation2Scene))
 
 await scene.compile();

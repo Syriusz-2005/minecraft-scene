@@ -28,5 +28,8 @@ import './models/miner.js';
 import './music/CliffhornTheme.js';
 import './scenes/Evaporation.js';
 import './models/Lord.js';
+import './models/LordsGuard.js';
+import './scenes/EvaporationPt2.js';
+import './scenes/evaporationPreparation.js';
 
 console.timeEnd('Compiled in');
