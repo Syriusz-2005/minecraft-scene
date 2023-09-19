@@ -1,6 +1,9 @@
 import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
+import ActionTree from "../lib/ActionTree.js";
 import Scene from "../lib/Scene.js";
+import DisplayGoal from "../lib/actions/DisplayGoal.js";
 import UnfreezePlayer from "../lib/actions/UnfreezePlayer.js";
+import { horsePath } from "../models/Lord.js";
 
 
 const scene = new Scene({
@@ -32,9 +35,28 @@ scene.actionTree
   `)
   .then(new UnfreezePlayer())
   .then(`
-    scoreboard players set $stealthTime w.internal 1000
+    scoreboard players set $stealthTime w.internal 1200
     scoreboard players set @a mechanics.exposure 0
     execute positioned -1143 90 -193 run function mechanics:visibility/summon_witness
   `)
+  .then(new DisplayGoal([{text: 'Sneak the convoy until the time runs out.'}]))
+  .then(horsePath.setPause(false))
+  .then(horsePath.setPosition([-1124.48, 89.00, -211.82]))
+  .concurrently({awaitingMethod: 'all-finished'}, [
+    new ActionTree(scene)
+      .then(horsePath.moveTo([-1141.22, 92.00, -203.93], {speed: 0.26}))
+      .then(horsePath.setPause(true))
+
+
+  ])
+  .then(horsePath.setPause(false))
+  .concurrently({awaitingMethod: 'all-finished'}, [
+    new ActionTree(scene)
+      .then(horsePath.moveTo([-1147.10, 89.00, -180], {speed: 0.2}))
+      .then(horsePath.setPause(true))
+
+
+  ])
+  .then(`say finished!`)
 
 await scene.compile();

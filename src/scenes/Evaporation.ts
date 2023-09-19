@@ -5,18 +5,10 @@ import FreezePlayer from "../lib/actions/FreezePlayer.js";
 import RunScene from "../lib/actions/RunScene.js";
 import UnfreezePlayer from "../lib/actions/UnfreezePlayer.js";
 import Pathfinder from "../lib/utils/Pathfinder.js";
+import { horsePath } from "../models/Lord.js";
 import { Evaporation2Scene } from "./EvaporationPt2.js";
 
-const horsePath = new Pathfinder({
-  id: 'the-lord-horse',
-  NAMESPACED_PATH,
-  project,
-  PATH,
-  options: {
-    speed: 0.37,
-    successRadius: 3.5,
-  }
-});
+
 
 const guard1Path = new Pathfinder({
   id: 'lord_guard_1',
@@ -74,7 +66,7 @@ scene.actionTree
     kill @e[tag=w.lordHorse]
     kill @e[tag=mechanics.hiding_spot]
     time set 20000
-    scoreboard players set $stealthTime w.internal 1000
+    scoreboard players set $stealthTime w.internal 1200
     scoreboard players set @a mechanics.exposure 0
     summon horse -1058.55 86.00 -268.76 {Tags: ["w.lordHorse"],NoAI:true,Passengers:[{id: "minecraft:villager",Silent:true,Invulnerable:true,Tags:["w.lord.skeleton"]}]}
 
@@ -183,7 +175,6 @@ scene.actionTree
   .then(guard2Path.setPause(false))
   .then(guard3Path.setPause(false))
 
-  .then(horsePath.dispatch())
   .then(guard1Path.dispatch())
   .then(guard2Path.dispatch())
   .then(guard3Path.dispatch())
@@ -191,3 +182,5 @@ scene.actionTree
   .then(new RunScene(Evaporation2Scene))
 
 await scene.compile();
+
+export { horsePath };
