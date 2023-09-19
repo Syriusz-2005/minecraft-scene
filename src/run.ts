@@ -31,5 +31,6 @@ import './models/Lord.js';
 import './models/LordsGuard.js';
 import './scenes/EvaporationPt2.js';
 import './scenes/evaporationPreparation.js';
+import './scenes/EvaporationPt3.js';
 
 console.timeEnd('Compiled in');

@@ -19,6 +19,7 @@ scene.actionTree
   .then(`
     kill @e[tag=mechanics.witness]
     kill @e[tag=mechanics.hiding_spot]
+    kill @e[tag=mechanics.final_hiding_spot]
 
     execute positioned -1076.69 92.00 -193.51 run function mechanics:visibility/summon_hiding_spot
     execute positioned -1096.70 90.00 -185.53 run function mechanics:visibility/summon_hiding_spot
@@ -27,11 +28,20 @@ scene.actionTree
     execute positioned -1113.00 89.00 -173.49 run function mechanics:visibility/summon_hiding_spot
     execute positioned -1125.59 88.88 -171.54 run function mechanics:visibility/summon_hiding_spot
     execute positioned -1134.70 88.00 -176.31 run function mechanics:visibility/summon_hiding_spot
-    execute positioned -1134.57 89.00 -190.35 run function mechanics:visibility/summon_hiding_spot
     execute positioned -1125.54 88.00 -191.58 run function mechanics:visibility/summon_hiding_spot
     execute positioned -1108.70 88.00 -202.55 run function mechanics:visibility/summon_hiding_spot
     execute positioned -1115.29 88.00 -198.56 run function mechanics:visibility/summon_hiding_spot
     execute positioned -1127.70 90.00 -200.42 run function mechanics:visibility/summon_hiding_spot
+
+
+    execute positioned -1134.57 89.00 -190.35 run function mechanics:visibility/summon_hiding_spot
+    execute positioned -1134.57 89.00 -190.35 run function mechanics:visibility/summon_final_hiding_spot
+
+    bossbar set stealthtime visible true
+    bossbar set stealthtime players @a
+
+    bossbar set stealth visible true
+    bossbar set stealth players @a
   `)
   .then(new UnfreezePlayer())
   .then(`
@@ -39,7 +49,7 @@ scene.actionTree
     scoreboard players set @a mechanics.exposure 0
     execute positioned -1143 90 -193 run function mechanics:visibility/summon_witness
   `)
-  .then(new DisplayGoal([{text: 'Sneak the convoy until the time runs out.'}]))
+  .then(new DisplayGoal([{text: 'Sneak to the convoy before the time runs out.'}]))
   .then(horsePath.setPause(false))
   .then(horsePath.setPosition([-1124.48, 89.00, -211.82]))
   .concurrently({awaitingMethod: 'all-finished'}, [
