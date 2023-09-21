@@ -6,45 +6,12 @@ import RunScene from "../lib/actions/RunScene.js";
 import UnfreezePlayer from "../lib/actions/UnfreezePlayer.js";
 import Pathfinder from "../lib/utils/Pathfinder.js";
 import { horsePath } from "../models/Lord.js";
+import { guard1Path, guard2Path, guard3Path } from "../models/LordsGuard.js";
 import { Evaporation2Scene } from "./EvaporationPt2.js";
 
 
 
-const guard1Path = new Pathfinder({
-  id: 'lord_guard_1',
-  NAMESPACED_PATH,
-  project,
-  PATH,
-  options: {
-    speed: 0.52,
-    successRadius: 3.5,
-  },
-  extraCustomTag: 'w.lordGuard.skeleton',
-});
 
-const guard2Path = new Pathfinder({
-  id: 'guard_2',
-  NAMESPACED_PATH,
-  project,
-  PATH,
-  options: {
-    speed: 0.53,
-    successRadius: 3.5,
-  },
-  extraCustomTag: 'w.lordGuard.skeleton',
-});
-
-const guard3Path = new Pathfinder({
-  id: 'guard_3',
-  NAMESPACED_PATH,
-  project,
-  PATH,
-  options: {
-    speed: 0.53,
-    successRadius: 3.5,
-  },
-  extraCustomTag: 'w.lordGuard.skeleton',
-});
 
 await guard1Path.init();
 await guard2Path.init();
@@ -174,10 +141,6 @@ scene.actionTree
   .then(guard1Path.setPause(false))
   .then(guard2Path.setPause(false))
   .then(guard3Path.setPause(false))
-
-  .then(guard1Path.dispatch())
-  .then(guard2Path.dispatch())
-  .then(guard3Path.dispatch())
 
   .then(new RunScene(Evaporation2Scene))
 

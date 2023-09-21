@@ -1,5 +1,6 @@
 import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
 import Scene from "../lib/Scene.js";
+import Fight from "../lib/actions/Fight.js";
 import FreezePlayer from "../lib/actions/FreezePlayer.js";
 import Wait from "../lib/actions/Wait.js";
 
@@ -46,6 +47,15 @@ scene.actionTree
     worldborder center -1145 -191
     worldborder set 30
   `)
+  .then(new Fight({
+    prepareEffect: `
 
+    `,
+    startEffect: `
+      
+    `,
+    skipFirstTimePreparation: true,
+    endWhenSuccess: ``,
+  }))
 
 await scene.compile();

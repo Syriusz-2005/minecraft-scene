@@ -4,6 +4,7 @@ import Scene from "../lib/Scene.js";
 import DisplayGoal from "../lib/actions/DisplayGoal.js";
 import UnfreezePlayer from "../lib/actions/UnfreezePlayer.js";
 import { horsePath } from "../models/Lord.js";
+import { guard1Path, guard2Path, guard3Path } from "../models/LordsGuard.js";
 
 
 const scene = new Scene({
@@ -50,23 +51,63 @@ scene.actionTree
     execute positioned -1143 90 -193 run function mechanics:visibility/summon_witness
   `)
   .then(new DisplayGoal([{text: 'Sneak to the convoy before the time runs out.'}]))
+  .then(horsePath.dispatch())
+  .then(`
+    kill @e[tag=w.lord.skeleton]
+    kill @e[tag=w.lordHorse]
+    summon horse -1124.48 89.00 -211.82 {Tags: ["w.lordHorse"],NoAI:true,Passengers:[{id: "minecraft:villager",Silent:true,Invulnerable:true,Tags:["w.lord.skeleton"]}]}
+  `)
+  .then(horsePath.summon([-1124.48, 89.00, -211.82]))
   .then(horsePath.setPause(false))
   .then(horsePath.setPosition([-1124.48, 89.00, -211.82]))
+  .then(horsePath.connect(`@e[tag=w.lordHorse]`))
+  .then(guard1Path.dispatch())
+  .then(guard1Path.summon([-1127, 89, -210]))
+  .then(guard2Path.dispatch())
+  .then(guard2Path.summon([-1127, 91, -212]))
+  .then(guard3Path.dispatch())
+  .then(guard3Path.summon([-1124, 91, -210]))
   .concurrently({awaitingMethod: 'all-finished'}, [
     new ActionTree(scene)
-      .then(horsePath.moveTo([-1141.22, 92.00, -203.93], {speed: 0.26}))
+      .then(horsePath.moveTo([-1141.22, 92.00, -203.93], {speed: 0.28}))
       .then(horsePath.setPause(true))
 
+    ,new ActionTree(scene)
+      .then(guard1Path.moveTo([-1139.89, 92.00, -206.44], {speed: 0.34}))
+      .then(guard1Path.setPause(true))
 
+    ,new ActionTree(scene)
+      .then(guard2Path.moveTo([-1137.58, 90.94, -206.5], {speed: 0.34}))
+      .then(guard2Path.setPause(true))
+    
+    ,new ActionTree(scene)
+      .then(guard3Path.moveTo([-1135.42, 90.00, -204.32], {speed: 0.34}))
+      .then(guard3Path.setPause(true))
   ])
   .then(horsePath.setPause(false))
+  .then(guard1Path.setPause(false))
+  .then(guard2Path.setPause(false))
+  .then(guard3Path.setPause(false))
+
+
   .concurrently({awaitingMethod: 'all-finished'}, [
     new ActionTree(scene)
       .then(horsePath.moveTo([-1147.10, 89.00, -180], {speed: 0.2}))
       .then(horsePath.setPause(true))
 
+    ,new ActionTree(scene)
+      .then(guard1Path.moveTo([-1148.14, 89.00, -181.96], {speed: 0.35}))
+      .then(guard1Path.setPause(true))
 
+    ,new ActionTree(scene)
+      .then(guard2Path.moveTo([-1144.79, 89.00, -182.97], {speed: 0.33}))
+      .then(guard2Path.setPause(true))
+    
+    ,new ActionTree(scene)
+      .then(guard3Path.moveTo([-1143.40, 88.00, -180.65], {speed: 0.33}))
+      .then(guard3Path.setPause(true))
   ])
+  
   .then(`say finished!`)
 
 await scene.compile();
