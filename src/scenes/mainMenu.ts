@@ -24,8 +24,8 @@ scene.actionTree
     spectate 4b46e8fb-7bb9-4fc1-9014-17b8748f1bc1
     tellraw @a {"text": "\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n"}
     tellraw @a {"text": "The Soul destroyers map", "color": "aqua", "bold": true, "underlined": true}
-    tellraw @a {"text": "              Demo 1\\n", "color": "#8f8f8f"}
-    tellraw @a {"text": "*Contains around 20 minutes of basic gameplay*", "color": "#8f8f8f"}
+    tellraw @a {"text": "              Demo 2\\n", "color": "#8f8f8f"}
+    tellraw @a {"text": "*Contains around 1 hour of basic gameplay*", "color": "#8f8f8f"}
     function animated_java:recruiter/remove/all
     team join w.noCollision @a[tag=w.player]
     tag @s add w.initialized
