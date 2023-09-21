@@ -3,6 +3,7 @@ import Scene from "../lib/Scene.js";
 import Fight from "../lib/actions/Fight.js";
 import FreezePlayer from "../lib/actions/FreezePlayer.js";
 import Wait from "../lib/actions/Wait.js";
+import { getClearLastFight } from "../lib/utils/ClearLastFight.js";
 
 
 
@@ -49,13 +50,20 @@ scene.actionTree
   `)
   .then(new Fight({
     prepareEffect: `
-
+      ${getClearLastFight(['w.evaporation.enemy', "w.lordGuard.skeleton"])}
+      summon skeleton -1143.41 89.00 -186.12 {Tags: ["w.lordGuard.skeleton", "w.evaporation.enemy"],HandItems:[{},{}],DeathLootTable:"health:burglar"}
+      summon skeleton -1144.79 89.00 -182.97 {Tags: ["w.lordGuard.skeleton", "w.evaporation.enemy"],HandItems:[{},{}],DeathLootTable:"health:burglar"}
+      summon skeleton -1143.40 88.00 -180.65 {Tags: ["w.lordGuard.skeleton", "w.evaporation.enemy"],HandItems:[{},{}],DeathLootTable:"health:burglar"}
     `,
     startEffect: `
-      
+      worldborder center -1145 -191
+      worldborder set 30
     `,
-    skipFirstTimePreparation: true,
-    endWhenSuccess: ``,
+    skipFirstTimePreparation: false,
+    endWhenSuccess: `execute unless entity @e[tag=w.evaporation.enemy]`,
   }))
+  .then(`
+    worldborder set 999999
+  `)
 
 await scene.compile();
