@@ -2,6 +2,7 @@ import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
 import Scene from "../lib/Scene.js";
 import Fight from "../lib/actions/Fight.js";
 import FreezePlayer from "../lib/actions/FreezePlayer.js";
+import UnfreezePlayer from "../lib/actions/UnfreezePlayer.js";
 import Wait from "../lib/actions/Wait.js";
 import { getClearLastFight } from "../lib/utils/ClearLastFight.js";
 
@@ -21,7 +22,7 @@ scene.actionTree
     kill @e[tag=mechanics.hiding_spot]
     kill @e[tag=mechanics.final_hiding_spot]
   `)
-  .then(new FreezePlayer())
+  .then(new FreezePlayer([-1134.46, 89.00, -190.53]))
   .then(`
     title @a times 10t 5s 10t 
     title @a title {"text": "The actions starts in", "color": "gold"}
@@ -48,6 +49,7 @@ scene.actionTree
     worldborder center -1145 -191
     worldborder set 30
   `)
+  .then(new UnfreezePlayer())
   .then(new Fight({
     prepareEffect: `
       ${getClearLastFight(['w.evaporation.enemy', "w.lordGuard.skeleton"])}
@@ -58,6 +60,7 @@ scene.actionTree
     startEffect: `
       worldborder center -1145 -191
       worldborder set 30
+      execute in minecraft:overworld run spawnpoint @a[tag=w.player] -1134.46 89.00 -190.53 91.12 60.64
     `,
     skipFirstTimePreparation: false,
     endWhenSuccess: `execute unless entity @e[tag=w.evaporation.enemy]`,
