@@ -53,14 +53,14 @@ scene.actionTree
   .then(new Fight({
     prepareEffect: `
       ${getClearLastFight(['w.evaporation.enemy', "w.lordGuard.skeleton"])}
-      summon skeleton -1143.41 89.00 -186.12 {Tags: ["w.lordGuard.skeleton", "w.evaporation.enemy"],HandItems:[{},{}],DeathLootTable:"health:burglar"}
-      summon skeleton -1144.79 89.00 -182.97 {Tags: ["w.lordGuard.skeleton", "w.evaporation.enemy"],HandItems:[{},{}],DeathLootTable:"health:burglar"}
-      summon skeleton -1143.40 88.00 -180.65 {Tags: ["w.lordGuard.skeleton", "w.evaporation.enemy"],HandItems:[{},{}],DeathLootTable:"health:burglar"}
+      summon skeleton -1143.41 89.00 -186.12 {Tags: ["w.lordGuard.skeleton", "w.evaporation.enemy", "ma.halberdAttacker"],HandItems:[{},{}],DeathLootTable:"health:burglar"}
+      summon skeleton -1144.79 89.00 -182.97 {Tags: ["w.lordGuard.skeleton", "w.evaporation.enemy", "ma.halberdAttacker"],HandItems:[{},{}],DeathLootTable:"health:burglar"}
+      summon skeleton -1143.40 88.00 -180.65 {Tags: ["w.lordGuard.skeleton", "w.evaporation.enemy", "ma.halberdAttacker"],HandItems:[{},{}],DeathLootTable:"health:burglar"}
     `,
     startEffect: `
       worldborder center -1145 -191
       worldborder set 30
-      execute in minecraft:overworld run spawnpoint @a[tag=w.player] -1134.46 89.00 -190.53 91.12 60.64
+      execute in minecraft:overworld run spawnpoint @a[tag=w.player] -1134 89 -190
     `,
     skipFirstTimePreparation: false,
     endWhenSuccess: `execute unless entity @e[tag=w.evaporation.enemy]`,
