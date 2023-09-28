@@ -18,6 +18,9 @@ const scene = new Scene({
   sceneName: 'evaporation-preparation',
 });
 
+export {scene as EvaporationPreparationScene};
+
+
 scene.actionTree
    
 

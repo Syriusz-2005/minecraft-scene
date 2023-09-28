@@ -18,6 +18,7 @@ import { MineCaptainSpeech } from "../speakers/Captain.js";
 import { TrainerSpeech } from "../speakers/Trainer.js";
 import { miner1Pathfinder, miner2Pathfinder } from "../models/miner.js";
 import DisplayGoal from "../lib/actions/DisplayGoal.js";
+import { EvaporationPreparationScene } from "./evaporationPreparation.js";
 
 const summonSpiders = `
   ${getClearLastFight(['w.lavaSpider.first'])}
@@ -322,14 +323,27 @@ scene.actionTree
         function mechanics:shooting_range/api/start
       `)
   ])
-  .then(`
-    tellraw @a {"text": "Thank you for giving us a chance!", "color": "gold", "bold": true, "underlined": true}
-    tellraw @a {"text":"This is the end of the first playable demo. We hope you had at least a little bit of fun! Keep in mind that the stuff you see on this map WILL change in the future. Many things you saw were just a placeholder for something better. Also the story will take much longer (You've seen around 1/5 of the whole story). Though the demo is short, we've put a lot of work to get to this stage, 200 hours of the world beeing open to be exact."}`)
+  // .then(`
+  //   tellraw @a {"text": "Thank you for giving us a chance!", "color": "gold", "bold": true, "underlined": true}
+  //   tellraw @a {"text":"This is the end of the first playable demo. We hope you had at least a little bit of fun! Keep in mind that the stuff you see on this map WILL change in the future. Many things you saw were just a placeholder for something better. Also the story will take much longer (You've seen around 1/5 of the whole story). Though the demo is short, we've put a lot of work to get to this stage, 200 hours of the world beeing open to be exact."}`)
   .then(new Wait(10))
-  .then(TrainerSpeech.hide())
+  .log()
   .then(`
-    execute in w:warland run tp @a[tag=w.player] -138.09 -11.00 89.23 630.90 1.22
+    function effect:darkening/apply
   `)
+  .then(new Wait(1))
+  .then(`
+    execute in minecraft:overworld run tp @a[tag=w.player] -349.76 37.00 -343.60 -179.64 2.16
+  `)
+  .then(`
+    title @a title {"text": "A few days later..."}
+  `)
+  .then(TrainerSpeech.hide())
+  .then(new Wait(10))
+  .then(new RunScene(EvaporationPreparationScene))
+  // .then(`
+  //   execute in w:warland run tp @a[tag=w.player] -138.09 -11.00 89.23 630.90 1.22
+  // `)
   // .then(new RunScene(TheLordMurderActionScene))
  
   await scene.compile();

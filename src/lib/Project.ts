@@ -29,6 +29,7 @@ export default class Project {
   }
 
   public async init() {
+    await this.mkFile('log.mcfunction', ``);
     await this.mkFile('tick.mcfunction', `
       execute as @a[tag=w.freeze] at @s at @e[tag=w.freezer,sort=nearest,limit=1] run tp @s ~ ~ ~
       execute as @a[tag=w.freeze] run effect give @s jump_boost 1 128 true 

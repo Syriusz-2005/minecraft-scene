@@ -1,5 +1,6 @@
 import Scene, { SceneConfig } from "./Scene.js";
 import Concurrently from "./actions/Concurrently.js";
+import LogFunctions from "./actions/LogFunction.js";
 import RunCommand from "./actions/RunCommand.js";
 
 export type ActionConfig = {
@@ -39,6 +40,11 @@ export default class ActionTree implements Action {
 
     this.elements.push(new Concurrently(config, actions));
 
+    return this;
+  }
+
+  public log() {
+    this.elements.push(new LogFunctions());
     return this;
   }
 
