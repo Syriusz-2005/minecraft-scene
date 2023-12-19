@@ -25,6 +25,10 @@ scene.actionTree
    
 
   //NA KONIEC ZMIENIĆ Z SORT=NEAREST NA TAG=W.PLAYER!!!!!!!!!!
+  .then(`
+    function effect:darkening/apply
+  `)
+  .then(new Wait(2))
   .then('execute positioned -338 84 -330 run ride @a[sort=nearest,limit=1] mount 27aff223-5c92-4cdb-9dbc-fecd320e26cf')
   .then(new Wait(1))
   .then(evaporationPreparationSoldierSpeech.say({text: `Hey! Are you Lucas?`}))
