@@ -46,7 +46,7 @@ export default class Pathfinder {
    */
   public summon(pos: Vector) {
     return new RunCommand(`
-      summon wandering_trader ${VMath.toString(pos)} {Tags: ["${this.Tag}", "w.wandering-trader.pathfinder"${this.config.extraCustomTag ? `, "${this.config.extraCustomTag}"` : ''}],Invulnerable:true,Silent:true,ActiveEffects: [{Id:14,ShowParticles:false,Duration: 999999999}],PersistenceRequired:true} 
+      summon wandering_trader ${VMath.toString(pos)} {Tags: ["${this.Tag}", "w.wandering-trader.pathfinder"${this.config.extraCustomTag ? `, "${this.config.extraCustomTag}"` : ''}],Invulnerable:true,Silent:true,active_effects: [{id:"minecraft:invisibility",show_particles:false,duration: 999999999}],PersistenceRequired:true} 
     `);
   }
 
