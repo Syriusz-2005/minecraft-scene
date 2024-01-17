@@ -1,9 +1,8 @@
-import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "../mainProject.js";
 import Scene from "../lib/Scene.js";
 import ContinueWhen from "../lib/actions/ContinueWhen.js";
 import FreezePlayer from "../lib/actions/FreezePlayer.js";
 import Restart from "../lib/actions/Restart.js";
-import Switch from "../lib/actions/Switch.js";
 import UnfreezePlayer from "../lib/actions/UnfreezePlayer.js";
 import Wait from "../lib/actions/Wait.js";
 
@@ -34,5 +33,3 @@ scene.actionTree
   `)
   .then(new Wait(1))
   .then(new Restart())
-
-await scene.compile();

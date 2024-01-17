@@ -1,4 +1,4 @@
-import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "../mainProject.js";
 import ActionTree from "../lib/ActionTree.js";
 import Scene from "../lib/Scene.js";
 import DisplayGoal from "../lib/actions/DisplayGoal.js";
@@ -109,5 +109,3 @@ scene.actionTree
   ])
   
   .then(`say finished!`)
-
-await scene.compile();

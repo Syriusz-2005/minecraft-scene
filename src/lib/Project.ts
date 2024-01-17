@@ -1,8 +1,11 @@
 import * as fs from 'fs/promises';
 import Pathfinder from './utils/Pathfinder.js';
+import Scene from './Scene.js';
 
 
 export default class Project {
+  private readonly scenes: Scene[] = [];
+
   constructor(
     private readonly PATH: string, 
     private readonly NAMESPACED_PATH: string
@@ -26,6 +29,16 @@ export default class Project {
 
   public async addFile(file: string, content: string) {
     return this.mkFile(file, content);
+  }
+
+  public appendScene(scene: Scene) {
+    this.scenes.push(scene);
+  }
+
+  public async compileAll() {
+    const compilePromises = this.scenes.map(scene => scene.compile());
+
+    return await Promise.all(compilePromises);
   }
 
   public async init() {

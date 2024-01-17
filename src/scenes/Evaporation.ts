@@ -1,4 +1,4 @@
-import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "../mainProject.js";
 import ActionTree from "../lib/ActionTree.js";
 import Scene from "../lib/Scene.js";
 import FreezePlayer from "../lib/actions/FreezePlayer.js";
@@ -144,6 +144,5 @@ scene.actionTree
 
   .then(new RunScene(Evaporation2Scene))
 
-await scene.compile();
 
 export { horsePath };

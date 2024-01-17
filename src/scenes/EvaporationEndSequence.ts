@@ -1,4 +1,4 @@
-import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "../mainProject.js";
 import Scene from "../lib/Scene.js";
 
 
@@ -24,5 +24,3 @@ scene.actionTree
     say [soldier2]: What are we waiting for? Let's just take him to the camp already!
 
   `)
-
-await scene.compile();

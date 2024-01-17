@@ -1,4 +1,4 @@
-import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "../mainProject.js";
 import ModeledEntity from "../lib/utils/ModeledEntity.js";
 import Pathfinder from "../lib/utils/Pathfinder.js";
 

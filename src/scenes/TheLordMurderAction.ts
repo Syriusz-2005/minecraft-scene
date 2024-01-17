@@ -1,6 +1,6 @@
 import UsePath from "../lib/actions/UsePath.js";
 import Scene from "../lib/Scene.js";
-import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "../mainProject.js";
 
 
 export const TheLordMurderActionScene = new Scene({
@@ -36,5 +36,3 @@ TheLordMurderActionScene.actionTree
     say [captain]: Yes, you may leave now.
   `)
 
-
-await TheLordMurderActionScene.compile();

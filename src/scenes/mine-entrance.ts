@@ -1,4 +1,4 @@
-import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "../mainProject.js";
 import ActionTree from "../lib/ActionTree.js";
 import Scene from "../lib/Scene.js";
 import ContinueWhen from "../lib/actions/ContinueWhen.js";
@@ -57,5 +57,3 @@ scene.actionTree
     }))
     
   .then(new Restart())
-
-await scene.compile();

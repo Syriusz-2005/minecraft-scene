@@ -1,4 +1,4 @@
-import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "../mainProject.js";
 import Scene from "../lib/Scene.js";
 import ContinueWhen from "../lib/actions/ContinueWhen.js";
 import Restart from "../lib/actions/Restart.js";
@@ -27,5 +27,3 @@ scene.actionTree
     execute at @a[tag=w.player,tag=!w.player.justElevated] run teleport @p ~ ~-54 ~
   `)
   .then(new Restart())
-
-await scene.compile();

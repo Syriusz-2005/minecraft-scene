@@ -1,6 +1,6 @@
 import Scene from "./lib/Scene.js";
 import ContinueWhen from "./lib/actions/ContinueWhen.js";
-import { NAMESPACED_PATH, PATH, project } from "./PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "./mainProject.js";
 import Speaker from "./lib/utils/Speaker.js";
 import DisplaySentence from "./lib/actions/DisplaySentence.js";
 import TransformGroup from "./lib/utils/TransformGroup.js";

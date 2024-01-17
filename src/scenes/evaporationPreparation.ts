@@ -1,4 +1,4 @@
-import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "../mainProject.js";
 import Scene from "../lib/Scene.js";
 import ContinueWhen from "../lib/actions/ContinueWhen.js";
 import DisplayGoal from "../lib/actions/DisplayGoal.js";
@@ -96,5 +96,4 @@ scene.actionTree
   .then(campCaptainSpeech.sayAs({text: `Thank you Captain.`}, ThePlayer))
   .then(new Wait(3))
   .then(campCaptainSpeech.hide())
-await scene.compile();
 

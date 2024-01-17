@@ -1,4 +1,4 @@
-import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "../mainProject.js";
 import ActionTree from "../lib/ActionTree.js";
 import Scene from "../lib/Scene.js";
 import ContinueWhen from "../lib/actions/ContinueWhen.js";
@@ -135,5 +135,3 @@ TimeBeforeRecruitmentScene.actionTree
     kill @e[tag=${minerSpeech.TransformGroup.groupTag}]
   `)
   .then(new RunScene(TheMineScene))
-
-await TimeBeforeRecruitmentScene.compile();

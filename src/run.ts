@@ -1,9 +1,7 @@
-import { NAMESPACED_PATH, PATH, project } from "./PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "./mainProject.js";
 
 
 
-
-console.time('Compiled in');
 import './misc.js'
 import './scenes/castle-travel.js'
 import './scenes/emperorSpeech1.js'
@@ -33,5 +31,3 @@ import './scenes/EvaporationPt2.js';
 import './scenes/evaporationPreparation.js';
 import './scenes/EvaporationPt3.js';
 import './scenes/EvaporationEndSequence.js';
-
-console.timeEnd('Compiled in');

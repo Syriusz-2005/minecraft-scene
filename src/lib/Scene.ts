@@ -17,7 +17,9 @@ export default class Scene {
 
   constructor(
     public readonly config: SceneConfig,
-  ) {}
+  ) {
+    this.config.project.appendScene(this);
+  }
 
 
   private getPath() {
@@ -51,6 +53,9 @@ export default class Scene {
     await fs.appendFile(this.getPath() + '/' + fileName, content.replace(/\n */g, '\n'));
   }
 
+  /**
+   * @deprecated to use as a public function
+   */
   public async compile() {
     await fs.rm(this.getPath(), {recursive: true}).catch(err => {});
     await this.mkdir();
@@ -58,8 +63,6 @@ export default class Scene {
     await this.mkFile('load.mcfunction', `
       #declare score_holder #SCENE_${this.config.sceneName}
       scoreboard players set #SCENE_${this.config.sceneName} w.scenes ${this.config.sceneIndex}
-
-      scoreboard objectives add w.internal dummy
 
       ${this.config.autoStart ? `function ${this.getFunctionReference(0, 0)}` : ''}
     `);

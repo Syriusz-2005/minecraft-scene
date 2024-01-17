@@ -1,4 +1,4 @@
-import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "../mainProject.js";
 import Scene from "../lib/Scene.js";
 import Restart from "../lib/actions/Restart.js";
 import Pathfinder from "../lib/utils/Pathfinder.js";
@@ -45,5 +45,3 @@ scene.actionTree
     #say the path is complete
   `)
   // .then(new Restart())
-
-await scene.compile();

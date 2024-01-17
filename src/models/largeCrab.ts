@@ -1,4 +1,4 @@
-import { project } from "../PATH.js";
+import { project } from "../mainProject.js";
 import ModeledEntity from "../lib/utils/ModeledEntity.js";
 
 

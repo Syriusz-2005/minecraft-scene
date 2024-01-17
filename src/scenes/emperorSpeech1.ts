@@ -1,4 +1,4 @@
-import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "../mainProject.js";
 import ActionTree from "../lib/ActionTree.js";
 import Scene from "../lib/Scene.js";
 import FreezePlayer from "../lib/actions/FreezePlayer.js";
@@ -118,5 +118,3 @@ scene.actionTree
     #clone -294 -4 -8 -308 7 -25 -287 67 -24
   `)
 //TODO: scene cleanup
-
-await scene.compile();

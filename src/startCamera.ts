@@ -4,7 +4,7 @@ import Wait from "./lib/actions/Wait.js";
 import { openingNarrativeSpeech } from "./speakers/openingNarrative.js";
 import RunScene from "./lib/actions/RunScene.js";
 import { CastleTravelScene } from "./scenes/castle-travel.js";
-import { NAMESPACED_PATH, PATH, project } from "./PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "./mainProject.js";
 
 const startCamera = new Scene({
   NAMESPACED_PATH,

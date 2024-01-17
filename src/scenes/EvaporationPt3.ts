@@ -1,4 +1,4 @@
-import { NAMESPACED_PATH, PATH, project } from "../PATH.js";
+import { NAMESPACED_PATH, PATH, project } from "../mainProject.js";
 import Scene from "../lib/Scene.js";
 import Fight from "../lib/actions/Fight.js";
 import FreezePlayer from "../lib/actions/FreezePlayer.js";
@@ -68,5 +68,3 @@ scene.actionTree
   .then(`
     worldborder set 999999
   `)
-
-await scene.compile();
