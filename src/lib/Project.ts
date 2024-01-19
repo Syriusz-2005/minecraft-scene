@@ -62,7 +62,7 @@ export default class Project {
 
       execute as @a[scores={w.death-ticks=59..}] run function ${this.NAMESPACED_PATH}/end-death
 
-      execute as @e at @s run function ${this.NAMESPACED_PATH}/tick_as_all
+      execute at @p as @e[type=!pig,type=!item_frame,type=!sheep,type=!marker,distance=..140] at @s run function ${this.NAMESPACED_PATH}/tick_as_all
     `);
     await this.mkFile('tick_as_all.mcfunction', `
       execute if entity @s[tag=w.wandering-trader.pathfinder] run data merge entity @s {HandItems: []}
